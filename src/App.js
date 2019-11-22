@@ -1,9 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { SignUp } from './components'
+import { Route } from 'react-router-dom'
 
 function App() {
-  return <div className="App"></div>;
+  return <div className="App">
+    <Route path ='/signUp' component={SignUp} />
+  </div>;
 }
 
 export default App;

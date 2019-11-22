@@ -1,0 +1,1 @@
+export {default as SignUp} from '../components/auth/SignUp/SignUp'
