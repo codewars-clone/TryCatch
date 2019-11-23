@@ -14,7 +14,7 @@ class SignUp extends Component {
       password: '',
       location: '',
       gender: '',
-      ageIntrest: '',
+      ageInterest: '',
       meetUp: '',
       sexualOrientation: ''
     }
@@ -45,7 +45,7 @@ class SignUp extends Component {
 
 
   render() { 
-    const { step, firstName, email, DOB, gender, age, password } = this.state
+    const { step, firstName, email, DOB, gender, age, password, ageInterest, meetUp,sexualOrientation} = this.state
     // eslint-disable-next-line default-case
     switch(step){
       case 1: 
@@ -73,6 +73,9 @@ class SignUp extends Component {
       case 3: 
         return(
           <Preferences
+            ageInterest={ageInterest}
+            sexualOrientation={sexualOrientation}
+            meetUp={meetUp}
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
