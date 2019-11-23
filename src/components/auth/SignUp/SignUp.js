@@ -33,7 +33,7 @@ class SignUp extends Component {
   prevStep() {
     const {step} = this.state
     this.setState({
-      step: step + 1
+      step: step - 1
     })
   }
 
