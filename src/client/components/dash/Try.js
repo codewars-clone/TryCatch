@@ -7,20 +7,26 @@ import axios from 'axios';
 
 //in order to get all users that match preferences, we send a specific request that takes the current users' preferences, and makes a call to the database using those preferences as filters, and specificially if that user has not been "seen" by the current user. Can return all users that match these preferences, and that becomes the stack? or a user is randomly selected from that list.
 //also, the other user's preferences have to match the requested user's info/assets
+const user = {
+  age: 26,
+  name: "Daphne",
+  imageUrl: "https://upload.wikimedia.org/wikipedia/it/4/41/Daphne_Blake.jpg",
+  codingChallenge: 'find the sum in a multidimensional array'
+}
 export default class Try extends Component {
   constructor(){
     super();
     this.state = {
-      user: {},
-      currentIdx: 0
+      user: user,
+      //currentIdx: 0
     };
    // this.handleClick = this.handleClick.bind(this);
   };
   async componentDidMount(){
-    const response = await axios.get(`server/users/QiJLYhalcagEnxHjF5cb`);
-    const user = response.data;
-    this.setState({user});
-    console.log(this.state.user)
+    // const response = await axios.get(`server/users/QiJLYhalcagEnxHjF5cb`);
+    // const user = response.data;
+    // this.setState({user: user});
+    // console.log(this.state.user)
   }
   handleX(){
     // this.setState({currentIdx:+1})
@@ -32,10 +38,16 @@ export default class Try extends Component {
   render() {
     return (
       <div>
-        <img src ={this.state.user.imageUrl} />
-        <button onClick= {this.handleLike}></button>
-        <h4>{this.state.user.name} {this.state.user.age}</h4>
-        <button onClick= {this.handleX}>X</button>
+        <div>
+          <img width = '200px' height='200px' src={this.state.user.imageUrl} alt=""/>
+          <button onClick= {this.handleLike}>like</button>
+          <h4 className= "body">{this.state.user.name} {this.state.user.age}</h4>
+          <p>{this.state.user.codingChallenge}</p>
+          <textarea></textarea>
+       </div>
+       <div>
+          <button onClick= {this.handleX}>X</button>
+        </div>
       </div>
     );
   }
