@@ -48,7 +48,31 @@ const getSingleUser = async (req, res, next) => {
   }
 };
 
+const getTries = async (req, res, next) => {
+  try {
+    const users = await db.collection('users');
+    const currentUser = await db.doc(`/users/${req.params.userId}`).get();
+
+    const response = await users.where('gender', '==', currentUser.data().preferences.gender);
+     const age = await response.where('age', '>=', currentUser.data().preferences.age[0]).where('age','<=', currentUser.data().preferences.age[1]).get();
+    const tries = []
+    age.forEach(doc => {
+      tries.push({
+        userId: doc.id,
+        name: doc.data().name,
+        age: doc.data().age,
+        gender: doc.data().gender,
+        imageUrl: doc.data().imageUrl,
+      })
+    })
+    res.json(tries);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   getUsers,
   getSingleUser,
+  getTries
 };
