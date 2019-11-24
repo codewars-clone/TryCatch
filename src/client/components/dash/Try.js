@@ -7,22 +7,23 @@ import axios from 'axios';
 
 //in order to get all users that match preferences, we send a specific request that takes the current users' preferences, and makes a call to the database using those preferences as filters, and specificially if that user has not been "seen" by the current user. Can return all users that match these preferences, and that becomes the stack? or a user is randomly selected from that list.
 //also, the other user's preferences have to match the requested user's info/assets
-export class Try extends Component {
+export default class Try extends Component {
   constructor(){
     super();
     this.state = {
-      users: [],
+      user: {},
       currentIdx: 0
     };
-    this.handleClick = this.handleClick.bind(this);
+   // this.handleClick = this.handleClick.bind(this);
   };
   async componentDidMount(){
-    const response = await axios.get(`/server/users`);
-    const users = response.data;
-    this.setState({users});
+    const response = await axios.get(`server/users/QiJLYhalcagEnxHjF5cb`);
+    const user = response.data;
+    this.setState({user});
+    console.log(this.state.user)
   }
   handleX(){
-    this.setState({currentIdx:+1})
+    // this.setState({currentIdx:+1})
     //will make a dispatch to store to handle X
   }
   handleLike(){
@@ -31,9 +32,9 @@ export class Try extends Component {
   render() {
     return (
       <div>
-        <img src ={this.state.user[this.state.currentIdx].imageUrl} />
+        <img src ={this.state.user.imageUrl} />
         <button onClick= {this.handleLike}></button>
-        <h4>{this.state.user[this.state.currentIdx].name} {this.state.user[this.state.currentIdx].age}</h4>
+        <h4>{this.state.user.name} {this.state.user.age}</h4>
         <button onClick= {this.handleX}>X</button>
       </div>
     );
