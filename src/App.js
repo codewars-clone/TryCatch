@@ -1,12 +1,11 @@
 import React from 'react';
-import Dashbar from './client/components/dash/Dashbar';
-import Try from './client/components/dash/Try'
+import { SignUp } from './components';
+import { Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Dashbar />
-      <Try />
+      <Route path="/signUp" component={SignUp} />
     </div>
   );
 }

@@ -1,0 +1,6 @@
+export {default as SignUp} from '../components/auth/SignUp/SignUp'
+export {default as GeneralInfo} from '../components/auth/SignUp/GeneralInfo'
+export {default as Location} from '../components/auth/SignUp/Location'
+export {default as Preferences} from '../components/auth/SignUp/Preferences'
+export {default as Assets} from '../components/auth/SignUp/Assets'
+export {default as Terms} from '../components/auth/SignUp/Terms'
