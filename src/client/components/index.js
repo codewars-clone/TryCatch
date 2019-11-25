@@ -6,7 +6,8 @@ export { default as Preferences } from './auth/SignUp/Preferences';
 export { default as Assets } from './auth/SignUp/Assets';
 export { default as Terms } from './auth/SignUp/Terms';
 //--------- DASHBOARD ------------//
-export { default as Try } from './dash/Try';
+export { default as LikeButton } from './dash/try/LikeButton'
+export { default as Try } from './dash/try/Try';
 export { default as Dashbar} from './dash/Dashbar'
 export { default as NextButton } from './dash/NextButton'
 export { default as AwaitList } from './dash/await/AwaitList'

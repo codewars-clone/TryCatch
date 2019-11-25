@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LikeButton } from '../../index'
 //import { connect } from 'react-redux'
 import axios from 'axios';
 //display photo, name, age... description later
@@ -44,9 +45,7 @@ export default class Try extends Component {
           <h2 className="title is-3"><b>{this.state.user.name}</b></h2>
           <figure className='image is-square'>
             <img width = '2100px' height='200px' src={this.state.user.imageUrl} alt=""/>   
-            <button onClick= {this.handleLike} className='button is-success'>
-              <i class="far fa-heart"></i>
-            </button>  
+            <LikeButton />
           </figure>
           <br/>
           <div className="box">
@@ -73,31 +72,30 @@ export default class Try extends Component {
           <div className="content">
             <h3 className="title is-3">Coding Challenge</h3>
             <p>{this.state.user.codingChallenge}</p>
-            <textarea placeHolder='write code here' cols="30" rows="10" className="textarea"></textarea>
+            <textarea placeHolder='write code here and hit like button' cols="30" rows="10" className="textarea"></textarea>
+            <LikeButton />
           </div>
           {/* PIC 2 */}
           <figure className='image is-square'>
             <img width = '2100px' height='200px' src='https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736' alt=""/>   
-            <button onClick= {this.handleLike} className='button is-success'>
-              <i class="far fa-heart"></i>
-            </button>  
+            <LikeButton />
           </figure>
           <br/>
           <div className="content">
             <h3 className="title is-3">Puns</h3>
             <h4 className="subtitle">lorem lor e leolda </h4>
+            <LikeButton />
           </div>
           {/* PIC 3 */}
           <figure className='image is-square'>
             <img width = '2100px' height='200px' src='https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg' alt=""/>   
-            <button onClick= {this.handleLike} className='button is-success'>
-              <i class="far fa-heart"></i>
-            </button>  
+            <LikeButton />
           </figure>
           <br/>
           <div className="content">
             <h3 className="title is-3">Puns</h3>
             <h4 className="subtitle">lorem lor e leolda </h4>
+            <LikeButton />
           </div>
         </div>
       </section>
