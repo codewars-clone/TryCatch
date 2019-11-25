@@ -53,19 +53,19 @@ export default class Try extends Component {
             <div className="media">
               <div className="media-content">
                 <i class="fas fa-birthday-cake"></i>
-                <h4 className="title is-5"> {this.state.user.age}</h4>
+                <h6 className="title is-6"> {this.state.user.age}</h6>
               </div>
               <div className="media-content">
                 <i class="fab fa-js-square"></i>
-                <h4 className="title is-5">Javascript</h4>
+                <h6 className="title is-6">Javascript</h6>
               </div>
               <div className="media-content">
                 <i class="fas fa-location-arrow"></i>
-                <h4 className="title is-5">New York, NY</h4>
+                <h6 className="title is-6">New York, NY</h6>
               </div>
               <div className="media-content">
                 <i class="fas fa-ruler-vertical"></i>
-                <h4 className="title is-5">5'8</h4>
+                <h6 className="title is-6">5'8</h6>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default class Try extends Component {
           <br/>
           <div className="content">
             <h3 className="title is-3">Puns</h3>
-            <textarea placeHolder='write pun here' cols="30" rows="10" className="textarea"></textarea>
+            <h4 className="subtitle">lorem lor e leolda </h4>
           </div>
           {/* PIC 3 */}
           <figure className='image is-square'>
@@ -97,7 +97,7 @@ export default class Try extends Component {
           <br/>
           <div className="content">
             <h3 className="title is-3">Puns</h3>
-            <textarea placeHolder='write pun here' cols="30" rows="10" className="textarea"></textarea>
+            <h4 className="subtitle">lorem lor e leolda </h4>
           </div>
         </div>
       </section>

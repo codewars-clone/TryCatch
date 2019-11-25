@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  height: 485vh;
+  padding-bottom: 10em;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -16,7 +16,7 @@ code {
 #next { 
   position: fixed;
   bottom: 160px;
-  right: 975px; 
+  left: 1em; 
 }
 
 footer { 
