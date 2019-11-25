@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+footer { 
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  left: 0;
+  bottom: 0;
+  height: 5%; 
+  width: 100%;
+  color: black; 
+  text-align: center; 
+}

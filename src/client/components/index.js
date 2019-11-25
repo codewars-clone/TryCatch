@@ -7,3 +7,4 @@ export { default as Assets } from './auth/SignUp/Assets';
 export { default as Terms } from './auth/SignUp/Terms';
 //--------- DASHBOARD ------------//
 export { default as Try } from './dash/Try';
+export { default as Dashbar} from './dash/Dashbar'
