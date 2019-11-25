@@ -6,10 +6,13 @@ class Settings extends Component {
   }
   render() { 
     return ( 
-      <div className="container">
-        <h1 className="title is-1">Settings</h1>
-        <hr/>
-      </div>
+      <section className="section">
+        <div className="container">
+          <h1 className="title is-1">Settings</h1>
+          <hr/>
+        </div>
+      </section>
+
     );
   }
 }
