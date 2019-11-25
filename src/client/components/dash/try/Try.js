@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { LikeButton, NextButton } from '../../index'
+import { LikeButton, NextButton, Splash} from '../../index'
+import { Redirect } from 'react-router-dom'
 //import { connect } from 'react-redux'
 import axios from 'axios';
 //display photo, name, age... description later
@@ -19,9 +20,11 @@ export default class Try extends Component {
     super();
     this.state = {
       user: user,
+      redirect: true
       //currentIdx: 0
     };
    // this.handleClick = this.handleClick.bind(this);
+    this.renderSplash = this.renderSplash.bind(this)
   };
   async componentDidMount(){
     // const response = await axios.get(`server/users/QiJLYhalcagEnxHjF5cb`);
@@ -36,6 +39,14 @@ export default class Try extends Component {
   handleLike(){
     //will make a dispatch to store to handle like
   }
+
+  renderSplash() {
+    this.setState({
+      redirect: true
+    })
+  }
+
+
   render() {
     return (
       <section className="section">
@@ -98,9 +109,9 @@ export default class Try extends Component {
             <LikeButton />
           </div>
           <NextButton/>
+          {/* <Splash/> */}
         </div>
       </section>
-
     );
   }
 }

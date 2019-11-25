@@ -1,5 +1,5 @@
 import React from 'react';
-import { SignUp, Dashbar, NextButton, Try, AwaitList, AllCatach, Settings} from './client/components/index';
+import { SignUp, Dashbar, Try, AwaitList, AllCatach, Settings} from './client/components/index';
 import { Route } from 'react-router-dom';
 
 
@@ -12,7 +12,6 @@ function App() {
       <Route path="/catch" component={AllCatach} />
       <Route path="/settings" component={Settings} />
       <Dashbar />
-      {/* <NextButton /> */}
     </div>
   );
 }
