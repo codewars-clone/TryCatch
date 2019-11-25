@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Calendar from 'react-calendar'
 
 export default class GeneralInfo extends Component {
   constructor() {
@@ -13,6 +14,7 @@ export default class GeneralInfo extends Component {
 
   render() {
     const { firstName, email, DOB, gender, password, handleChange}= this.props
+    console.log("TCL: GeneralInfo -> render -> DOB,", DOB)
     return (
       <section className="section">
         <div className="container">
@@ -58,8 +60,15 @@ export default class GeneralInfo extends Component {
               </span>
             </p>
           </div>
-          {/* GENDER= */}
+          {/* GENDER*/}
+          <div className="fiel">
+            <label className="label"></label>
+          </div>
           {/* DOB */}
+          <div className="field">
+            <label className="label">Date of Birth</label>
+            <Calendar value={DOB}/>
+          </div>
           <div className="buttons">
           <button className="button is-info" onClick={this.continue}>Save and Continue</button>
           </div>
