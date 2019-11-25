@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 export default class Dashbar extends Component {
   render() {
     return(
       <footer className="footer">
           <div>
-            <i class="fas fa-users"></i> 
-            <h4>TRY</h4>
+            <Link to='/try'>
+              <i class="fas fa-users"></i> 
+              <h4>TRY</h4>
+            </Link> 
           </div>
           <div>
-            <i class="fas fa-pause"></i>
-            <h4>AWAIT</h4>
+            <Link to='/await'>
+              <i class="fas fa-pause"></i>
+              <h4>AWAIT</h4>
+            </Link>
           </div>
           <div>
-            <i class="fas fa-equals"></i>
-            <h4>CATCH</h4>
+            <Link to='/catch'>
+              <i class="far fa-comment"></i>
+              <h4>CATCH</h4>
+            </Link>
           </div>
           <div>
-            <i class="fas fa-cogs"></i> 
-            <h4>SETTINGS</h4>
+            <Link to='/settings'>
+              <i class="fas fa-cogs"></i> 
+              <h4>SETTINGS</h4>
+            </Link>
           </div>
       </footer>
     )

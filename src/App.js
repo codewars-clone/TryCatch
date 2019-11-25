@@ -1,14 +1,18 @@
 import React from 'react';
-import { SignUp, Dashbar } from './client/components/index';
+import { SignUp, Dashbar, NextButton, Try, AwaitList} from './client/components/index';
 import { Route } from 'react-router-dom';
-import { Try } from './client/components/index';
+
 
 function App() {
   return (
     <div className="App">
       <Route path="/signUp" component={SignUp} />
       <Route path="/try" component={Try} />
+      <Route path="/await" component={AwaitList} />
+      <Route path="/catch" component={Try} />
+      <Route path="/settings" component={Try} />
       <Dashbar />
+      <NextButton />
     </div>
   );
 }
