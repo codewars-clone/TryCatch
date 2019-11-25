@@ -9,6 +9,6 @@ export { default as Terms } from './auth/SignUp/Terms';
 export { default as Try } from './dash/Try';
 export { default as Dashbar} from './dash/Dashbar'
 export { default as NextButton } from './dash/NextButton'
-
 export { default as AwaitList } from './dash/await/AwaitList'
 export { default as AllCatach } from './dash/catch/AllCatch'
+export { default as Settings } from './dash/settings/preferences/index'
