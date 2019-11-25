@@ -12,7 +12,7 @@ function App() {
       <Route path="/catch" component={AllCatach} />
       <Route path="/settings" component={Settings} />
       <Dashbar />
-      <NextButton />
+      {/* <NextButton /> */}
     </div>
   );
 }

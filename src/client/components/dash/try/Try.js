@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LikeButton } from '../../index'
+import { LikeButton, NextButton } from '../../index'
 //import { connect } from 'react-redux'
 import axios from 'axios';
 //display photo, name, age... description later
@@ -97,6 +97,7 @@ export default class Try extends Component {
             <h4 className="subtitle">lorem lor e leolda </h4>
             <LikeButton />
           </div>
+          <NextButton/>
         </div>
       </section>
 
