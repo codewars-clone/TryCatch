@@ -11,3 +11,4 @@ export { default as Dashbar} from './dash/Dashbar'
 export { default as NextButton } from './dash/NextButton'
 
 export { default as AwaitList } from './dash/await/AwaitList'
+export { default as AllCatach } from './dash/catch/AllCatch'
