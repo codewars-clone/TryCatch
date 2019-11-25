@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { NextButton } from '../../index'
+import { Link } from 'react-router-dom'
 class Splash extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,9 @@ class Splash extends Component {
             <hr/>
             <h1 className="title is-1 ">CHAT NOW</h1> 
           </div>
+          <Link to="/try">
+            <NextButton />
+          </Link>
         </div>
       </section>
     );
