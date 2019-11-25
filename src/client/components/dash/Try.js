@@ -37,18 +37,71 @@ export default class Try extends Component {
   }
   render() {
     return (
-      <div>
-        <div>
-          <img width = '200px' height='200px' src={this.state.user.imageUrl} alt=""/>
-          <button onClick= {this.handleLike}>like</button>
-          <h4 className= "body">{this.state.user.name} {this.state.user.age}</h4>
-          <p>{this.state.user.codingChallenge}</p>
-          <textarea></textarea>
-       </div>
-       <div>
-          <button onClick= {this.handleX}>X</button>
+      <section className="section">
+        <div className='container'>
+          <h1 className="title is-1">Try</h1>
+          <hr />
+          <h2 className="title is-3"><b>{this.state.user.name}</b></h2>
+          <figure className='image is-square'>
+            <img width = '2100px' height='200px' src={this.state.user.imageUrl} alt=""/>   
+            <button onClick= {this.handleLike} className='button is-success'>
+              <i class="far fa-heart"></i>
+            </button>  
+          </figure>
+          <br/>
+          <div className="box">
+            <div className="media">
+              <div className="media-content">
+                <i class="fas fa-birthday-cake"></i>
+                <h4 className="title is-5"> {this.state.user.age}</h4>
+              </div>
+              <div className="media-content">
+                <i class="fab fa-js-square"></i>
+                <h4 className="title is-5">Javascript</h4>
+              </div>
+              <div className="media-content">
+                <i class="fas fa-location-arrow"></i>
+                <h4 className="title is-5">New York, NY</h4>
+              </div>
+              <div className="media-content">
+                <i class="fas fa-ruler-vertical"></i>
+                <h4 className="title is-5">5'8</h4>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div className="content">
+            <h3 className="title is-3">Coding Challenge</h3>
+            <p>{this.state.user.codingChallenge}</p>
+            <textarea placeHolder='write code here' cols="30" rows="10" className="textarea"></textarea>
+          </div>
+          {/* PIC 2 */}
+          <figure className='image is-square'>
+            <img width = '2100px' height='200px' src='https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736' alt=""/>   
+            <button onClick= {this.handleLike} className='button is-success'>
+              <i class="far fa-heart"></i>
+            </button>  
+          </figure>
+          <br/>
+          <div className="content">
+            <h3 className="title is-3">Puns</h3>
+            <textarea placeHolder='write pun here' cols="30" rows="10" className="textarea"></textarea>
+          </div>
+          {/* PIC 3 */}
+          <figure className='image is-square'>
+            <img width = '2100px' height='200px' src='https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg' alt=""/>   
+            <button onClick= {this.handleLike} className='button is-success'>
+              <i class="far fa-heart"></i>
+            </button>  
+          </figure>
+          <br/>
+          <div className="content">
+            <h3 className="title is-3">Puns</h3>
+            <textarea placeHolder='write pun here' cols="30" rows="10" className="textarea"></textarea>
+          </div>
         </div>
-      </div>
+      </section>
+
     );
   }
 }
