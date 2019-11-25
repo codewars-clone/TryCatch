@@ -5,5 +5,7 @@ export { default as Location } from './auth/SignUp/Location';
 export { default as Preferences } from './auth/SignUp/Preferences';
 export { default as Assets } from './auth/SignUp/Assets';
 export { default as Terms } from './auth/SignUp/Terms';
+//-------------SIGNIN-------------//
+export { default as SignIn } from './auth/SignIn';
 //--------- DASHBOARD ------------//
 export { default as Try } from './dash/Try';
