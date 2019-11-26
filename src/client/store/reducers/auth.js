@@ -1,4 +1,5 @@
 import firebase from '../../config/firebaseConfig';
+const db = firebase.firestore();
 
 //Action types
 
@@ -9,6 +10,10 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 
 export const VERIFY_REQUEST = 'VERIFY_REQUEST';
 export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
@@ -31,6 +36,19 @@ const receiveLogin = user => {
 const loginError = () => {
   return {
     type: LOGIN_FAILURE,
+  };
+};
+
+const requestSignUp = () => {
+  return {
+    type: SIGNUP_REQUEST,
+  };
+};
+
+const receiveSignUp = user => {
+  return {
+    type: SIGNUP_SUCCESS,
+    user,
   };
 };
 
@@ -76,6 +94,23 @@ export const loginUser = (email, password) => dispatch => {
     .catch(error => {
       console.error(error);
       dispatch(loginError());
+    });
+};
+
+export const signUpUser = (email, password, state) => dispatch => {
+  dispatch(requestSignUp());
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(cred => {
+      dispatch(receiveSignUp(cred));
+      return db
+        .collection('users')
+        .doc(cred.user.uid)
+        .set(state);
+    })
+    .catch(error => {
+      console.error(error);
     });
 };
 
@@ -140,6 +175,16 @@ export default (state = initialState, action) => {
         isLoggingIn: false,
         isAuthenticated: false,
         loginError: true,
+      };
+    case SIGNUP_REQUEST:
+      return {
+        ...state,
+      };
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.user,
       };
     case LOGOUT_REQUEST:
       return {
