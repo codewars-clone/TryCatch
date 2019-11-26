@@ -3,20 +3,20 @@ import axios from 'axios';
 //initial state
 const initialState = {
   users: [],
-  user: {}
-}
+  user: {},
+};
 //action types
 const GET_ALL_USERS = 'GET_ALL_USERS';
 const GET_USER = 'GET_USER';
 const GET_TRIES = 'GET_TRIES';
 
 //action creators
-const gotUsers = users => ({GET_ALL_USERS, users});
-const gotUser = user => ({GET_USER, user});
+const gotUsers = users => ({ type: GET_ALL_USERS, users });
+const gotUser = user => ({ type: GET_USER, user });
 //thunk creators
 
-export const getUsers = () => async (dispatch, getState, {getFirestore})=> {
-  try{
+export const getUsers = () => async (dispatch, getState, { getFirestore }) => {
+  try {
     const firestore = getFirestore();
     let data = await firestore.collection('users').get();
     let users = [];
@@ -33,7 +33,7 @@ export const getUsers = () => async (dispatch, getState, {getFirestore})=> {
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 // export const getUser = (userId) => async dispatch => {
 //   try{
@@ -47,12 +47,12 @@ export const getUsers = () => async (dispatch, getState, {getFirestore})=> {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_USERS:
-      return {...state, users: [...action.users]}
+      return { ...state, users: [...action.users] };
     case GET_USER:
-      return {...state, user: action.user}
+      return { ...state, user: action.user };
     default:
       return state;
   }
-}
+};
 
 export default userReducer;
