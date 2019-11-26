@@ -1,5 +1,3 @@
-import { nextTick } from "q";
-
 const initialState = {
   currentProspect: {},
   prospects: [],
@@ -17,6 +15,8 @@ const getOneProspect = prospect => ({type: GET_ONE_PROSPECT, prospect});
 const gotLikes = likes => ({type: GET_LIKES, likes});
 const gotMatches = matches => ({type: GET_MATCHES, matches});
 const sentLike = () => ({type: SEND_LIKE});
+
+//const { user } = getState();
 
 export const getProspects = (userId) => async (dispatch, getState, {getFirestore}) => {
   try {
@@ -47,6 +47,9 @@ export const getProspects = (userId) => async (dispatch, getState, {getFirestore
     console.error(err);
   }
 }
+export const getOneProspect = () => async (dispatch, getState, {getFirestore}) => {
+
+}
 
 export const getLikes = (userId) => async (dispatch, getState, {getFirestore}) => {
   try {
@@ -60,7 +63,8 @@ export const getLikes = (userId) => async (dispatch, getState, {getFirestore}) =
         name: doc.data().name,
         age: doc.data().age,
         gender: doc.data().gender,
-        imageUrl: doc.data().imageUrl
+        imageUrl: doc.data().imageUrl,
+        message: doc.data().message
       });
     });
     dispatch(gotLikes(likes));
@@ -68,22 +72,34 @@ export const getLikes = (userId) => async (dispatch, getState, {getFirestore}) =
     console.error(err);
   }
 }
-export const sendLike = (userId, prospectId) => async (dispatch, getState, {getFirestore}) => {
+export const sendLike = (currentUserId, prospectId, message) => async (dispatch, getState, {getFirestore}) => {
   try{
     const firestore = getFirestore();
-    const currentUser = await firestore.doc(`/users/${userId}`).get();
+    const currentUser = await firestore.doc(`/users/${currentUserId}`).get();
     const prospectUser = await firestore.doc(`/users/${prospectId}`).get();
-    firestore.collection('userLikes')
+    await firestore.collection('userLikes')
       .doc(currentUser.id)
       .set({ [prospectUser.id]: true });
-    firestore.collection('likedUser')
+    await firestore.collection('likesUser')
       .doc(prospectUser.id)
-      .set({ [currentUser.id]: true });
-      dispatch(sendLike())
+      .set({
+        userId: currentUser.id,
+        name: currentUser.name,
+        age: currentUser.age,
+        gender: currentUser.gender,
+        imageUrl: currentUser.imageUrl,
+        message: message});
+      dispatch(sentLike());
+      //check if prospectUser has liked current user. If so, it is a match
+      // const matchQuery = await firestore.doc(`/userLikes/${prospectId}`).where(currentUserId, '==', true);
+      // if(matchQuery.exists){
+        //set up match
+        //set up chat
+
+      // }
   } catch (err) {
     console.error(err);
   }
-
 }
 
 // const getLikes = async (req, res, next) => {
