@@ -88,8 +88,14 @@ export const loginUser = (email, password) => dispatch => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      dispatch(receiveLogin(user));
+    .then(cred => {
+      const user = db
+        .collection('users')
+        .doc(cred.user.uid)
+        .get()
+        .then(user => {
+          dispatch(receiveLogin(user));
+        });
     })
     .catch(error => {
       console.error(error);
