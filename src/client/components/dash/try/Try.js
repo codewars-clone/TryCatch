@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { LikeButton, NextButton, Splash } from '../../index';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUsers } from '../../../store/reducers/users';
-import axios from 'axios';
+import { getUsers, getUser } from '../../../store/reducers/users';
+import { getProspects } from '../../../store/reducers/likes';
 //display photo, name, age... description later
 //how to randomize which user is displayed, based on preferences
 //needs two buttons, like button and x button
@@ -28,7 +28,10 @@ class Try extends Component {
   }
   componentDidMount() {
     this.props.getUserData();
-    console.log('our users:', this.props);
+    const userId = this.props.auth.user;
+    this.props.getCurrentUser(userId);
+    this.props.getProspects(userId);
+
     // const user = response.data;
     // this.setState({user: user});
     // console.log(this.state.user)
@@ -144,12 +147,15 @@ class Try extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   users: state.users.users,
   user: state.users.user,
 });
 
 const mapDispatchToProps = dispatch => ({
   getUserData: () => dispatch(getUsers()),
+  getCurrentUser: userId => dispatch(getUser(userId)),
+  getProspects: userId => dispatch(getProspects(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Try);

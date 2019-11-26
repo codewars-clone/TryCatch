@@ -83,24 +83,18 @@ const verifySuccess = () => {
 
 //We dispatch requestLogin() which tells the app the user is logging in. Get the firebase.auth instance and the
 //aurhentication method we want signInWithEmailAndPAssword
-export const loginUser = (email, password) => dispatch => {
-  dispatch(requestLogin());
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(cred => {
-      const user = db
-        .collection('users')
-        .doc(cred.user.uid)
-        .get()
-        .then(user => {
-          dispatch(receiveLogin(user));
-        });
-    })
-    .catch(error => {
+export const loginUser = (email, password) => {
+  return async dispatch => {
+    dispatch(requestLogin());
+    try {
+      const credentials = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      dispatch(receiveLogin(credentials.user.uid));
+    } catch (error) {
       console.error(error);
-      dispatch(loginError());
-    });
+    }
+  };
 };
 
 export const signUpUser = (email, password, state) => dispatch => {
@@ -157,7 +151,7 @@ let initialState = {
   loginError: false,
   logoutError: false,
   isAuthenticated: false,
-  user: {},
+  user: '',
 };
 
 export default (state = initialState, action) => {
@@ -203,7 +197,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoggingOut: false,
         isAuthenticated: false,
-        user: {},
+        user: '',
       };
     case LOGOUT_FAILURE:
       return {
