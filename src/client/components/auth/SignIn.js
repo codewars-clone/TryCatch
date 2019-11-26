@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../store/signIn';
 import { Redirect } from 'react-router-dom';
 
-class SignIn extends Component {
+export default class SignIn extends Component {
   constructor() {
     super();
     this.state = {
@@ -24,57 +24,80 @@ class SignIn extends Component {
     });
   };
   handleSubmit = () => {
-    const { dispatch } = this.props;
-    const { email, password } = this.state;
+    console.log(this.state);
+    // const { dispatch } = this.props;
+    // const { email, password } = this.state;
 
-    dispatch(loginUser(email, password));
+    // dispatch(loginUser(email, password));
   };
   render() {
-    const { loginError, isAuthenticated } = this.props;
-    if (isAuthenticated) {
-      return <Redirect to="/try" />;
-    } else {
-      return (
-        <div className="container">
-          <form onSubmit={this.handleSubmit} className="white">
-            <h5 className="grey-text text-darken-3">Sign In</h5>
-            <div className="input-filed">
-              <label htmlFor="email">Email</label>
+    // const { loginError, isAuthenticated } = this.props;
+    // if (isAuthenticated) {
+    //   return <Redirect to="/try" />;
+    // } else {
+    return (
+      <section className="section">
+        <form onSubmit={this.handleSubmit} className="container">
+          <div className="title" size="is-full">
+            <h1>Sign In</h1>
+          </div>
+
+          {/* <h2 className="column">Sign In</h2> */}
+          {/* EMAIL */}
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control has-icons-left has-icons-right">
               <input
                 type="email"
-                id="email"
+                className="input"
+                placeholder="Email input"
                 onChange={this.handleEmailChange}
               />
+              <span className="icon is-small is-left">
+                <icon className="fas fa-envelope"></icon>
+              </span>
+              <span className="icon is-small is-right">
+                <icon className="fas fa-exclamation-triangle"></icon>
+              </span>
             </div>
-            <div className="input-filed">
-              <label htmlFor="password">Password</label>
+          </div>
+          {/* PASSWORD */}
+          <div className="field">
+            <label className="label">Password</label>
+            <p className="control has-icons-left">
               <input
                 type="password"
-                id="password"
+                className="input"
                 onChange={this.handlePasswordChange}
+                placeholder="password"
               />
-              {loginError && (
-                <p className="error">Incorrect email or password.</p>
-              )}
-            </div>
-            <div className="input-field">
-              <button type="submit" className="button">
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
-      );
-    }
+              <span className="icon is-small is-left">
+                <icon className="fas fa-lock"></icon>
+              </span>
+
+              {/* {loginError && (
+              <p className="error">Incorrect email or password.</p>
+            )} */}
+            </p>
+          </div>
+          <div className="column">
+            <button type="submit" className="button is-danger">
+              Login
+            </button>
+          </div>
+        </form>
+      </section>
+    );
   }
 }
+// }
 
-const mapStateToProps = state => {
-  return {
-    isLoggingIn: state.auth.isLoggingIn,
-    loginError: state.auth.loginError,
-    isAuthenticated: state.auth.isAuthenticated,
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     isLoggingIn: state.auth.isLoggingIn,
+//     loginError: state.auth.loginError,
+//     isAuthenticated: state.auth.isAuthenticated,
+//   };
+// };
 
-export default connect(mapStateToProps)(SignIn);
+// export default connect(mapStateToProps)(SignIn);
