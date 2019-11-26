@@ -23,9 +23,9 @@ class Try extends Component {
     };
     // this.handleClick = this.handleClick.bind(this);
   }
-  async componentDidMount() {
+  componentDidMount() {
     this.props.getUserData();
-    console.log('our users:', this.props.users);
+    console.log('our users:', this.props);
     // const user = response.data;
     // this.setState({user: user});
     // console.log(this.state.user)
