@@ -3,12 +3,11 @@ import axios from 'axios';
 //initial state
 const initialState = {
   users: [],
-  currentUser: {},
+  user: {},
 };
 //action types
 const GET_ALL_USERS = 'GET_ALL_USERS';
 const GET_USER = 'GET_USER';
-
 
 //action creators
 const gotUsers = users => ({ type: GET_ALL_USERS, users });
@@ -36,8 +35,12 @@ export const getUsers = () => async (dispatch, getState, { getFirestore }) => {
   }
 };
 
-export const getUser = (userId) => async (dispatch, getState, {getFirestore}) => {
-  try{
+export const getUser = userId => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  try {
     const firestore = getFirestore();
     let userData = {};
     const response = await firestore.doc(`/users/${userId}`).get();
@@ -48,7 +51,7 @@ export const getUser = (userId) => async (dispatch, getState, {getFirestore}) =>
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 //reducer
 const userReducer = (state = initialState, action) => {
@@ -56,7 +59,7 @@ const userReducer = (state = initialState, action) => {
     case GET_ALL_USERS:
       return { ...state, users: [...action.users] };
     case GET_USER:
-      return { ...state, currentUser: action.user };
+      return { ...state, user: action.user };
     default:
       return state;
   }
