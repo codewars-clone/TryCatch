@@ -2,6 +2,7 @@ import React from 'react';
 import {
   SignUp,
   Dashbar,
+  NextButton,
   Try,
   AwaitList,
   AllCatach,

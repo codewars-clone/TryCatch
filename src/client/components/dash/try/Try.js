@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { LikeButton, NextButton, Splash} from '../../index'
 import { Redirect } from 'react-router-dom'
-//import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { getUsers } from '../../../store/reducers/users';
 import axios from 'axios';
 //display photo, name, age... description later
 //how to randomize which user is displayed, based on preferences
@@ -11,32 +12,32 @@ import axios from 'axios';
 //also, the other user's preferences have to match the requested user's info/assets
 const user = {
   age: 26,
-  name: "Daphne",
-  imageUrl: "https://upload.wikimedia.org/wikipedia/it/4/41/Daphne_Blake.jpg",
-  codingChallenge: 'find the sum in a multidimensional array'
-}
-export default class Try extends Component {
-  constructor(){
+  name: 'Daphne',
+  imageUrl: 'https://upload.wikimedia.org/wikipedia/it/4/41/Daphne_Blake.jpg',
+  codingChallenge: 'find the sum in a multidimensional array',
+};
+class Try extends Component {
+  constructor() {
     super();
     this.state = {
       user: user,
       redirect: false
       //currentIdx: 0
     };
-   // this.handleClick = this.handleClick.bind(this);
     this.renderSplash = this.renderSplash.bind(this)
   };
-  async componentDidMount(){
-    // const response = await axios.get(`server/users/QiJLYhalcagEnxHjF5cb`);
+  componentDidMount() {
+    this.props.getUserData();
+    console.log('our users:', this.props);
     // const user = response.data;
     // this.setState({user: user});
     // console.log(this.state.user)
   }
-  handleX(){
+  handleX() {
     // this.setState({currentIdx:+1})
     //will make a dispatch to store to handle X
   }
-  handleLike(){
+  handleLike() {
     //will make a dispatch to store to handle like
   }
 
@@ -47,6 +48,7 @@ export default class Try extends Component {
   }
 
   render() {
+
     const { redirect} = this.state
     if(redirect){
       console.log(redirect)
@@ -121,14 +123,13 @@ export default class Try extends Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
+  users: state.users.users,
+  user: state.users.user,
+});
 
-// })
+const mapDispatchToProps = dispatch => ({
+  getUserData: () => dispatch(getUsers()),
+});
 
-// const mapDispatchToProps = {
-
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Try)
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(Try);
