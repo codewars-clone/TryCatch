@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { LikeButton, NextButton } from '../../index'
-//import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import axios from 'axios';
+import { getUsers } from '../../../store/reducers/users'
 //display photo, name, age... description later
 //how to randomize which user is displayed, based on preferences
 //needs two buttons, like button and x button
@@ -14,7 +15,7 @@ const user = {
   imageUrl: "https://upload.wikimedia.org/wikipedia/it/4/41/Daphne_Blake.jpg",
   codingChallenge: 'find the sum in a multidimensional array'
 }
-export default class Try extends Component {
+class Try extends Component {
   constructor(){
     super();
     this.state = {
@@ -24,7 +25,8 @@ export default class Try extends Component {
    // this.handleClick = this.handleClick.bind(this);
   };
   async componentDidMount(){
-    // const response = await axios.get(`server/users/QiJLYhalcagEnxHjF5cb`);
+    this.props.getUsers();
+    console.log("our users:", this.props.users)
     // const user = response.data;
     // this.setState({user: user});
     // console.log(this.state.user)
@@ -44,7 +46,7 @@ export default class Try extends Component {
           <hr />
           <h2 className="title is-3"><b>{this.state.user.name}</b></h2>
           <figure className='image is-square'>
-            <img width = '2100px' height='200px' src={this.state.user.imageUrl} alt=""/>   
+            <img width = '2100px' height='200px' src={this.state.user.imageUrl} alt=""/>
             <LikeButton />
           </figure>
           <br/>
@@ -77,7 +79,7 @@ export default class Try extends Component {
           </div>
           {/* PIC 2 */}
           <figure className='image is-square'>
-            <img width = '2100px' height='200px' src='https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736' alt=""/>   
+            <img width = '2100px' height='200px' src='https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736' alt=""/>
             <LikeButton />
           </figure>
           <br/>
@@ -88,7 +90,7 @@ export default class Try extends Component {
           </div>
           {/* PIC 3 */}
           <figure className='image is-square'>
-            <img width = '2100px' height='200px' src='https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg' alt=""/>   
+            <img width = '2100px' height='200px' src='https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg' alt=""/>
             <LikeButton />
           </figure>
           <br/>
@@ -105,14 +107,15 @@ export default class Try extends Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
+  users: state.users.users,
+  user: state.users.user
+})
 
-// })
+const mapDispatchToProps = (dispatch) => ({
+  getUsers: () => dispatch(getUsers())
+})
 
-// const mapDispatchToProps = {
-
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Try)
+export default connect(mapStateToProps, mapDispatchToProps)(Try)
 
 
