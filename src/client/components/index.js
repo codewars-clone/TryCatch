@@ -21,3 +21,7 @@ export { default as SingleAwait } from './dash/await/SingleAwait'
 // --------CATCH-----------//
 export { default as ChatButton } from './dash/catch/ChatButton'
 export { default as SingleCatch } from './dash/catch/SingleCatch' 
+
+// -------CHAT -------//
+export { default as ChatRoom } from '../components/chat/ChatRoom'
+export { default as Messages } from '../components/chat/Messages'

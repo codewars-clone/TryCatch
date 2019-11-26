@@ -13,6 +13,15 @@ code {
     monospace;
 }
 
+
+
+form{
+  position: fixed;
+  bottom: 10em;
+  left: 3em; 
+}
+
+
 /* #overlay { 
   position: fixed;
   display: block;
