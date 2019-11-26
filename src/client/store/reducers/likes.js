@@ -10,13 +10,13 @@ const GET_PROSPECTS = 'GET_PROSPECTS';
 const GET_LIKES = 'GET_LIKES';
 const GET_MATCHES = 'GET_MATCHES';
 const SEND_LIKE = 'SEND_LIKE';
-const GET_ONE_TRY = 'GET_ONE_TRY';
+const GET_ONE_PROSPECT = 'GET_ONE_TRY';
 
-const gotProspects = tries => ({type: GET_PROSPECTS, prospects});
-const getOne = prospect => ({type: GET_ONE_PROSPECT, prospect});
+const gotProspects = prospects => ({type: GET_PROSPECTS, prospects});
+const getOneProspect = prospect => ({type: GET_ONE_PROSPECT, prospect});
 const gotLikes = likes => ({type: GET_LIKES, likes});
 const gotMatches = matches => ({type: GET_MATCHES, matches});
-const sendLike = () => ({type: SEND_LIKE});
+const sentLike = () => ({type: SEND_LIKE});
 
 export const getProspects = (userId) => async (dispatch, getState, {getFirestore}) => {
   try {
@@ -68,7 +68,21 @@ export const getLikes = (userId) => async (dispatch, getState, {getFirestore}) =
     console.error(err);
   }
 }
-export const sendLike = (userId, likedId) => async (dispatch, getState, {getFirestore}) => {
+export const sendLike = (userId, prospectId) => async (dispatch, getState, {getFirestore}) => {
+  try{
+    const firestore = getFirestore();
+    const currentUser = await firestore.doc(`/users/${userId}`).get();
+    const prospectUser = await firestore.doc(`/users/${prospectId}`).get();
+    firestore.collection('userLikes')
+      .doc(currentUser.id)
+      .set({ [prospectUser.id]: true });
+    firestore.collection('likedUser')
+      .doc(prospectUser.id)
+      .set({ [currentUser.id]: true });
+      dispatch(sendLike())
+  } catch (err) {
+    console.error(err);
+  }
 
 }
 
@@ -106,12 +120,16 @@ export const sendLike = (userId, likedId) => async (dispatch, getState, {getFire
 // };
 
 //reducer
-const triesReducer = (state = initialState, action) => {
+const likesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PROSPECTS:
       return { ...state, tries: [...action.prospects]};
+    case GET_ONE_PROSPECT:
+      return {...state, currentProspect: action.prospect}
     case GET_LIKES:
       return {...state, likes: [...action.likes]};
+    case SEND_LIKE:
+      return{...state}
     default:
       return state;
   }
