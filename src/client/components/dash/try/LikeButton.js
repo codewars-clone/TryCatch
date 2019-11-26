@@ -1,8 +1,8 @@
 import React from 'react'
-const LikeButton = ({ renderSplash }) => {
+const LikeButton = () => {
   return ( 
     <div className="buttons is-right">
-      <button className='button is-success' onClick={()=> {renderSplash()}}>
+      <button className='button is-success' >
         <i class="far fa-heart"></i>
       </button>  
     </div>

@@ -14,3 +14,6 @@ export { default as AwaitList } from './dash/await/AwaitList'
 export { default as AllCatach } from './dash/catch/AllCatch'
 export { default as Settings } from './dash/settings/preferences/Settings'
 export { default as Splash } from './dash/try/Splash'
+
+// ---------AWAIT------------//
+export { default as SingleAwait } from './dash/await/SingleAwait'
