@@ -21,7 +21,7 @@ class ChatRoom extends Component {
                 <h3 className="title is-3">Fred</h3>  
               </div>
               <div className="media-right">
-                <Link to='/try'>
+                <Link to='/catch'>
                   <div  className="buttons">
                     <button className='button is-danger'>
                       LEAVE CHAT
