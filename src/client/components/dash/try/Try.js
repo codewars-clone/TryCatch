@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { LikeButton, NextButton } from '../../index';
+import { LikeButton, NextButton, Splash} from '../../index'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { getUsers } from '../../../store/reducers/users';
+import axios from 'axios';
 //display photo, name, age... description later
 //how to randomize which user is displayed, based on preferences
 //needs two buttons, like button and x button
@@ -19,10 +21,11 @@ class Try extends Component {
     super();
     this.state = {
       user: user,
+      redirect: false
       //currentIdx: 0
     };
-    // this.handleClick = this.handleClick.bind(this);
-  }
+    this.renderSplash = this.renderSplash.bind(this)
+  };
   componentDidMount() {
     this.props.getUserData();
     console.log('our users:', this.props);
@@ -37,93 +40,86 @@ class Try extends Component {
   handleLike() {
     //will make a dispatch to store to handle like
   }
+
+  renderSplash() {
+    this.setState({
+      redirect: true
+    })
+  }
+
   render() {
-    return (
-      <section className="section">
-        <div className="container">
-          <h1 className="title is-1">Try</h1>
-          <hr />
-          <h2 className="title is-3">
-            <b>{this.state.user.name}</b>
-          </h2>
-          <figure className="image is-square">
-            <img
-              width="2100px"
-              height="200px"
-              src={this.state.user.imageUrl}
-              alt=""
-            />
-            <LikeButton />
-          </figure>
-          <br />
-          <div className="box">
-            <div className="media">
-              <div className="media-content">
-                <i class="fas fa-birthday-cake"></i>
-                <h6 className="title is-6"> {this.state.user.age}</h6>
-              </div>
-              <div className="media-content">
-                <i class="fab fa-js-square"></i>
-                <h6 className="title is-6">Javascript</h6>
-              </div>
-              <div className="media-content">
-                <i class="fas fa-location-arrow"></i>
-                <h6 className="title is-6">New York, NY</h6>
-              </div>
-              <div className="media-content">
-                <i class="fas fa-ruler-vertical"></i>
-                <h6 className="title is-6">5'8</h6>
+
+    const { redirect} = this.state
+    if(redirect){
+      console.log(redirect)
+      return <Redirect to='/splash' />
+    }
+    else{
+      return (
+        <section className="section">
+          <div className='container'>
+            <h1 className="title is-1">Try</h1>
+            <hr />
+            <h2 className="title is-3"><b>{this.state.user.name}</b></h2>
+            <figure className='image is-square'>
+              <img width = '2100px' height='200px' src={this.state.user.imageUrl} alt=""/>   
+              <LikeButton renderSplash={this.renderSplash}/>
+            </figure>
+            <br/>
+            <div className="box">
+              <div className="media">
+                <div className="media-content">
+                  <i class="fas fa-birthday-cake"></i>
+                  <h6 className="title is-6"> {this.state.user.age}</h6>
+                </div>
+                <div className="media-content">
+                  <i class="fab fa-js-square"></i>
+                  <h6 className="title is-6">Javascript</h6>
+                </div>
+                <div className="media-content">
+                  <i class="fas fa-location-arrow"></i>
+                  <h6 className="title is-6">New York, NY</h6>
+                </div>
+                <div className="media-content">
+                  <i class="fas fa-ruler-vertical"></i>
+                  <h6 className="title is-6">5'8</h6>
+                </div>
               </div>
             </div>
+            <br/>
+            <div className="content">
+              <h3 className="title is-3">Coding Challenge</h3>
+              <p>{this.state.user.codingChallenge}</p>
+              <textarea placeHolder='write code here and hit like button' cols="30" rows="10" className="textarea"></textarea>
+              <LikeButton />
+            </div>
+            {/* PIC 2 */}
+            <figure className='image is-square'>
+              <img width = '2100px' height='200px' src='https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736' alt=""/>   
+              <LikeButton />
+            </figure>
+            <br/>
+            <div className="content">
+              <h3 className="title is-3">Puns</h3>
+              <h4 className="subtitle">lorem lor e leolda </h4>
+              <LikeButton />
+            </div>
+            {/* PIC 3 */}
+            <figure className='image is-square'>
+              <img width = '2100px' height='200px' src='https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg' alt=""/>   
+              <LikeButton />
+            </figure>
+            <br/>
+            <div className="content">
+              <h3 className="title is-3">Puns</h3>
+              <h4 className="subtitle">lorem lor e leolda </h4>
+              <LikeButton />
+            </div>
+            <NextButton/>
           </div>
-          <br />
-          <div className="content">
-            <h3 className="title is-3">Coding Challenge</h3>
-            <p>{this.state.user.codingChallenge}</p>
-            <textarea
-              placeHolder="write code here and hit like button"
-              cols="30"
-              rows="10"
-              className="textarea"
-            ></textarea>
-            <LikeButton />
-          </div>
-          {/* PIC 2 */}
-          <figure className="image is-square">
-            <img
-              width="2100px"
-              height="200px"
-              src="https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736"
-              alt=""
-            />
-            <LikeButton />
-          </figure>
-          <br />
-          <div className="content">
-            <h3 className="title is-3">Puns</h3>
-            <h4 className="subtitle">lorem lor e leolda </h4>
-            <LikeButton />
-          </div>
-          {/* PIC 3 */}
-          <figure className="image is-square">
-            <img
-              width="2100px"
-              height="200px"
-              src="https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg"
-              alt=""
-            />
-            <LikeButton />
-          </figure>
-          <br />
-          <div className="content">
-            <h3 className="title is-3">Puns</h3>
-            <h4 className="subtitle">lorem lor e leolda </h4>
-            <LikeButton />
-          </div>
-          <NextButton />
-        </div>
-      </section>
-    );
+        </section>
+      );
+    }
   }
 }
 

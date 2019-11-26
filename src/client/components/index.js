@@ -15,3 +15,15 @@ export { default as NextButton } from './dash/NextButton'
 export { default as AwaitList } from './dash/await/AwaitList'
 export { default as AllCatach } from './dash/catch/AllCatch'
 export { default as Settings } from './dash/settings/preferences/Settings'
+export { default as Splash } from './dash/try/Splash'
+
+// ---------AWAIT------------//
+export { default as SingleAwait } from './dash/await/SingleAwait'
+
+// --------CATCH-----------//
+export { default as ChatButton } from './dash/catch/ChatButton'
+export { default as SingleCatch } from './dash/catch/SingleCatch' 
+
+// -------CHAT -------//
+export { default as ChatRoom } from '../components/chat/ChatRoom'
+export { default as Messages } from '../components/chat/Messages'
