@@ -11,12 +11,13 @@ const SEND_LIKE = 'SEND_LIKE';
 const GET_ONE_PROSPECT = 'GET_ONE_TRY';
 
 const gotProspects = prospects => ({type: GET_PROSPECTS, prospects});
-const getOneProspect = prospect => ({type: GET_ONE_PROSPECT, prospect});
+const gotOneProspect = prospect => ({type: GET_ONE_PROSPECT, prospect});
 const gotLikes = likes => ({type: GET_LIKES, likes});
 const gotMatches = matches => ({type: GET_MATCHES, matches});
 const sentLike = () => ({type: SEND_LIKE});
 
 //const { user } = getState();
+//getState() and remove current user
 
 export const getProspects = (userId) => async (dispatch, getState, {getFirestore}) => {
   try {
@@ -91,12 +92,14 @@ export const sendLike = (currentUserId, prospectId, message) => async (dispatch,
         message: message});
       dispatch(sentLike());
       //check if prospectUser has liked current user. If so, it is a match
-      // const matchQuery = await firestore.doc(`/userLikes/${prospectId}`).where(currentUserId, '==', true);
-      // if(matchQuery.exists){
+      const matchQuery = await firestore.doc(`/userLikes/${prospectId}`).where(currentUserId, '==', true);
+      if(matchQuery.exists){
         //set up match
         //set up chat
-
-      // }
+        // const newChat = await firestore.collection('chats').add({user1: currentUserId, user2: prospectId});
+        // const newMatch1 = await firestore.collection('matches').doc(currentUserId).set({userId: prospectId, chatId: newChat.id});
+        // const newMatch2 = await firestore.collection('matches').doc(prospectId).set({userId: currentUserId, chatId: newChat.id})
+       }
   } catch (err) {
     console.error(err);
   }

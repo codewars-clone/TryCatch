@@ -3,7 +3,7 @@ import axios from 'axios';
 //initial state
 const initialState = {
   users: [],
-  user: {},
+  currentUser: {},
 };
 //action types
 const GET_ALL_USERS = 'GET_ALL_USERS';
@@ -41,7 +41,7 @@ export const getUser = (userId) => async (dispatch, getState, {getFirestore}) =>
     const firestore = getFirestore();
     let userData = {};
     const response = await firestore.doc(`/users/${userId}`).get();
-    if (!response.exists) {
+    if (response.exists) {
       userData = response.data();
       dispatch(gotUser(userData));
     }
@@ -56,7 +56,7 @@ const userReducer = (state = initialState, action) => {
     case GET_ALL_USERS:
       return { ...state, users: [...action.users] };
     case GET_USER:
-      return { ...state, user: action.user };
+      return { ...state, currentUser: action.user };
     default:
       return state;
   }
