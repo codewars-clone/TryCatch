@@ -3,7 +3,7 @@ import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 // import { getFirebase, reactReduxFirebase } from 'react-redux-firebase';
-// import { getFirestore, reduxFirestore } from 'redux-firestore';
+import { getFirestore, reduxFirestore } from 'redux-firestore';
 import users from './users';
 import signIn from './signIn';
 
