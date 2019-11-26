@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SingleCatch } from '../../index'
 class AllCatch extends Component {
 
   render() { 
@@ -7,6 +8,7 @@ class AllCatch extends Component {
         <div className="container">
           <h1 className="title is-1">Catch</h1>
           <hr/>
+          <SingleCatch />
         </div>
       </section>
 
