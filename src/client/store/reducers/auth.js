@@ -1,6 +1,3 @@
-import firebase from '../../config/firebaseConfig';
-const db = firebase.firestore();
-
 //Action types
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -84,9 +81,10 @@ const verifySuccess = () => {
 //We dispatch requestLogin() which tells the app the user is logging in. Get the firebase.auth instance and the
 //aurhentication method we want signInWithEmailAndPAssword
 export const loginUser = (email, password) => {
-  return async dispatch => {
+  return async (dispatch, getState, { getFirebase }) => {
     dispatch(requestLogin());
     try {
+      const firebase = getFirebase();
       const credentials = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);
@@ -97,8 +95,15 @@ export const loginUser = (email, password) => {
   };
 };
 
-export const signUpUser = (email, password, state) => dispatch => {
+export const signUpUser = (email, password, state) => (
+  dispatch,
+  getState,
+  getFirebase,
+  getFirestore
+) => {
   dispatch(requestSignUp());
+  const firebase = getFirebase();
+  const db = getFirestore();
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -115,9 +120,10 @@ export const signUpUser = (email, password, state) => dispatch => {
 };
 
 //It calls firebase signOut() method
-export const logoutUser = () => dispatch => {
+export const logoutUser = () => async (dispatch, getState, { getFirebase }) => {
   dispatch(requestLogout());
-  firebase
+  const firebase = getFirebase();
+  await firebase
     .auth()
     .signOut()
     .then(() => {
@@ -132,8 +138,9 @@ export const logoutUser = () => dispatch => {
 //Call the firebase onAuthStateChange(), looks for pre-existing seesion, and re-stablishes it, plus
 // it also sets up a listener while the app is running to change user session tokens when they expire
 
-export const verifyAuth = () => dispatch => {
+export const verifyAuth = () => (dispatch, getState, getFirebase) => {
   dispatch(verifyRequest());
+  const firebase = getFirebase();
   firebase.auth().onAuthStateChanged(user => {
     if (user !== null) {
       dispatch(receiveLogin(user));

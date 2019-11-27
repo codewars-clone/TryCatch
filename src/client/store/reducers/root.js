@@ -8,8 +8,8 @@ import authReducer from './auth';
 import likesReducer from './likes';
 
 const rootReducer = combineReducers({
-  firestore: firestoreReducer,
   firebase: firebaseReducer,
+  firestore: firestoreReducer,
   users: userReducer,
   auth: authReducer,
   chat: chatReducer,

@@ -18,14 +18,24 @@ export default class Preferences extends Component {
   }
 
   render() {
+    const {
+      ageInterest,
+      sexualOrientation,
+      meetUp,
+      handleChange,
+      parsePreferences,
+    } = this.props;
     return (
       <section className="section">
         <div className="container">
           <h1 className="title">Preferences</h1>
+          <progress class="progress is-small is-info" value="45" max="100">
+            45%
+          </progress>
           {/* MEET UP */}
           <div className="field">
-            <label className="label">Meet UP</label>
-            <div className="select is-multiple">
+            <label className="label">Meet Up</label>
+            <div className="select is-multiple is-medium">
               <select multiple size="2">
                 <option value="pair-program">Pair Program</option>
                 <option value="work-remote">Work Remote</option>
@@ -35,13 +45,19 @@ export default class Preferences extends Component {
           {/* AGE INTEREST */}
           <div className="field">
             <label className="label">Age Interest</label>
-            <div className="select is-multiple">
-              <select multiple size="5" onChange={this.handleChange}>
-                <option value="18-25">18-25</option>
-                <option value="26-33">26-33</option>
-                <option value="33-41">33-41</option>
-                <option value="41-65">41-65</option>
-                <option value="65+">65+</option>
+            <div className="select is-medium">
+              <select
+                name="ageInterest"
+                value={ageInterest}
+                onChange={handleChange}
+              >
+                <option default value="18:25">
+                  18-25
+                </option>
+                <option value="26:33">26-33</option>
+                <option value="33:41">33-41</option>
+                <option value="41:65">41-65</option>
+                <option value="65:115">65+</option>
               </select>
             </div>
           </div>
@@ -50,7 +66,13 @@ export default class Preferences extends Component {
             <button className="button is-danger" onClick={this.back}>
               Back
             </button>
-            <button className="button is-info" onClick={this.continue}>
+            <button
+              className="button is-info"
+              onClick={e => {
+                this.continue(e);
+                parsePreferences();
+              }}
+            >
               Save and continue
             </button>
           </div>

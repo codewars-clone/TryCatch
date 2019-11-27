@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Calendar from 'react-calendar';
 
 export default class GeneralInfo extends Component {
   constructor() {
@@ -14,18 +13,23 @@ export default class GeneralInfo extends Component {
 
   render() {
     const {
-      firstName,
+      name,
       email,
-      DOB,
+      MM,
+      DD,
+      YYYY,
       gender,
       password,
       handleChange,
+      calcAge,
     } = this.props;
-    console.log('TCL: GeneralInfo -> render -> DOB,', DOB);
     return (
       <section className="section">
         <div className="container">
           <h1 className="title">General Info</h1>
+          <progress class="progress is-small is-info" value="15" max="100">
+            15%
+          </progress>
           {/* FIRST NAME */}
           <div className="field">
             <label className="label">First Name</label>
@@ -34,9 +38,9 @@ export default class GeneralInfo extends Component {
                 type="text"
                 className="input"
                 placeholder="Enter your first name"
-                value={firstName}
-                name="firstName"
-                onChange={handleChange('firstName')}
+                value={name}
+                name="name"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -50,7 +54,7 @@ export default class GeneralInfo extends Component {
                 placeholder="Enter a valid email"
                 value={email}
                 name="email"
-                onChange={handleChange('email')}
+                onChange={handleChange}
               />
               <span className="icon is-small is-left">
                 <icon className="fas fa-envelope"></icon>
@@ -66,9 +70,10 @@ export default class GeneralInfo extends Component {
             <p className="control has-icons-left">
               <input
                 type="password"
+                name="password"
                 className="input"
                 value={password}
-                onChange={handleChange('password')}
+                onChange={handleChange}
                 placeholder="Enter a secure password"
               />
               <span className="icon is-small is-left">
@@ -76,17 +81,83 @@ export default class GeneralInfo extends Component {
               </span>
             </p>
           </div>
-          {/* GENDER*/}
-          <div className="fiel">
-            <label className="label"></label>
-          </div>
           {/* DOB */}
-          <div className="field">
-            <label className="label">Date of Birth</label>
-            <Calendar value={DOB} />
+          <label className="label">Date of Birth</label>
+          <div className="field is-horizontal">
+            <input
+              className="input"
+              maxLength="2"
+              type="tel"
+              name="MM"
+              value={MM}
+              onChange={handleChange}
+              style={{ width: '5em' }}
+              placeholder="MM"
+            ></input>
+            <input
+              className="input"
+              maxLength="2"
+              type="tel"
+              name="DD"
+              value={DD}
+              onChange={handleChange}
+              style={{ width: '5em' }}
+              placeholder="DD"
+            ></input>
+            <input
+              className="input"
+              maxLength="4"
+              type="tel"
+              name="YYYY"
+              value={YYYY}
+              onChange={handleChange}
+              style={{ width: '6em' }}
+              placeholder="YYYY"
+            ></input>
+          </div>
+          {/* GENDER & HEIGHT */}
+          <div className="field is-horizontal">
+            <div className="field-body">
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="select">
+                  <select name="gender" onChange={handleChange} value={gender}>
+                    <option default value="Male">
+                      Male
+                    </option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Height</label>
+                <input
+                  className="input"
+                  maxLength="2"
+                  type="tel"
+                  name="ft"
+                  style={{ width: '5em' }}
+                  placeholder="ft"
+                ></input>
+                <input
+                  className="input"
+                  maxLength="2"
+                  type="tel"
+                  name="in"
+                  style={{ width: '5em' }}
+                  placeholder="in"
+                ></input>
+              </div>
+            </div>
           </div>
           <div className="buttons">
-            <button className="button is-info" onClick={this.continue}>
+            <button
+              className="button is-info"
+              onClick={e => {
+                this.continue(e);
+                calcAge();
+              }}
+            >
               Save and Continue
             </button>
           </div>
