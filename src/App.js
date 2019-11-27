@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Route path="/signUp" component={SignUp} />
       <Route path="/try" component={Try} />
-      <Route path="/signin" component={SignIn} />
+      <Route exact path="/" component={SignIn} />
       <Route path="/await" component={AwaitList} />
       <Route path="/catch" component={AllCatach} />
       <Route path="/settings" component={Settings} />

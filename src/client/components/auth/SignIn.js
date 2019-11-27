@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginUser } from '../../store/reducers/auth';
 import { Redirect } from 'react-router-dom';
+import TryImage from './try.png'
+import { Link } from 'react-router-dom'
 
 class SignIn extends Component {
   constructor() {
@@ -31,14 +33,17 @@ class SignIn extends Component {
       return <Redirect to="/try" />;
     } else {
       return (
-        <section className="section">
+        <section className="section" style={{
+        backgroundImage: `url(${TryImage})`,
+        backgroundRepeat:'no-repeat'
+      }}>
           <form onSubmit={this.handleSubmit} className="container">
-            <div className="title" size="is-full">
+            {/* <div className="title" size="is-full">
               <h1>Sign In</h1>
-            </div>
+            </div> */}
             {/* EMAIL */}
             <div className="field">
-              <label className="label">Email</label>
+              <label className="label has-text-white">Email</label>
               <div className="control has-icons-left has-icons-right">
                 <input
                   type="email"
@@ -57,7 +62,7 @@ class SignIn extends Component {
             </div>
             {/* PASSWORD */}
             <div className="field">
-              <label className="label">Password</label>
+              <label className="label has-text-white">Password</label>
               <p className="control has-icons-left">
                 <input
                   type="password"
@@ -71,13 +76,18 @@ class SignIn extends Component {
                 </span>
               </p>
               {loginError && (
-                <p className="error">Incorrect email or password.</p>
+                <p className="error has-text-white">Incorrect email or password.</p>
               )}
             </div>
-            <div className="column">
+            <div className="column" id='loggin'>
               <button type="submit" className="button is-danger">
                 Login
               </button>
+            </div>
+            <div id='signup-link'>
+              <Link to='/signup'>
+                  <h5 className="title is-5 has-text-white" >Sign Up</h5>
+              </Link>
             </div>
           </form>
         </section>

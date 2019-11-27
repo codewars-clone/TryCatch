@@ -10,8 +10,9 @@ class AwaitList extends Component {
   }
 
   createChat(prospect) {
+
     let newChat = {
-      chatId: 1,
+      chatId: prospect.userId ,
       name: prospect.name,
       people: {
         prospect: {

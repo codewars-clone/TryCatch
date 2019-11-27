@@ -23,7 +23,7 @@ const initialState = {
 const chatReducer = (state = initialState, action) => {
   switch(action.type){
     case CREATE_CHAT:
-      return {...state, chats: action.chat}
+      return {...state, chats: [...state.chats, action.chat]}
     default:
       return state
   }

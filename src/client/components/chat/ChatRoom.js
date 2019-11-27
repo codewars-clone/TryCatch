@@ -32,7 +32,7 @@ class ChatRoom extends Component {
             </div>
           </div>
           <Messages />
-          <form>
+          <form id='form'>
             <div className="field has-addons">
               <div className="control">
                 <input type="text" name="message" className="input" placeholder="Send message" autoFocus />
