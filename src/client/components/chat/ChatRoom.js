@@ -20,6 +20,7 @@ class ChatRoom extends Component {
   }
   componentDidMount() {
     let chatId = this.props.match.params.id;
+    //console.log(chatId);
     const { currChat } = this.props;
     if (chatId) {
       setTimeout(() => {
