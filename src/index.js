@@ -4,14 +4,18 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { rrfProps } from './client/store/index';
 import store from './client/store';
 import * as serviceWorker from './serviceWorker';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Router>
+        <App />
+      </Router>
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('root')
 );

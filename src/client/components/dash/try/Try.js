@@ -28,9 +28,7 @@ class Try extends Component {
   }
   componentDidMount() {
     console.log('>>>>>>', this.props.auth);
-    this.props.getUserData();
     const userId = this.props.auth;
-    this.props.getCurrentUser(userId);
     this.props.getProspects(userId);
 
     // const user = response.data;
