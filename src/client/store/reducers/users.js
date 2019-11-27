@@ -46,7 +46,11 @@ export const getUser = userId => async (
     const response = await firestore.doc(`/users/${userId}`).get();
     if (response.exists) {
       userData = response.data();
-      dispatch(gotUser(userData));
+      const user = {
+        id: userId,
+        ...userData
+      }
+      dispatch(gotUser(user));
     }
   } catch (err) {
     console.error(err);
