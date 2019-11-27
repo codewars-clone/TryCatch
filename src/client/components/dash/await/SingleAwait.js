@@ -7,20 +7,24 @@ class SingleAwait extends Component {
     this.state = {  }
   }
   render() {
-    const { url } = this.props 
+    const { age, image } = this.props.prospect
+    const { createChat, prospect } = this.props
+
     return ( 
       <div className="box">
         <div className="media">
           <div className="media-content">
             <figure className="image is-96x96">
-              <img width = '2100px' height='200px' src={url} alt=""/>   
+              <img width = '2100px' height='200px' src={image} alt=""/>   
             </figure>
           </div>
           <div className="media-right">
-            <h4 className="title is-4"> 23 <i class="fas fa-birthday-cake"></i></h4> 
-            <Link to='/splash'>
-              <LikeButton />
-            </Link>
+            <h4 className="title is-4" >{age} <i class="fas fa-birthday-cake"></i></h4> 
+            <div onClick={()=> {createChat(prospect)}}>
+              {/* <Link to='/splash'> */}
+                <LikeButton />
+              {/* </Link> */}
+            </div>
           </div>
         </div>
       </div>
