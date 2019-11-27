@@ -48,7 +48,7 @@ const chatReducer = (state = initialState, action) => {
         }
       });
       console.log('newChat => ', newChat);
-      return { ...state, currChat: newChat[0] };
+      return { ...state, currChat: newChat };
     case ADD_MESSAGE:
       const updatedCurrChat = state.currChat.map(chat => {
         if (chat.chatId === action.message.chatId) {
@@ -56,17 +56,10 @@ const chatReducer = (state = initialState, action) => {
         }
         return chat;
       });
-
-      const updatedChats = state.chats.map(chat => {
-        if (chat.chatId === action.message.chatId) {
-          chat.messages = [...chat.messages, ...updatedCurrChat];
-        }
-        return chat;
-      });
+      console.log('TCL: chatReducer -> updatedCurrChat', updatedCurrChat);
 
       return {
         ...state,
-        chats: [...updatedChats],
         currChat: [...updatedCurrChat],
       };
     default:

@@ -14,9 +14,9 @@ export default class Messages extends Component {
               messages.map(message => {
                 return (
                   <li key={message.sender}>
-                    <p>{message.sender}</p>
+                    <p>{message.name}</p>
                     <p>{message.time}</p>
-                    <p>{message.text}</p>
+                    <p>{message.txt}</p>
                     <br />
                   </li>
                 );

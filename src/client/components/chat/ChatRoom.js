@@ -41,20 +41,23 @@ class ChatRoom extends Component {
     e.preventDefault();
     let txt = this.state.txt;
     let message = {
+      chatId: this.props.currChat[0].chatId,
       name: 'Daphyni',
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     };
     console.log('TCL: ChatRoom -> handleSubmit -> messages', message);
+    this.props.addMessage(message);
   }
 
   render() {
     const { currChat } = this.props;
+    console.log('TCL: ChatRoom -> render -> currChat ', currChat);
     const { loadingScreen } = this.state;
 
-    let image = currChat ? currChat.image : '';
-    let name = currChat ? currChat.name : '';
-    let messages = currChat ? currChat.messages : [];
+    let image = currChat.length ? currChat[0].image : '';
+    let name = currChat.length ? currChat[0].name : '';
+    let messages = currChat.length ? currChat[0].messages : [];
 
     console.log('TCL: ChatRoom -> render -> Message', this.state.txt);
 
@@ -133,6 +136,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getChat: chatId => dispatch(getChat(chatId)),
+    addMessage: message => dispatch(addMessage(message)),
   };
 };
 
