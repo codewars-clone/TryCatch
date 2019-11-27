@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 export default class Messages extends Component {
-  constructor() {
-    super();
-  }
   render() {
     const { messages } = this.props;
     return (
@@ -13,7 +10,7 @@ export default class Messages extends Component {
             {messages &&
               messages.map(message => {
                 return (
-                  <li key={message.sender}>
+                  <li key={message.name}>
                     <p>{message.name}</p>
                     <p>{message.time}</p>
                     <p>{message.txt}</p>

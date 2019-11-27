@@ -3,6 +3,7 @@
 const CREATE_CHAT = 'CREATE_CHAT';
 const GET_CHAT = 'GET_CHAT';
 const ADD_MESSAGE = 'ADD_MESSAGE';
+const UPDATE_CHAT = 'UPDATE_CHAT';
 
 export const createChat = ({ chatId, name, people, image, messages = [] }) => {
   console.log('TCL: createChat -> chatId,', chatId);
@@ -32,6 +33,13 @@ export const addMessage = message => {
   };
 };
 
+export const updateChat = chatId => {
+  return {
+    type: UPDATE_CHAT,
+    chatId,
+  };
+};
+
 const initialState = {
   chats: [],
   currChat: [],
@@ -56,12 +64,22 @@ const chatReducer = (state = initialState, action) => {
         }
         return chat;
       });
-      console.log('TCL: chatReducer -> updatedCurrChat', updatedCurrChat);
-
       return {
         ...state,
         currChat: [...updatedCurrChat],
       };
+    case UPDATE_CHAT:
+      const updateChats = state.chats.map(chat => {
+        if (chat.chatId === action.chatId) {
+          chat.messages = [...state.currChat[0].messages];
+        }
+        return chat;
+      });
+      return {
+        ...state,
+        chats: [...updateChats],
+      };
+
     default:
       return state;
   }

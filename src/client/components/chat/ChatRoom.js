@@ -10,7 +10,7 @@ import moment from 'moment';
 class ChatRoom extends Component {
   constructor(props) {
     super(props);
-    console.log('name => ', props);
+    //console.log('name => ', props);
     this.state = {
       loadingScreen: true,
       txt: '',
@@ -37,7 +37,7 @@ class ChatRoom extends Component {
     });
   }
   handleSubmit(e) {
-    console.log('event => ', e);
+    //console.log('event => ', e);
     e.preventDefault();
     let txt = this.state.txt;
     let message = {
@@ -46,21 +46,21 @@ class ChatRoom extends Component {
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     };
-    console.log('TCL: ChatRoom -> handleSubmit -> messages', message);
+    //console.log('TCL: ChatRoom -> handleSubmit -> messages', message);
     this.props.addMessage(message);
   }
 
   render() {
     const { currChat } = this.props;
-    console.log('TCL: ChatRoom -> render -> currChat ', currChat);
+    //console.log('TCL: ChatRoom -> render -> currChat ', currChat);
     const { loadingScreen } = this.state;
 
     let image = currChat.length ? currChat[0].image : '';
     let name = currChat.length ? currChat[0].name : '';
     let messages = currChat.length ? currChat[0].messages : [];
 
-    console.log('TCL: ChatRoom -> render -> Message', this.state.txt);
-
+    //console.log('TCL: ChatRoom -> render -> Message', this.state.txt);
+    console.log('chats ===> ', this.props.chats);
     let main = (
       <div className="container">
         <div className="box">
@@ -130,6 +130,7 @@ class ChatRoom extends Component {
 const mapStateToProps = state => {
   return {
     currChat: state.chat.currChat,
+    chats: state.chat.chats,
   };
 };
 
