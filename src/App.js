@@ -22,7 +22,7 @@ function App() {
       <Route path="/catch" component={AllCatach} />
       <Route path="/settings" component={Settings} />
       <Route path="/splash" component={Splash} />
-      <Route path="/chat" component={ChatRoom} />
+      <Route path="/chat/:id" component={ChatRoom} />
       <Dashbar />
     </div>
   );

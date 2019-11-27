@@ -17,7 +17,7 @@ const SingleCatch = props => {
           </div>
           <div className="media-right">
           <div id={chat.chatId}>
-            <Link to='/chat'>
+            <Link to={`/chat/${chat.chatId}`}>
               <ChatButton />
             </Link>
           </div>

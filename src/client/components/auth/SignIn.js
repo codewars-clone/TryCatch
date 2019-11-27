@@ -37,7 +37,7 @@ class SignIn extends Component {
         backgroundImage: `url(${TryImage})`,
         backgroundRepeat:'no-repeat'
       }}>
-          <form onSubmit={this.handleSubmit} className="container">
+          <form id="sign-in-form" onSubmit={this.handleSubmit} className="container">
             {/* <div className="title" size="is-full">
               <h1>Sign In</h1>
             </div> */}
