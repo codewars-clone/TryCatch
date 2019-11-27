@@ -27,8 +27,9 @@ class Try extends Component {
     this.renderSplash = this.renderSplash.bind(this);
   }
   componentDidMount() {
+    console.log('>>>>>>', this.props.auth);
     this.props.getUserData();
-    const userId = this.props.auth.user;
+    const userId = this.props.auth;
     this.props.getCurrentUser(userId);
     this.props.getProspects(userId);
 
@@ -147,7 +148,8 @@ class Try extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  reduxAuth: state.auth,
+  auth: state.firebase.auth,
   users: state.users.users,
   user: state.users.user,
 });

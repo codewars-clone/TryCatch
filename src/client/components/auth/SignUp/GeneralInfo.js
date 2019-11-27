@@ -27,6 +27,9 @@ export default class GeneralInfo extends Component {
       <section className="section">
         <div className="container">
           <h1 className="title">General Info</h1>
+          <progress class="progress is-small is-info" value="15" max="100">
+            15%
+          </progress>
           {/* FIRST NAME */}
           <div className="field">
             <label className="label">First Name</label>
@@ -78,21 +81,9 @@ export default class GeneralInfo extends Component {
               </span>
             </p>
           </div>
-          {/* GENDER*/}
-          <div className="field">
-            <label className="label">Gender</label>
-            <div className="select">
-              <select name="gender" onChange={handleChange} value={gender}>
-                <option default value="Male">
-                  Male
-                </option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
-          </div>
           {/* DOB */}
           <label className="label">Date of Birth</label>
-          <div className="field is-grouped">
+          <div className="field is-horizontal">
             <input
               className="input"
               maxLength="2"
@@ -123,6 +114,41 @@ export default class GeneralInfo extends Component {
               style={{ width: '6em' }}
               placeholder="YYYY"
             ></input>
+          </div>
+          {/* GENDER & HEIGHT */}
+          <div className="field is-horizontal">
+            <div className="field-body">
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="select">
+                  <select name="gender" onChange={handleChange} value={gender}>
+                    <option default value="Male">
+                      Male
+                    </option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Height</label>
+                <input
+                  className="input"
+                  maxLength="2"
+                  type="tel"
+                  name="ft"
+                  style={{ width: '5em' }}
+                  placeholder="ft"
+                ></input>
+                <input
+                  className="input"
+                  maxLength="2"
+                  type="tel"
+                  name="in"
+                  style={{ width: '5em' }}
+                  placeholder="in"
+                ></input>
+              </div>
+            </div>
           </div>
           <div className="buttons">
             <button

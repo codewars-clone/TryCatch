@@ -19,7 +19,7 @@ class SignUp extends Component {
       password: '',
       location: '',
       gender: '',
-      ageInterest: [],
+      ageInterest: '',
       meetUp: '',
       sexualOrientation: '',
     };
@@ -34,7 +34,7 @@ class SignUp extends Component {
   parsePreferences() {
     const { ageInterest } = this.state;
     if (typeof ageInterest === 'string') {
-      const arr = ageInterest.split(':');
+      const arr = ageInterest.split(':').map(ele => Number(ele));
       this.setState({
         ageInterest: arr,
       });
@@ -69,15 +69,20 @@ class SignUp extends Component {
 
   handleSignUp() {
     const { signUpThunk } = this.props;
-    const { email } = this.state;
-    const { password } = this.state;
+    let { email, password, age, DOB, gender, name, ageInterest } = this.state;
+    if (!ageInterest) {
+      ageInterest = '18:25';
+    }
+    if (!gender) {
+      gender = 'Male';
+    }
     const userData = {
-      age: this.state.age,
-      dob: this.state.DOB,
-      gender: this.state.gender,
-      name: this.state.name,
+      age: age,
+      dob: DOB,
+      gender: gender,
+      name: name,
       preferences: {
-        age: this.state.ageInterest,
+        age: ageInterest,
         gender: 'Female',
       },
     };
