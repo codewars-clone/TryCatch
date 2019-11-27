@@ -50,7 +50,25 @@ const chatReducer = (state = initialState, action) => {
       console.log('newChat => ', newChat);
       return { ...state, currChat: newChat[0] };
     case ADD_MESSAGE:
-      return;
+      const updatedCurrChat = state.currChat.map(chat => {
+        if (chat.chatId === action.message.chatId) {
+          chat.messages = [...chat.messages, action.message];
+        }
+        return chat;
+      });
+
+      const updatedChats = state.chats.map(chat => {
+        if (chat.chatId === action.message.chatId) {
+          chat.messages = [...chat.messages, ...updatedCurrChat];
+        }
+        return chat;
+      });
+
+      return {
+        ...state,
+        chats: [...updatedChats],
+        currChat: [...updatedCurrChat],
+      };
     default:
       return state;
   }

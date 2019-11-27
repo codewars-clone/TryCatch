@@ -39,12 +39,12 @@ class ChatRoom extends Component {
     console.log('event => ', e);
     e.preventDefault();
     let txt = this.state.txt;
-    let messages = {
+    let message = {
       name: 'Daphyni',
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     };
-    console.log('TCL: ChatRoom -> handleSubmit -> messages', messages);
+    console.log('TCL: ChatRoom -> handleSubmit -> messages', message);
   }
 
   render() {
