@@ -21,9 +21,9 @@ class SingleAwait extends Component {
           <div className="media-right">
             <h4 className="title is-4" >{age} <i class="fas fa-birthday-cake"></i></h4> 
             <div onClick={()=> {createChat(prospect)}}>
-              <Link to='/splash'>
+              {/* <Link to='/splash'> */}
                 <LikeButton />
-              </Link>
+              {/* </Link> */}
             </div>
           </div>
         </div>
