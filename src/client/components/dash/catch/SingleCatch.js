@@ -3,7 +3,7 @@ import { ChatButton } from '../../index'
 import { Link } from 'react-router-dom'
 const SingleCatch = props => {
   const { chat, toChatRoom } = props
-  console.log("TCL: chat", chat)
+  //console.log("TCL: chat", chat)
   return ( 
     <div className="box">
       <div className="media">
