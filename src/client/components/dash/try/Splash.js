@@ -17,7 +17,7 @@ class Splash extends Component {
               <h1 className="title is-1 ">CHAT NOW</h1> 
             </Link>
           </div>
-          <Link to="/try">
+          <Link to="/await">
             <NextButton />
           </Link>
         </div>
