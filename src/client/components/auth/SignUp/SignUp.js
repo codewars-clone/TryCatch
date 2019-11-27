@@ -9,14 +9,17 @@ class SignUp extends Component {
     super();
     this.state = {
       step: 1,
-      firstName: '',
-      DOB: '',
+      name: '',
+      MM: '',
+      DD: '',
+      YYYY: '',
       email: '',
-      age: '',
+      DOB: '',
+      age: null,
       password: '',
       location: '',
       gender: '',
-      ageInterest: '',
+      ageInterest: [],
       meetUp: '',
       sexualOrientation: '',
     };
@@ -24,6 +27,21 @@ class SignUp extends Component {
     this.prevStep = this.prevStep.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.calcAge = this.calcAge.bind(this);
+    this.parsePreferences = this.parsePreferences.bind(this);
+  }
+
+  parsePreferences() {}
+
+  calcAge() {
+    const { YYYY, MM, DD } = this.state;
+    const dateString = `${YYYY}-${MM}-${DD}`;
+    const birthday = new Date(dateString);
+    const age = ~~((Date.now() - birthday) / 31557600000);
+    this.setState({
+      age: age,
+      DOB: dateString,
+    });
   }
 
   nextStep() {
@@ -48,18 +66,21 @@ class SignUp extends Component {
     signUpThunk(email, password, this.state);
   }
 
-  handleChange = input => e => {
+  handleChange = e => {
     this.setState({
-      [input]: e.target.value,
+      [e.target.name]: e.target.value,
     });
+    console.log(this.state);
   };
 
   render() {
     const {
       step,
-      firstName,
+      name,
       email,
-      DOB,
+      MM,
+      DD,
+      YYYY,
       gender,
       age,
       password,
@@ -72,18 +93,21 @@ class SignUp extends Component {
       case 1:
         return (
           <GeneralInfo
-            firstName={firstName}
+            name={name}
             email={email}
-            DOB={DOB}
+            MM={MM}
+            DD={DD}
+            YYYY={YYYY}
             gender={gender}
             age={age}
             password={password}
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            calcAge={this.calcAge}
           />
         );
-      case 2:
+      case 2: {
         return (
           <Location
             nextStep={this.nextStep}
@@ -91,6 +115,7 @@ class SignUp extends Component {
             handleChange={this.handleChange}
           />
         );
+      }
       case 3:
         return (
           <Preferences

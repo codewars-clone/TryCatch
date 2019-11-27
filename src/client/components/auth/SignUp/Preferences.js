@@ -18,6 +18,7 @@ export default class Preferences extends Component {
   }
 
   render() {
+    const { ageInterest, sexualOrientation, meetUp, handleChange } = this.props;
     return (
       <section className="section">
         <div className="container">
@@ -35,13 +36,17 @@ export default class Preferences extends Component {
           {/* AGE INTEREST */}
           <div className="field">
             <label className="label">Age Interest</label>
-            <div className="select is-multiple">
-              <select multiple size="5" onChange={this.handleChange}>
-                <option value="18-25">18-25</option>
-                <option value="26-33">26-33</option>
-                <option value="33-41">33-41</option>
-                <option value="41-65">41-65</option>
-                <option value="65+">65+</option>
+            <div className="select">
+              <select
+                name="ageInterest"
+                value={ageInterest}
+                onChange={handleChange}
+              >
+                <option value="18:25">18-25</option>
+                <option value="26:33">26-33</option>
+                <option value="33:41">33-41</option>
+                <option value="41:65">41-65</option>
+                <option value="65:115">65+</option>
               </select>
             </div>
           </div>
