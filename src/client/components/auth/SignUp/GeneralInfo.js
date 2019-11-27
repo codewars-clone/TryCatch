@@ -83,7 +83,9 @@ export default class GeneralInfo extends Component {
             <label className="label">Gender</label>
             <div className="select">
               <select name="gender" onChange={handleChange} value={gender}>
-                <option value="Male">Male</option>
+                <option default value="Male">
+                  Male
+                </option>
                 <option value="Female">Female</option>
               </select>
             </div>

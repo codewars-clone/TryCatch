@@ -31,7 +31,16 @@ class SignUp extends Component {
     this.parsePreferences = this.parsePreferences.bind(this);
   }
 
-  parsePreferences() {}
+  parsePreferences() {
+    const { ageInterest } = this.state;
+    if (typeof ageInterest === 'string') {
+      const arr = ageInterest.split(':');
+      this.setState({
+        ageInterest: arr,
+      });
+    }
+    console.log(this.state);
+  }
 
   calcAge() {
     const { YYYY, MM, DD } = this.state;
@@ -40,7 +49,7 @@ class SignUp extends Component {
     const age = ~~((Date.now() - birthday) / 31557600000);
     this.setState({
       age: age,
-      DOB: dateString,
+      DOB: birthday,
     });
   }
 
@@ -62,8 +71,18 @@ class SignUp extends Component {
     const { signUpThunk } = this.props;
     const { email } = this.state;
     const { password } = this.state;
+    const userData = {
+      age: this.state.age,
+      dob: this.state.DOB,
+      gender: this.state.gender,
+      name: this.state.name,
+      preferences: {
+        age: this.state.ageInterest,
+        gender: 'Female',
+      },
+    };
 
-    signUpThunk(email, password, this.state);
+    signUpThunk(email, password, userData);
   }
 
   handleChange = e => {
@@ -125,6 +144,7 @@ class SignUp extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            parsePreferences={this.parsePreferences}
           />
         );
       case 4:

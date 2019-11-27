@@ -18,7 +18,13 @@ export default class Preferences extends Component {
   }
 
   render() {
-    const { ageInterest, sexualOrientation, meetUp, handleChange } = this.props;
+    const {
+      ageInterest,
+      sexualOrientation,
+      meetUp,
+      handleChange,
+      parsePreferences,
+    } = this.props;
     return (
       <section className="section">
         <div className="container">
@@ -55,7 +61,13 @@ export default class Preferences extends Component {
             <button className="button is-danger" onClick={this.back}>
               Back
             </button>
-            <button className="button is-info" onClick={this.continue}>
+            <button
+              className="button is-info"
+              onClick={e => {
+                this.continue(e);
+                parsePreferences();
+              }}
+            >
               Save and continue
             </button>
           </div>
