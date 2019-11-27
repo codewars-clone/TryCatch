@@ -1,4 +1,5 @@
 import firebase from '../../config/firebaseConfig';
+const db = firebase.firestore();
 
 //Action types
 
@@ -9,6 +10,10 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 
 export const VERIFY_REQUEST = 'VERIFY_REQUEST';
 export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
@@ -31,6 +36,19 @@ const receiveLogin = user => {
 const loginError = () => {
   return {
     type: LOGIN_FAILURE,
+  };
+};
+
+const requestSignUp = () => {
+  return {
+    type: SIGNUP_REQUEST,
+  };
+};
+
+const receiveSignUp = user => {
+  return {
+    type: SIGNUP_SUCCESS,
+    user,
   };
 };
 
@@ -65,17 +83,34 @@ const verifySuccess = () => {
 
 //We dispatch requestLogin() which tells the app the user is logging in. Get the firebase.auth instance and the
 //aurhentication method we want signInWithEmailAndPAssword
-export const loginUser = (email, password) => dispatch => {
-  dispatch(requestLogin());
+export const loginUser = (email, password) => {
+  return async dispatch => {
+    dispatch(requestLogin());
+    try {
+      const credentials = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      dispatch(receiveLogin(credentials.user.uid));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const signUpUser = (email, password, state) => dispatch => {
+  dispatch(requestSignUp());
   firebase
     .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      dispatch(receiveLogin(user));
+    .createUserWithEmailAndPassword(email, password)
+    .then(cred => {
+      dispatch(receiveSignUp(cred));
+      return db
+        .collection('users')
+        .doc(cred.user.uid)
+        .set(state);
     })
     .catch(error => {
       console.error(error);
-      dispatch(loginError());
     });
 };
 
@@ -116,7 +151,7 @@ let initialState = {
   loginError: false,
   logoutError: false,
   isAuthenticated: false,
-  user: {},
+  user: '',
 };
 
 export default (state = initialState, action) => {
@@ -141,6 +176,16 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         loginError: true,
       };
+    case SIGNUP_REQUEST:
+      return {
+        ...state,
+      };
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.user,
+      };
     case LOGOUT_REQUEST:
       return {
         ...state,
@@ -152,7 +197,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoggingOut: false,
         isAuthenticated: false,
-        user: {},
+        user: '',
       };
     case LOGOUT_FAILURE:
       return {

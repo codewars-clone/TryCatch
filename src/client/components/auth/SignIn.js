@@ -23,7 +23,6 @@ class SignIn extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
     const { signInThunk } = this.props;
     signInThunk(this.state.email, this.state.password);
   };

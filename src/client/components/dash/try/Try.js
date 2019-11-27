@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { LikeButton, NextButton, Splash} from '../../index'
-import { Redirect } from 'react-router-dom'
+import { LikeButton, NextButton, Splash } from '../../index';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUsers } from '../../../store/reducers/users';
-import axios from 'axios';
+import { getUsers, getUser } from '../../../store/reducers/users';
+import { getProspects } from '../../../store/reducers/likes';
 //display photo, name, age... description later
 //how to randomize which user is displayed, based on preferences
 //needs two buttons, like button and x button
@@ -21,14 +21,17 @@ class Try extends Component {
     super();
     this.state = {
       user: user,
-      redirect: false
+      redirect: false,
       //currentIdx: 0
     };
-    this.renderSplash = this.renderSplash.bind(this)
-  };
+    this.renderSplash = this.renderSplash.bind(this);
+  }
   componentDidMount() {
     this.props.getUserData();
-    console.log('our users:', this.props);
+    const userId = this.props.auth.user;
+    this.props.getCurrentUser(userId);
+    this.props.getProspects(userId);
+
     // const user = response.data;
     // this.setState({user: user});
     // console.log(this.state.user)
@@ -43,79 +46,99 @@ class Try extends Component {
 
   renderSplash() {
     this.setState({
-      redirect: true
-    })
+      redirect: true,
+    });
   }
 
   render() {
-
-    const { redirect} = this.state
-    if(redirect){
-      console.log(redirect)
-      return <Redirect to='/splash' />
-    }
-    else{
+    const { redirect } = this.state;
+    if (redirect) {
+      console.log(redirect);
+      return <Redirect to="/splash" />;
+    } else {
       return (
         <section className="section">
-          <div className='container'>
+          <div className="container">
             <h1 className="title is-1">Try</h1>
             <hr />
-            <h2 className="title is-3"><b>{this.state.user.name}</b></h2>
-            <figure className='image is-square'>
-              <img width = '2100px' height='200px' src={this.state.user.imageUrl} alt=""/>   
-              <LikeButton renderSplash={this.renderSplash}/>
+            <h2 className="title is-3">
+              <b>{this.state.user.name}</b>
+            </h2>
+            <figure className="image is-square">
+              <img
+                width="2100px"
+                height="200px"
+                src={this.state.user.imageUrl}
+                alt=""
+              />
+              <LikeButton renderSplash={this.renderSplash} />
             </figure>
-            <br/>
+            <br />
             <div className="box">
               <div className="media">
                 <div className="media-content">
-                  <i class="fas fa-birthday-cake"></i>
+                  <i className="fas fa-birthday-cake"></i>
                   <h6 className="title is-6"> {this.state.user.age}</h6>
                 </div>
                 <div className="media-content">
-                  <i class="fab fa-js-square"></i>
+                  <i className="fab fa-js-square"></i>
                   <h6 className="title is-6">Javascript</h6>
                 </div>
                 <div className="media-content">
-                  <i class="fas fa-location-arrow"></i>
+                  <i className="fas fa-location-arrow"></i>
                   <h6 className="title is-6">New York, NY</h6>
                 </div>
                 <div className="media-content">
-                  <i class="fas fa-ruler-vertical"></i>
+                  <i className="fas fa-ruler-vertical"></i>
                   <h6 className="title is-6">5'8</h6>
                 </div>
               </div>
             </div>
-            <br/>
+            <br />
             <div className="content">
               <h3 className="title is-3">Coding Challenge</h3>
               <p>{this.state.user.codingChallenge}</p>
-              <textarea placeHolder='write code here and hit like button' cols="30" rows="10" className="textarea"></textarea>
+              <textarea
+                placeholder="write code here and hit like button"
+                cols="30"
+                rows="10"
+                className="textarea"
+              ></textarea>
               <LikeButton />
             </div>
             {/* PIC 2 */}
-            <figure className='image is-square'>
-              <img width = '2100px' height='200px' src='https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736' alt=""/>   
+            <figure className="image is-square">
+              <img
+                width="2100px"
+                height="200px"
+                src="https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736"
+                alt=""
+              />
               <LikeButton />
             </figure>
-            <br/>
+            <br />
             <div className="content">
               <h3 className="title is-3">Puns</h3>
               <h4 className="subtitle">lorem lor e leolda </h4>
               <LikeButton />
             </div>
             {/* PIC 3 */}
-            <figure className='image is-square'>
-              <img width = '2100px' height='200px' src='https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg' alt=""/>   
+            <figure className="image is-square">
+              <img
+                width="2100px"
+                height="200px"
+                src="https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg"
+                alt=""
+              />
               <LikeButton />
             </figure>
-            <br/>
+            <br />
             <div className="content">
               <h3 className="title is-3">Puns</h3>
               <h4 className="subtitle">lorem lor e leolda </h4>
               <LikeButton />
             </div>
-            <NextButton/>
+            <NextButton />
           </div>
         </section>
       );
@@ -124,12 +147,15 @@ class Try extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   users: state.users.users,
   user: state.users.user,
 });
 
 const mapDispatchToProps = dispatch => ({
   getUserData: () => dispatch(getUsers()),
+  getCurrentUser: userId => dispatch(getUser(userId)),
+  getProspects: userId => dispatch(getProspects(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Try);

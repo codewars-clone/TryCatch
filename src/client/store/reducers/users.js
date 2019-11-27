@@ -8,11 +8,11 @@ const initialState = {
 //action types
 const GET_ALL_USERS = 'GET_ALL_USERS';
 const GET_USER = 'GET_USER';
-const GET_TRIES = 'GET_TRIES';
 
 //action creators
 const gotUsers = users => ({ type: GET_ALL_USERS, users });
 const gotUser = user => ({ type: GET_USER, user });
+
 //thunk creators
 
 export const getUsers = () => async (dispatch, getState, { getFirestore }) => {
@@ -35,14 +35,24 @@ export const getUsers = () => async (dispatch, getState, { getFirestore }) => {
   }
 };
 
-// export const getUser = (userId) => async dispatch => {
-//   try{
-//     const {data} = await axios.get(`/server/users/${userId}`);
-//     dispatch(gotUser(data));
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
+export const getUser = userId => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  try {
+    const firestore = getFirestore();
+    let userData = {};
+    const response = await firestore.doc(`/users/${userId}`).get();
+    if (response.exists) {
+      userData = response.data();
+      dispatch(gotUser(userData));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 //reducer
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
