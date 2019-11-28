@@ -75,7 +75,7 @@ export const getLikes = userId => async (
     const data = response.data();
     data.likes.forEach(doc => {
       likes.push({
-        userId: doc.id,
+        userId: doc.userId,
         name: doc.data().name,
         age: doc.data().age,
         gender: doc.data().gender,
@@ -116,23 +116,16 @@ export const sendLike = (prospectId, currentUserId, message) => async (
       .set({ [prospectId]: true });
       console.log("prospectId:", prospectId);
     const prospectUser = await firestore.collection('likesUser').doc(prospectId);
-    console.log("prospectUser:" , prospectUser)
-    if(!(prospectUser.likes)){
-      (console.log("setting likes"))
-      await prospectUser.set(userData);
-    }if(prospectUser.likes){
+    //console.log("prospectUser:" , response)
+    const snapshot = await firestore.collection('likesUser').doc(prospectId).get();
+    const hasLikes = snapshot.data();
+    await prospectUser.set({likes: [user.id]}, {merge: true});
+
     await prospectUser.update({
-      likes: firestore.FieldValue.arrayUnion({
-        "userId": user.id,
-        "name": user.name,
-        "age": user.age,
-        "gender": user.gender,
-        "imageUrl": user.imageUrl,
-        "message": message,
-      })
-    })
-  };
+      likes: firestore.FieldValue.arrayUnion(user.id)
+    });
     dispatch(sentLike(prospectId));
+
     //check if prospectUser has liked current user. If so, it is a match
     // const matchQuery = await firestore
     //   .doc(`/userLikes/${prospectId}`)
@@ -148,39 +141,6 @@ export const sendLike = (prospectId, currentUserId, message) => async (
     console.error(err);
   }
 };
-
-// const getLikes = async (req, res, next) => {
-//   try {
-//     const likes = [];
-//     const response = await db
-//       .collection('likesUser')
-//       .doc(req.params.userId)
-//       .get();
-//     const data = response.data();
-//     data.likes.forEach(doc => {
-//       likes.push({
-//         userId: doc,
-//       });
-//     });
-//     res.json(likes);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-// const sendLike = async (req, res, next) => {
-//   try {
-//     const currentUser = await db.doc(`/users/${req.params.userId}`).get();
-//     const likedUser = await db.doc(`/users/${req.body.user.id}`).get();
-//     db.collection('userLikes')
-//       .doc(currentUser.id)
-//       .set({ [likedUser.id]: true });
-//     db.collection('likedUser')
-//       .doc(likedUser.id)
-//       .set({ [currentUser.id]: true });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 //reducer
 const likesReducer = (state = initialState, action) => {
