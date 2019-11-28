@@ -17,6 +17,9 @@ export default class Terms extends Component {
       <section className="section">
         <div className="container">
           <h1 className="title">Terms & Conditions</h1>
+          <progress class="progress is-small is-info" value="90" max="100">
+            90%
+          </progress>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum,
             possimus vero. Tenetur autem laboriosam fuga? Quam, ea itaque. Quas

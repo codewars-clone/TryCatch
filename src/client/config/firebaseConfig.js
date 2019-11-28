@@ -1,8 +1,4 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
-const firebaseConfig = {
+const fbConfig = {
   apiKey: 'AIzaSyArqZSptl2CfFA9IxzDqQ8bXC356OZSq0E',
   authDomain: 'try-catch-d20ae.firebaseapp.com',
   databaseURL: 'https://try-catch-d20ae.firebaseio.com',
@@ -13,6 +9,4 @@ const firebaseConfig = {
   measurementId: 'G-RTSK0YTJ4T',
 };
 
-firebase.initializeApp(firebaseConfig);
-
-export default firebase;
+export default fbConfig;

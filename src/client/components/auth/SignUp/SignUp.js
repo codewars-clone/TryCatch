@@ -9,10 +9,13 @@ class SignUp extends Component {
     super();
     this.state = {
       step: 1,
-      firstName: '',
-      DOB: '',
+      name: '',
+      MM: '',
+      DD: '',
+      YYYY: '',
       email: '',
-      age: '',
+      DOB: '',
+      age: null,
       password: '',
       location: '',
       gender: '',
@@ -24,6 +27,30 @@ class SignUp extends Component {
     this.prevStep = this.prevStep.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.calcAge = this.calcAge.bind(this);
+    this.parsePreferences = this.parsePreferences.bind(this);
+  }
+
+  parsePreferences() {
+    const { ageInterest } = this.state;
+    if (typeof ageInterest === 'string') {
+      const arr = ageInterest.split(':').map(ele => Number(ele));
+      this.setState({
+        ageInterest: arr,
+      });
+    }
+    console.log(this.state);
+  }
+
+  calcAge() {
+    const { YYYY, MM, DD } = this.state;
+    const dateString = `${YYYY}-${MM}-${DD}`;
+    const birthday = new Date(dateString);
+    const age = ~~((Date.now() - birthday) / 31557600000);
+    this.setState({
+      age: age,
+      DOB: birthday,
+    });
   }
 
   nextStep() {
@@ -42,24 +69,42 @@ class SignUp extends Component {
 
   handleSignUp() {
     const { signUpThunk } = this.props;
-    const { email } = this.state;
-    const { password } = this.state;
+    let { email, password, age, DOB, gender, name, ageInterest } = this.state;
+    if (!ageInterest) {
+      ageInterest = '18:25';
+    }
+    if (!gender) {
+      gender = 'Male';
+    }
+    const userData = {
+      age: age,
+      dob: DOB,
+      gender: gender,
+      name: name,
+      preferences: {
+        age: ageInterest,
+        gender: 'Female',
+      },
+    };
 
-    signUpThunk(email, password, this.state);
+    signUpThunk(email, password, userData);
   }
 
-  handleChange = input => e => {
+  handleChange = e => {
     this.setState({
-      [input]: e.target.value,
+      [e.target.name]: e.target.value,
     });
+    console.log(this.state);
   };
 
   render() {
     const {
       step,
-      firstName,
+      name,
       email,
-      DOB,
+      MM,
+      DD,
+      YYYY,
       gender,
       age,
       password,
@@ -72,18 +117,21 @@ class SignUp extends Component {
       case 1:
         return (
           <GeneralInfo
-            firstName={firstName}
+            name={name}
             email={email}
-            DOB={DOB}
+            MM={MM}
+            DD={DD}
+            YYYY={YYYY}
             gender={gender}
             age={age}
             password={password}
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            calcAge={this.calcAge}
           />
         );
-      case 2:
+      case 2: {
         return (
           <Location
             nextStep={this.nextStep}
@@ -91,6 +139,7 @@ class SignUp extends Component {
             handleChange={this.handleChange}
           />
         );
+      }
       case 3:
         return (
           <Preferences
@@ -100,6 +149,7 @@ class SignUp extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            parsePreferences={this.parsePreferences}
           />
         );
       case 4:

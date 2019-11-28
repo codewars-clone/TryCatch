@@ -27,10 +27,16 @@ class Try extends Component {
     this.renderSplash = this.renderSplash.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+<<<<<<< HEAD
   async componentDidMount() {
     this.props.getUserData();
     const userId = this.props.auth.user;
     this.props.getCurrentUser(userId);
+=======
+  componentDidMount() {
+    console.log('>>>>>>', this.props.auth);
+    const userId = this.props.auth;
+>>>>>>> 72ad9c7f0fd1e09ed5ba1a759587e27acadc89f9
     this.props.getProspects(userId);
     // const user = response.data;
     // this.setState({user: user});
@@ -163,7 +169,8 @@ class Try extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  reduxAuth: state.auth,
+  auth: state.firebase.auth,
   users: state.users.users,
   user: state.users.user,
   prospects: state.likes.prospects
