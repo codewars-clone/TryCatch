@@ -18,9 +18,7 @@ const gotMatches = matches => ({ type: GET_MATCHES, matches });
 const sentLike = (prospectId) => ({ type: SEND_LIKE, prospectId });
 export const unLike = (prospectId) => ({type: UNLIKE, prospectId});
 
-//const { user } = getState();
-//getState() and remove current user
-
+//cross reference likesUser to remove whomever they've already liked from prospects list
 export const getProspects = userId => async (
   dispatch,
   getState,
@@ -73,7 +71,7 @@ export const getLikes = userId => async (
       .doc(userId)
       .collection('likes').get();
     const data = response.data();
-    data.likes.forEach(doc => {
+    data.forEach(doc => {
       likes.push({
         userId: doc.userId,
         name: doc.data().name,
