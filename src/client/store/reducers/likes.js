@@ -100,13 +100,14 @@ export const sendLike = (prospectId, currentUserId, message) => async (
     //const prospectUser = await firestore.doc(`/users/${prospectId}`);
     const user = users.user;
     const state = getState();
+    console.log("current user data values", "id ", user.id, "name ", user.firstName, "age ", user.age, "gender ",user.gender, "image ", user.imageUrl)
     const userData = {likes: [{
-      userId: user.id,
-      name: user.name,
-      age: user.age,
-      gender: user.gender,
-      imageUrl: user.imageUrl,
-      message: message,
+      "userId": user.id,
+      "name": user.firstName,
+      "age": user.age,
+      "gender": user.gender,
+      "imageUrl": user.imageUrl || null,
+      "message": message || null,
     }]
   }
     console.log('state in sendLike thunk: ', state);
@@ -117,12 +118,12 @@ export const sendLike = (prospectId, currentUserId, message) => async (
       console.log("prospectId:", prospectId);
     const prospectUser = await firestore.collection('likesUser').doc(prospectId);
     //console.log("prospectUser:" , response)
-    const snapshot = await firestore.collection('likesUser').doc(prospectId).get();
-    const hasLikes = snapshot.data();
-    await prospectUser.set({likes: [user.id]}, {merge: true});
+    // const snapshot = await firestore.collection('likesUser').doc(prospectId).get();
+    // const hasLikes = snapshot.data();
+    await prospectUser.set({likes: [userData]}, {merge: true});
 
     await prospectUser.update({
-      likes: firestore.FieldValue.arrayUnion(user.id)
+      likes: firestore.FieldValue.arrayUnion(userData)
     });
     dispatch(sentLike(prospectId));
 
