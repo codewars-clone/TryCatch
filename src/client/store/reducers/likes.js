@@ -18,7 +18,8 @@ const gotMatches = matches => ({ type: GET_MATCHES, matches });
 const sentLike = (prospectId) => ({ type: SEND_LIKE, prospectId });
 export const unLike = (prospectId) => ({type: UNLIKE, prospectId});
 
-//cross reference likesUser to remove whomever they've already liked from prospects list
+//cross reference likesUser to remove whomever they've already liked from prospects list, and should also
+//keep track of who they've disliked and cross ref that as well
 export const getProspects = userId => async (
   dispatch,
   getState,
@@ -86,7 +87,7 @@ export const getLikes = userId => async (
     console.error(err);
   }
 };
-export const sendLike = (prospectId, currentUserId, message) => async (
+export const sendLike = (prospectId, message) => async (
   dispatch,
   getState,
   { getFirestore }
@@ -97,17 +98,15 @@ export const sendLike = (prospectId, currentUserId, message) => async (
     //const user = await firestore.collection('users').doc(currentUserId).get();
     //const prospectUser = await firestore.doc(`/users/${prospectId}`);
     const user = users.user;
-    const state = getState();
-
+    console.log('message in sendLike', message)
     const userData = {
-      "userId": user.id,
-      "name": user.firstName,
-      "age": user.age,
-      "gender": user.gender,
+      "userId": user.id || null,
+      "name": user.firstName || null,
+      "age": user.age || null,
+      "gender": user.gender || null,
       "imageUrl": user.imageUrl || null,
       "message": message || null,
     }
-    console.log('state in sendLike thunk: ', state);
     await firestore
       .collection('userLikes')
       .doc(user.id)

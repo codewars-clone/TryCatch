@@ -27,16 +27,10 @@ class Try extends Component {
     this.renderSplash = this.renderSplash.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-<<<<<<< HEAD
   async componentDidMount() {
     this.props.getUserData();
     const userId = this.props.auth.user;
     this.props.getCurrentUser(userId);
-=======
-  componentDidMount() {
-    console.log('>>>>>>', this.props.auth);
-    const userId = this.props.auth;
->>>>>>> 72ad9c7f0fd1e09ed5ba1a759587e27acadc89f9
     this.props.getProspects(userId);
     // const user = response.data;
     // this.setState({user: user});
@@ -44,8 +38,9 @@ class Try extends Component {
   }
   handleChange(event) {
     this.setState({
-      [event.target.id]: event.target.value,
+      [event.target.name]: event.target.value,
     });
+    console.log(this.state.message)
   }
   handleLike() {
     //will make a dispatch to store to handle like
@@ -85,7 +80,7 @@ class Try extends Component {
                 src={prospect.imageUrl}
                 alt=""
               />
-              <div onClick={() => this.props.sendLike(prospect.userId, this.props.user.id)}>
+              <div onClick={() => this.props.sendLike(prospect.userId)}>
                 <LikeButton renderSplash={this.renderSplash} />
               </div>
             </figure>
@@ -117,12 +112,13 @@ class Try extends Component {
               <textarea
                 placeholder="write code here and hit like button"
                 type= "message"
+                name= "message"
                 cols="30"
                 rows="10"
                 className="textarea"
                 onChange={this.handleChange}
               ></textarea>
-              <div onClick={() => this.props.sendLike(prospect.userId, this.props.user.id, this.state.message)}>
+              <div onClick={() => this.props.sendLike(prospect.userId, this.state.message)}>
               <LikeButton />
               </div>
             </div>
@@ -169,8 +165,7 @@ class Try extends Component {
 }
 
 const mapStateToProps = state => ({
-  reduxAuth: state.auth,
-  auth: state.firebase.auth,
+  auth: state.auth,
   users: state.users.users,
   user: state.users.user,
   prospects: state.likes.prospects
