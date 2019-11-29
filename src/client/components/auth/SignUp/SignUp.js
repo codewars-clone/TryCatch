@@ -1,5 +1,6 @@
 /* eslint-disable no-duplicate-case */
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GeneralInfo, Location, Preferences, Assets, Terms } from '../../index';
 import { signUpUser } from '../../../store/reducers/auth';
@@ -20,6 +21,7 @@ class SignUp extends Component {
       location: '',
       gender: '',
       ageInterest: '',
+      prefGender: '',
       meetUp: '',
       sexualOrientation: '',
     };
@@ -33,10 +35,14 @@ class SignUp extends Component {
 
   parsePreferences() {
     const { ageInterest } = this.state;
-    if (typeof ageInterest === 'string') {
+    if (ageInterest !== '') {
       const arr = ageInterest.split(':').map(ele => Number(ele));
       this.setState({
         ageInterest: arr,
+      });
+    } else {
+      this.setState({
+        ageInterest: [18, 25],
       });
     }
     console.log(this.state);
@@ -69,7 +75,16 @@ class SignUp extends Component {
 
   handleSignUp() {
     const { signUpThunk } = this.props;
-    let { email, password, age, DOB, gender, name, ageInterest } = this.state;
+    let {
+      email,
+      password,
+      age,
+      DOB,
+      gender,
+      name,
+      ageInterest,
+      prefGender,
+    } = this.state;
     if (!ageInterest) {
       ageInterest = '18:25';
     }
@@ -83,10 +98,9 @@ class SignUp extends Component {
       name: name,
       preferences: {
         age: ageInterest,
-        gender: 'Female',
+        gender: prefGender,
       },
     };
-
     signUpThunk(email, password, userData);
   }
 
@@ -94,7 +108,6 @@ class SignUp extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(this.state);
   };
 
   render() {
@@ -111,6 +124,7 @@ class SignUp extends Component {
       ageInterest,
       meetUp,
       sexualOrientation,
+      prefGender,
     } = this.state;
     // eslint-disable-next-line default-case
     switch (step) {
@@ -145,6 +159,7 @@ class SignUp extends Component {
           <Preferences
             ageInterest={ageInterest}
             sexualOrientation={sexualOrientation}
+            prefGender={prefGender}
             meetUp={meetUp}
             nextStep={this.nextStep}
             prevStep={this.prevStep}
