@@ -28,7 +28,6 @@ class Try extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   async componentDidMount() {
-    this.props.getUserData();
     const userId = this.props.auth.user;
     this.props.getCurrentUser(userId);
     this.props.getProspects(userId);
@@ -53,9 +52,6 @@ class Try extends Component {
   }
 
   render() {
-    console.log(this.props.prospects)
-    console.log(this.props.prospects[0])
-    console.log("current user at beginning of render: ", this.props.user.id)
     const { redirect } = this.state;
     if (redirect) {
       console.log(redirect);

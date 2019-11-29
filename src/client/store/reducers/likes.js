@@ -6,15 +6,15 @@ const initialState = {
 };
 const GET_PROSPECTS = 'GET_PROSPECTS';
 const GET_LIKES = 'GET_LIKES';
-const GET_MATCHES = 'GET_MATCHES';
+//const GET_MATCHES = 'GET_MATCHES';
 const SEND_LIKE = 'SEND_LIKE';
-const GET_ONE_PROSPECT = 'GET_ONE_TRY';
+const GET_ONE_PROSPECT = 'GET_ONE_PROSPECT';
 const UNLIKE = 'UNLIKE';
 
 const gotProspects = prospects => ({ type: GET_PROSPECTS, prospects });
-const gotOneProspect = prospect => ({ type: GET_ONE_PROSPECT, prospect });
+//const gotOneProspect = prospect => ({ type: GET_ONE_PROSPECT, prospect });
 const gotLikes = likes => ({ type: GET_LIKES, likes });
-const gotMatches = matches => ({ type: GET_MATCHES, matches });
+//const gotMatches = matches => ({ type: GET_MATCHES, matches });
 const sentLike = (prospectId) => ({ type: SEND_LIKE, prospectId });
 export const unLike = (prospectId) => ({type: UNLIKE, prospectId});
 
@@ -53,11 +53,11 @@ export const getProspects = userId => async (
     console.error(err);
   }
 };
-export const getOneProspect = () => async (
-  dispatch,
-  getState,
-  { getFirestore }
-) => {};
+// export const getOneProspect = () => async (
+//   dispatch,
+//   getState,
+//   { getFirestore }
+// ) => {};
 
 export const getLikes = userId => async (
   dispatch,
