@@ -74,7 +74,7 @@ export const getLikes = userId => async (
       .get();
     data.forEach(doc => {
       likes.push({
-        userId: doc.userId,
+        userId: doc.id,
         name: doc.data().name,
         age: doc.data().age,
         gender: doc.data().gender,

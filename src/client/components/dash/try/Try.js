@@ -31,18 +31,17 @@ class Try extends Component {
     const userId = this.props.auth.uid;
     this.props.getCurrentUser(userId);
     this.props.getProspects(userId);
-    // const user = response.data;
-    // this.setState({user: user});
-    // console.log(this.state.user)
   }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
     console.log(this.state.message);
   }
-  handleLike() {
-    //will make a dispatch to store to handle like
+  async handleCodingChallenge(prospectId, message) {
+    await this.props.sendLike(prospectId, message);
+    this.setState({message: ''});
   }
 
   renderSplash() {
@@ -115,14 +114,14 @@ class Try extends Component {
               ></textarea>
               <div
                 onClick={() =>
-                  this.props.sendLike(prospect.userId, this.state.message)
+                  this.handleCodingChallenge(prospect.userId, this.state.message)
                 }
               >
                 <LikeButton />
               </div>
             </div>
             {/* PIC 2 */}
-            <figure className="image is-square">
+            {/* <figure className="image is-square">
               <img
                 width="2100px"
                 height="200px"
@@ -137,7 +136,7 @@ class Try extends Component {
               <h4 className="subtitle">lorem lor e leolda </h4>
               <LikeButton />
             </div>
-            {/* PIC 3 */}
+            {/* PIC 3
             <figure className="image is-square">
               <img
                 width="2100px"
@@ -152,7 +151,7 @@ class Try extends Component {
               <h3 className="title is-3">Puns</h3>
               <h4 className="subtitle">lorem lor e leolda </h4>
               <LikeButton />
-            </div>
+            </div> */}
             <div
               onClick={() => {
                 this.props.unLike(prospect.userId);
@@ -179,7 +178,7 @@ const mapDispatchToProps = dispatch => ({
   getCurrentUser: userId => dispatch(getUser(userId)),
   getProspects: userId => dispatch(getProspects(userId)),
   unLike: prospectId => dispatch(unLike(prospectId)),
-  sendLike: prospectId => dispatch(sendLike(prospectId)),
+  sendLike: (prospectId, message) => dispatch(sendLike(prospectId, message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Try);
