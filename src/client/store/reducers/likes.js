@@ -101,7 +101,7 @@ export const sendLike = (prospectId, message) => async (
     console.log('message in sendLike', message)
     const userData = {
       "userId": user.id || null,
-      "name": user.firstName || null,
+      "name": user.name || null,
       "age": user.age || null,
       "gender": user.gender || null,
       "imageUrl": user.imageUrl || null,
