@@ -15,8 +15,8 @@ const gotProspects = prospects => ({ type: GET_PROSPECTS, prospects });
 //const gotOneProspect = prospect => ({ type: GET_ONE_PROSPECT, prospect });
 const gotLikes = likes => ({ type: GET_LIKES, likes });
 //const gotMatches = matches => ({ type: GET_MATCHES, matches });
-const sentLike = (prospectId) => ({ type: SEND_LIKE, prospectId });
-export const unLike = (prospectId) => ({type: UNLIKE, prospectId});
+const sentLike = prospectId => ({ type: SEND_LIKE, prospectId });
+export const unLike = prospectId => ({ type: UNLIKE, prospectId });
 
 //cross reference likesUser to remove whomever they've already liked from prospects list, and should also
 //keep track of who they've disliked and cross ref that as well
@@ -70,7 +70,8 @@ export const getLikes = userId => async (
     const data = await firestore
       .collection('likesUser')
       .doc(userId)
-      .collection('likes').get();
+      .collection('likes')
+      .get();
     data.forEach(doc => {
       likes.push({
         userId: doc.userId,
@@ -78,7 +79,7 @@ export const getLikes = userId => async (
         age: doc.data().age,
         gender: doc.data().gender,
         imageUrl: doc.data().imageUrl,
-        message: doc.data().message || null
+        message: doc.data().message || null,
       });
     });
     dispatch(gotLikes(likes));
@@ -95,21 +96,24 @@ export const sendLike = (prospectId, message) => async (
     const firestore = getFirestore();
     const { users } = getState();
     const user = users.user;
-    console.log('message in sendLike', message)
+    console.log('message in sendLike', message);
     const userData = {
-      "userId": user.id || null,
-      "name": user.name || null,
-      "age": user.age || null,
-      "gender": user.gender || null,
-      "imageUrl": user.imageUrl || null,
-      "message": message || null,
-    }
+      userId: user.id || null,
+      name: user.name || null,
+      age: user.age || null,
+      gender: user.gender || null,
+      imageUrl: user.imageUrl || null,
+      message: message || null,
+    };
     await firestore
       .collection('userLikes')
       .doc(user.id)
       .set({ [prospectId]: true });
-      console.log("prospectId:", prospectId);
-    const prospectUser = await firestore.collection('likesUser').doc(prospectId).collection('likes');
+    console.log('prospectId:', prospectId);
+    const prospectUser = await firestore
+      .collection('likesUser')
+      .doc(prospectId)
+      .collection('likes');
     await prospectUser.doc(user.id).set(userData);
     dispatch(sentLike(prospectId));
 
@@ -118,11 +122,11 @@ export const sendLike = (prospectId, message) => async (
     //   .doc(`/userLikes/${prospectId}`)
     //   .where(currentUserId, '==', true);
     // if (matchQuery.exists) {
-      //set up match
-      //set up chat
-      // const newChat = await firestore.collection('chats').add({user1: currentUserId, user2: prospectId});
-      // const newMatch1 = await firestore.collection('matches').doc(currentUserId).set({userId: prospectId, chatId: newChat.id});
-      // const newMatch2 = await firestore.collection('matches').doc(prospectId).set({userId: currentUserId, chatId: newChat.id})
+    //set up match
+    //set up chat
+    // const newChat = await firestore.collection('chats').add({user1: currentUserId, user2: prospectId});
+    // const newMatch1 = await firestore.collection('matches').doc(currentUserId).set({userId: prospectId, chatId: newChat.id});
+    // const newMatch2 = await firestore.collection('matches').doc(prospectId).set({userId: currentUserId, chatId: newChat.id})
     //}
   } catch (err) {
     console.error(err);
@@ -139,11 +143,15 @@ const likesReducer = (state = initialState, action) => {
     case GET_LIKES:
       return { ...state, likes: [...action.likes] };
     case SEND_LIKE:
-      const removed = state.prospects.filter(prospect => prospect.userId !== action.prospectId);
+      const removed = state.prospects.filter(
+        prospect => prospect.userId !== action.prospectId
+      );
       return { ...state, prospects: [...removed] };
     case UNLIKE:
-      const removeUser = state.prospects.filter(prospect => prospect.userId !== action.prospectId);
-      return {...state, prospects: [...removeUser] };
+      const removeUser = state.prospects.filter(
+        prospect => prospect.userId !== action.prospectId
+      );
+      return { ...state, prospects: [...removeUser] };
     default:
       return state;
   }

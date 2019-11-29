@@ -22,13 +22,13 @@ class Try extends Component {
     this.state = {
       //user: user,
       redirect: false,
-      message: ''
+      message: '',
     };
     this.renderSplash = this.renderSplash.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   async componentDidMount() {
-    const userId = this.props.auth.user;
+    const userId = this.props.auth.uid;
     this.props.getCurrentUser(userId);
     this.props.getProspects(userId);
     // const user = response.data;
@@ -39,7 +39,7 @@ class Try extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
-    console.log(this.state.message)
+    console.log(this.state.message);
   }
   handleLike() {
     //will make a dispatch to store to handle like
@@ -56,11 +56,10 @@ class Try extends Component {
     if (redirect) {
       console.log(redirect);
       return <Redirect to="/splash" />;
-    }else if(!this.props.prospects[0]){
-      return <div/>;
-    }
-     else {
-       const prospect = this.props.prospects[0];
+    } else if (!this.props.prospects[0]) {
+      return <div />;
+    } else {
+      const prospect = this.props.prospects[0];
       return (
         <section className="section">
           <div className="container">
@@ -107,15 +106,19 @@ class Try extends Component {
               <p>{prospect.codingChallenge}</p>
               <textarea
                 placeholder="write code here and hit like button"
-                type= "message"
-                name= "message"
+                type="message"
+                name="message"
                 cols="30"
                 rows="10"
                 className="textarea"
                 onChange={this.handleChange}
               ></textarea>
-              <div onClick={() => this.props.sendLike(prospect.userId, this.state.message)}>
-              <LikeButton />
+              <div
+                onClick={() =>
+                  this.props.sendLike(prospect.userId, this.state.message)
+                }
+              >
+                <LikeButton />
               </div>
             </div>
             {/* PIC 2 */}
@@ -150,8 +153,12 @@ class Try extends Component {
               <h4 className="subtitle">lorem lor e leolda </h4>
               <LikeButton />
             </div>
-            <div onClick={() => {this.props.unLike(prospect.userId)}}>
-            <NextButton />
+            <div
+              onClick={() => {
+                this.props.unLike(prospect.userId);
+              }}
+            >
+              <NextButton />
             </div>
           </div>
         </section>
@@ -161,10 +168,10 @@ class Try extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  auth: state.firebase.auth,
   users: state.users.users,
   user: state.users.user,
-  prospects: state.likes.prospects
+  prospects: state.likes.prospects,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -172,7 +179,7 @@ const mapDispatchToProps = dispatch => ({
   getCurrentUser: userId => dispatch(getUser(userId)),
   getProspects: userId => dispatch(getProspects(userId)),
   unLike: prospectId => dispatch(unLike(prospectId)),
-  sendLike: prospectId => dispatch(sendLike(prospectId))
+  sendLike: prospectId => dispatch(sendLike(prospectId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Try);

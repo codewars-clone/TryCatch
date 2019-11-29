@@ -20,7 +20,7 @@ export default class Preferences extends Component {
   render() {
     const {
       ageInterest,
-      sexualOrientation,
+      prefGender,
       meetUp,
       handleChange,
       parsePreferences,
@@ -51,13 +51,25 @@ export default class Preferences extends Component {
                 value={ageInterest}
                 onChange={handleChange}
               >
-                <option default value="18:25">
-                  18-25
-                </option>
+                <option value="18:25">18-25</option>
                 <option value="26:33">26-33</option>
                 <option value="33:41">33-41</option>
                 <option value="41:65">41-65</option>
                 <option value="65:115">65+</option>
+              </select>
+            </div>
+          </div>
+          {/* PREF GENDER */}
+          <div className="field">
+            <label className="label">Preferred Gender</label>
+            <div className="select is-medium">
+              <select
+                name="prefGender"
+                value={prefGender}
+                onChange={handleChange}
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </div>
           </div>

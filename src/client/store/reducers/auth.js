@@ -98,8 +98,7 @@ export const loginUser = (email, password) => {
 export const signUpUser = (email, password, state) => (
   dispatch,
   getState,
-  getFirebase,
-  getFirestore
+  { getFirebase, getFirestore }
 ) => {
   dispatch(requestSignUp());
   const firebase = getFirebase();
