@@ -2,11 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { SingleAwait} from '../../index'
 import { createChat } from '../../../store/reducers/chat'
+import { getLikes } from '../../../store/reducers/likes'
+import { getUser } from '../../../store/reducers/users'
 
 class AwaitList extends Component {
   constructor(){
     super()
     this.createChat = this.createChat.bind(this)
+  }
+  componentDidMount(){
+    const userId = this.props.auth.user;
+    this.props.getCurrentUser(userId);
+    this.props.getLikes(userId);
   }
 
   createChat(prospect) {
@@ -18,7 +25,7 @@ class AwaitList extends Component {
         prospect: {
           name: prospect.name
         },
-        user: { 
+        user: {
           name: "Daphe"
         }
       },
@@ -29,27 +36,28 @@ class AwaitList extends Component {
   }
 
 
-  render() { 
+  render() {
+    console.log("prospects in DB", this.props.likes)
     const prospects = [ {
       userId: "1",
       name: "Johnny",
       age: 24,
-      gemder: 'male', 
+      gemder: 'male',
       image:  "https://pbs.twimg.com/profile_images/1005956021087547393/RdD7s-Gb_400x400.jpg"
     },{
       userId: "2",
       name: "Freddy",
       age: 24,
-      gemder: 'male', 
-      image: "https://cdn.images.express.co.uk/img/dynamic/35/590x/Freddie-Mercury-final-pictures-1208447.jpg?r=1574537671789" 
+      gemder: 'male',
+      image: "https://cdn.images.express.co.uk/img/dynamic/35/590x/Freddie-Mercury-final-pictures-1208447.jpg?r=1574537671789"
     }]
     console.log('CHAT', this.props.chats)
-    return ( 
+    return (
       <section className="section">
         <div className='container'>
           <h1 className="title is-1">Await</h1>
           <hr />
-          {prospects.map(prospect => { 
+          {prospects.map(prospect => {
             return <SingleAwait key={prospect.userId} prospect={prospect} createChat={this.createChat} />
           })}
         </div>
@@ -60,14 +68,19 @@ class AwaitList extends Component {
 }
 
 const mapStateToProps = state =>  {
-  return { 
-    chats: state.chat.chats
+  return {
+    chats: state.chat.chats,
+    likes: state.likes.likes,
+    user: state.users.user,
+    auth: state.auth,
   }
 }
 
 const mapDispatchToProps = dispatch =>  {
-  return { 
-    createChatRoom: (newChat) => dispatch(createChat(newChat))
+  return {
+    createChatRoom: (newChat) => dispatch(createChat(newChat)),
+    getLikes: (userId) => dispatch(getLikes(userId)),
+    getCurrentUser: (userId) => dispatch(getUser(userId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AwaitList);
