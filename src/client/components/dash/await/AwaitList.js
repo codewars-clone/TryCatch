@@ -10,8 +10,8 @@ class AwaitList extends Component {
     super()
     this.createChat = this.createChat.bind(this)
   }
-  componentDidMount(){
-    const userId = this.props.auth.user;
+  async componentDidMount(){
+    const userId = this.props.auth.uid;
     this.props.getCurrentUser(userId);
     this.props.getLikes(userId);
   }
@@ -26,10 +26,10 @@ class AwaitList extends Component {
           name: prospect.name
         },
         user: {
-          name: "Daphe"
+          name: this.props.user.name
         }
       },
-      image: prospect.image
+      image: prospect.imageUrl
     }
     console.log("TCL: AwaitList -> createChat -> newChat ", newChat )
     this.props.createChatRoom(newChat)
@@ -79,7 +79,7 @@ const mapStateToProps = state =>  {
     chats: state.chat.chats,
     prospects: state.likes.likes,
     user: state.users.user,
-    auth: state.auth,
+    auth: state.firebase.auth,
   }
 }
 

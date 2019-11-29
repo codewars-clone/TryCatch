@@ -7,7 +7,7 @@ class SingleAwait extends Component {
     this.state = {  }
   }
   render() {
-    const { age, image } = this.props.prospect
+    const { name, age, imageUrl } = this.props.prospect
     const { createChat, prospect } = this.props
 
     return (
@@ -15,11 +15,11 @@ class SingleAwait extends Component {
         <div className="media">
           <div className="media-content">
             <figure className="image is-96x96">
-              <img width = '2100px' height='200px' src={image} alt=""/>
+              <img width = '2100px' height='200px' src={imageUrl} alt=""/>
             </figure>
           </div>
           <div className="media-right">
-            <h4 className="title is-4" >{age} <i className="fas fa-birthday-cake"></i></h4>
+            <h4 className="title is-4" >{name} {age} <i className="fas fa-birthday-cake"></i></h4>
             <div onClick={()=> {createChat(prospect)}}>
               {/* <Link to='/splash'> */}
                 <LikeButton />
