@@ -67,11 +67,10 @@ export const getLikes = userId => async (
   try {
     const firestore = getFirestore();
     const likes = [];
-    const response = await firestore
+    const data = await firestore
       .collection('likesUser')
       .doc(userId)
       .collection('likes').get();
-    const data = response.data();
     data.forEach(doc => {
       likes.push({
         userId: doc.userId,
@@ -79,7 +78,7 @@ export const getLikes = userId => async (
         age: doc.data().age,
         gender: doc.data().gender,
         imageUrl: doc.data().imageUrl,
-        message: doc.data().message,
+        message: doc.data().message || null
       });
     });
     dispatch(gotLikes(likes));
@@ -95,8 +94,6 @@ export const sendLike = (prospectId, message) => async (
   try {
     const firestore = getFirestore();
     const { users } = getState();
-    //const user = await firestore.collection('users').doc(currentUserId).get();
-    //const prospectUser = await firestore.doc(`/users/${prospectId}`);
     const user = users.user;
     console.log('message in sendLike', message)
     const userData = {
@@ -113,11 +110,7 @@ export const sendLike = (prospectId, message) => async (
       .set({ [prospectId]: true });
       console.log("prospectId:", prospectId);
     const prospectUser = await firestore.collection('likesUser').doc(prospectId).collection('likes');
-    //console.log("prospectUser:" , response)
-    // const snapshot = await firestore.collection('likesUser').doc(prospectId).get();
-    // const hasLikes = snapshot.data();
     await prospectUser.doc(user.id).set(userData);
-    console.log('subcollection version: added like')
     dispatch(sentLike(prospectId));
 
     //check if prospectUser has liked current user. If so, it is a match

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { SingleAwait} from '../../index'
 import { createChat } from '../../../store/reducers/chat'
 import { getLikes } from '../../../store/reducers/likes'
+import { getUser } from '../../../store/reducers/users'
 
 class AwaitList extends Component {
   constructor(){
@@ -36,6 +37,7 @@ class AwaitList extends Component {
 
 
   render() {
+    console.log("prospects in DB", this.props.likes)
     const prospects = [ {
       userId: "1",
       name: "Johnny",
@@ -68,7 +70,7 @@ class AwaitList extends Component {
 const mapStateToProps = state =>  {
   return {
     chats: state.chat.chats,
-    prospects: state.likes.likes,
+    likes: state.likes.likes,
     user: state.users.user,
     auth: state.auth,
   }
@@ -77,7 +79,8 @@ const mapStateToProps = state =>  {
 const mapDispatchToProps = dispatch =>  {
   return {
     createChatRoom: (newChat) => dispatch(createChat(newChat)),
-    getLikes: (userId) => dispatch(getLikes(userId))
+    getLikes: (userId) => dispatch(getLikes(userId)),
+    getCurrentUser: (userId) => dispatch(getUser(userId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AwaitList);
