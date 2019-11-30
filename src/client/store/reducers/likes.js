@@ -74,7 +74,7 @@ export const getLikes = userId => async (
       .get();
     data.forEach(doc => {
       likes.push({
-        userId: doc.userId,
+        userId: doc.id,
         name: doc.data().name,
         age: doc.data().age,
         gender: doc.data().gender,
@@ -107,8 +107,7 @@ export const sendLike = (prospectId, message) => async (
     };
     await firestore
       .collection('userLikes')
-      .doc(user.id)
-      .set({ [prospectId]: true });
+      .doc(user.id).update({ [prospectId]: true });
     console.log('prospectId:', prospectId);
     const prospectUser = await firestore
       .collection('likesUser')

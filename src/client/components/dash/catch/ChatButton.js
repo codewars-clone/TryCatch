@@ -1,10 +1,10 @@
 import React from 'react'
 const ChatButton = () => {
-  return ( 
+  return (
     <div  className="buttons">
       <button className='button is-success'>
         CHAT
-        <i class="far fa-comment"></i>
+        <i className="far fa-comment"></i>
       </button>
     </div>
   );

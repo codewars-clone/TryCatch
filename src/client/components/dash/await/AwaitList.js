@@ -10,8 +10,8 @@ class AwaitList extends Component {
     super();
     this.createChat = this.createChat.bind(this);
   }
-  componentDidMount() {
-    const userId = this.props.auth.user;
+  async componentDidMount() {
+    const userId = this.props.auth.uid;
     this.props.getCurrentUser(userId);
     this.props.getLikes(userId);
   }
@@ -25,63 +25,62 @@ class AwaitList extends Component {
           name: prospect.name,
         },
         user: {
-          name: 'Daphe',
+          name: this.props.user.name,
         },
       },
-      image: prospect.image,
-      messages: [],
+      image: prospect.imageUrl,
     };
     console.log('TCL: AwaitList -> createChat -> newChat ', newChat);
-    this.props.createChatThunk(newChat);
+    this.props.createChatRoom(newChat);
   }
 
   render() {
-    console.log('prospects in DB', this.props.likes);
-    const prospects = [
-      {
-        userId: '1',
-        name: 'Johnny',
-        age: 24,
-        gemder: 'male',
-        image:
-          'https://pbs.twimg.com/profile_images/1005956021087547393/RdD7s-Gb_400x400.jpg',
-      },
-      {
-        userId: '2',
-        name: 'Freddy',
-        age: 24,
-        gemder: 'male',
-        image:
-          'https://cdn.images.express.co.uk/img/dynamic/35/590x/Freddie-Mercury-final-pictures-1208447.jpg?r=1574537671789',
-      },
-    ];
+    console.log('prospects in DB', this.props.prospects);
+    // const prospects = [ {
+    //   userId: "1",
+    //   name: "Johnny",
+    //   age: 24,
+    //   gemder: 'male',
+    //   image:  "https://pbs.twimg.com/profile_images/1005956021087547393/RdD7s-Gb_400x400.jpg"
+    // },{
+    //   userId: "2",
+    //   name: "Freddy",
+    //   age: 24,
+    //   gemder: 'male',
+    //   image: "https://cdn.images.express.co.uk/img/dynamic/35/590x/Freddie-Mercury-final-pictures-1208447.jpg?r=1574537671789"
+    // }]
     console.log('CHAT', this.props.chats);
-    return (
-      <section className="section">
-        <div className="container">
-          <h1 className="title is-1">Await</h1>
-          <hr />
-          {prospects.map(prospect => {
-            return (
-              <SingleAwait
-                key={prospect.userId}
-                prospect={prospect}
-                createChat={this.createChat}
-              />
-            );
-          })}
-        </div>
-      </section>
-    );
+    if (this.props.prospects.length) {
+      const prospects = this.props.prospects;
+      return (
+        <section className="section">
+          <div className="container">
+            <h1 className="title is-1">Await</h1>
+            <hr />
+            {prospects.map(prospect => {
+              return (
+                <SingleAwait
+                  key={prospect.userId}
+                  prospect={prospect}
+                  createChat={this.createChat}
+                />
+              );
+            })}
+          </div>
+        </section>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
     chats: state.chat.chats,
-    likes: state.likes.likes,
+    prospects: state.likes.likes,
     user: state.users.user,
-    auth: state.auth,
+    auth: state.firebase.auth,
   };
 };
 
