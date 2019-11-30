@@ -52,15 +52,14 @@ class ChatRoom extends Component {
 
   render() {
     const { currChat } = this.props;
-    //console.log('TCL: ChatRoom -> render -> currChat ', currChat);
+
     const { loadingScreen } = this.state;
 
     let image = currChat.length ? currChat[0].image : '';
     let name = currChat.length ? currChat[0].name : '';
     let messages = currChat.length ? currChat[0].messages : [];
 
-    //console.log('TCL: ChatRoom -> render -> Message', this.state.txt);
-    console.log('chats ===> ', this.props.chats);
+  console.log('TCL: ChatRoom -> render -> currChat ', currChat);
     let main = (
       <div className="container">
         <div className="box">

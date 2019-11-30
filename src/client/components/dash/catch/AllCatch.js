@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { SingleCatch } from '../../index'
 import { connect } from 'react-redux'
-import { Stats } from 'fs';
+import { getChatsThunk } from '../../../store/reducers/chat'
+
 class AllCatch extends Component {
+
+  componentDidMount() {
+    this.props.getChatsThunk()
+  }
 
   render() { 
     const { chats } = this.props
@@ -28,7 +33,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    getChatsThunk: () => { dispatch(getChatsThunk()) }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCatch)

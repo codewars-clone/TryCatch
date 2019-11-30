@@ -66,6 +66,19 @@ export const createChatThunk = newChat => async (
   }
 };
 
+export const addMessageThunk = message => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  try {
+    const db = getFirestore();
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const initialState = {
   chats: [],
   currChat: [],
