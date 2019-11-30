@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SingleAwait } from '../../index';
 import { createChat, createChatThunk } from '../../../store/reducers/chat';
-import { getLikes } from '../../../store/reducers/likes';
+import { getLikes, sendLike } from '../../../store/reducers/likes';
 import { getUser } from '../../../store/reducers/users';
 
 class AwaitList extends Component {
@@ -63,6 +63,7 @@ class AwaitList extends Component {
                   key={prospect.userId}
                   prospect={prospect}
                   createChat={this.createChat}
+                  sendLike={this.props.sendLike}
                 />
               );
             })}
@@ -89,6 +90,7 @@ const mapDispatchToProps = dispatch => {
     createChatThunk: newChat => dispatch(createChatThunk(newChat)),
     createChatRoom: newChat => dispatch(createChat(newChat)),
     getLikes: userId => dispatch(getLikes(userId)),
+    sendLike: userId => dispatch(sendLike(userId)),
     getCurrentUser: userId => dispatch(getUser(userId)),
   };
 };

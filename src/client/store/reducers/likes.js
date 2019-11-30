@@ -47,13 +47,11 @@ export const getProspects = userId => async (
     });
     //cross reference with who the user has already liked
     const userLikes = await firestore.collection('userLikes').doc(currentUser.id).get();
-    console.log('userLikes...', userLikes)
     const filteredProspects = prospects.filter(prospect => {
       let id = prospect.userId;
       //if prospectId is already in current user's liked collection, it will be removed from prospects
       return !userLikes.data()[id];
     });
-    console.log(filteredProspects);
     dispatch(gotProspects(filteredProspects));
   } catch (err) {
     console.error(err);
@@ -83,7 +81,14 @@ export const getLikes = userId => async (
         message: doc.data().message || null,
       });
     });
-    dispatch(gotLikes(likes));
+    //cross reference userLikes, as they should now be displayed in chat
+    const userLikes = await firestore.collection('userLikes').doc(userId).get();
+    const filteredLikes = likes.filter(user => {
+      let id = user.userId;
+      return !userLikes.data()[id];
+    });
+    //once chat is up and running, dispatch filteredLikes
+    dispatch(gotLikes(filteredLikes));
   } catch (err) {
     console.error(err);
   }
