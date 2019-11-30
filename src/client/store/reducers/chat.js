@@ -5,17 +5,10 @@ const GET_CHAT = 'GET_CHAT';
 const ADD_MESSAGE = 'ADD_MESSAGE';
 const UPDATE_CHAT = 'UPDATE_CHAT';
 
-export const createChat = ({ chatId, name, people, image, messages = [] }) => {
-  console.log('TCL: createChat -> chatId,', chatId);
+export const createChat = chats => {
   return {
     type: CREATE_CHAT,
-    chat: {
-      chatId,
-      name,
-      people,
-      image,
-      messages,
-    },
+    chats,
   };
 };
 
@@ -40,6 +33,39 @@ export const updateChat = chatId => {
   };
 };
 
+//thunk
+export const getChatsThunk = () => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  try {
+    const db = getFirestore();
+    let data = await db.collection('chats').get();
+    let chats = [];
+    data.forEach(doc => {
+      chats.push(doc.data());
+    });
+    dispatch(createChat(chats));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createChatThunk = newChat => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  try {
+    const db = getFirestore();
+    db.collection('chats').add(newChat);
+    dispatch(getChatsThunk());
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const initialState = {
   chats: [],
   currChat: [],
@@ -48,7 +74,7 @@ const initialState = {
 const chatReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_CHAT:
-      return { ...state, chats: [...state.chats, action.chat] };
+      return { ...state, chats: [...action.chats] };
     case GET_CHAT:
       let newChat = state.chats.filter(chat => {
         if (chat.chatId === action.chatId) {

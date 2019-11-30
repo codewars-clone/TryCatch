@@ -1,43 +1,41 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { SingleAwait} from '../../index'
-import { createChat } from '../../../store/reducers/chat'
-import { getLikes } from '../../../store/reducers/likes'
-import { getUser } from '../../../store/reducers/users'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { SingleAwait } from '../../index';
+import { createChat, createChatThunk } from '../../../store/reducers/chat';
+import { getLikes } from '../../../store/reducers/likes';
+import { getUser } from '../../../store/reducers/users';
 
 class AwaitList extends Component {
-  constructor(){
-    super()
-    this.createChat = this.createChat.bind(this)
+  constructor() {
+    super();
+    this.createChat = this.createChat.bind(this);
   }
-  async componentDidMount(){
+  async componentDidMount() {
     const userId = this.props.auth.uid;
     this.props.getCurrentUser(userId);
     this.props.getLikes(userId);
   }
 
   createChat(prospect) {
-
     let newChat = {
-      chatId: prospect.userId ,
+      chatId: prospect.userId,
       name: prospect.name,
       people: {
         prospect: {
-          name: prospect.name
+          name: prospect.name,
         },
         user: {
-          name: this.props.user.name
-        }
+          name: this.props.user.name,
+        },
       },
-      image: prospect.imageUrl
-    }
-    console.log("TCL: AwaitList -> createChat -> newChat ", newChat )
-    this.props.createChatRoom(newChat)
+      image: prospect.imageUrl,
+    };
+    console.log('TCL: AwaitList -> createChat -> newChat ', newChat);
+    this.props.createChatRoom(newChat);
   }
 
-
   render() {
-    console.log("prospects in DB", this.props.prospects)
+    console.log('prospects in DB', this.props.prospects);
     // const prospects = [ {
     //   userId: "1",
     //   name: "Johnny",
@@ -51,43 +49,47 @@ class AwaitList extends Component {
     //   gemder: 'male',
     //   image: "https://cdn.images.express.co.uk/img/dynamic/35/590x/Freddie-Mercury-final-pictures-1208447.jpg?r=1574537671789"
     // }]
-    console.log('CHAT', this.props.chats)
-    if(this.props.prospects.length){
+    console.log('CHAT', this.props.chats);
+    if (this.props.prospects.length) {
       const prospects = this.props.prospects;
       return (
         <section className="section">
-          <div className='container'>
+          <div className="container">
             <h1 className="title is-1">Await</h1>
             <hr />
             {prospects.map(prospect => {
-              return <SingleAwait key={prospect.userId} prospect={prospect} createChat={this.createChat} />
+              return (
+                <SingleAwait
+                  key={prospect.userId}
+                  prospect={prospect}
+                  createChat={this.createChat}
+                />
+              );
             })}
           </div>
         </section>
-
       );
     } else {
-      return (
-        <div></div>
-      )
+      return <div></div>;
     }
   }
 }
 
-const mapStateToProps = state =>  {
+const mapStateToProps = state => {
   return {
     chats: state.chat.chats,
     prospects: state.likes.likes,
     user: state.users.user,
     auth: state.firebase.auth,
-  }
-}
+  };
+};
 
-const mapDispatchToProps = dispatch =>  {
+const mapDispatchToProps = dispatch => {
   return {
-    createChatRoom: (newChat) => dispatch(createChat(newChat)),
-    getLikes: (userId) => dispatch(getLikes(userId)),
-    getCurrentUser: (userId) => dispatch(getUser(userId))
-  }
-}
+    createChatThunk: newChat => dispatch(createChatThunk(newChat)),
+    createChatRoom: newChat => dispatch(createChat(newChat)),
+    getLikes: userId => dispatch(getLikes(userId)),
+    getCurrentUser: userId => dispatch(getUser(userId)),
+  };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(AwaitList);
