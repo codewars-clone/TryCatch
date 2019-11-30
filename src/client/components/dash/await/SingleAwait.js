@@ -7,7 +7,7 @@ class SingleAwait extends Component {
     this.state = {  }
   }
   render() {
-    const { name, age, imageUrl } = this.props.prospect
+    const { name, age, imageUrl, userId } = this.props.prospect
     const { createChat, prospect } = this.props
 
     return (
@@ -22,7 +22,9 @@ class SingleAwait extends Component {
             <h4 className="title is-4" >{name} {age} <i className="fas fa-birthday-cake"></i></h4>
             <div onClick={()=> {createChat(prospect)}}>
               {/* <Link to='/splash'> */}
+                <div onClick={() => this.props.sendLike(userId)}>
                 <LikeButton />
+                </div>
               {/* </Link> */}
             </div>
           </div>

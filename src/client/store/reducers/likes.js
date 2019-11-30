@@ -1,5 +1,4 @@
 const initialState = {
-  currentProspect: {},
   prospects: [],
   likes: [],
   matches: [],
@@ -8,11 +7,9 @@ const GET_PROSPECTS = 'GET_PROSPECTS';
 const GET_LIKES = 'GET_LIKES';
 //const GET_MATCHES = 'GET_MATCHES';
 const SEND_LIKE = 'SEND_LIKE';
-const GET_ONE_PROSPECT = 'GET_ONE_PROSPECT';
 const UNLIKE = 'UNLIKE';
 
 const gotProspects = prospects => ({ type: GET_PROSPECTS, prospects });
-//const gotOneProspect = prospect => ({ type: GET_ONE_PROSPECT, prospect });
 const gotLikes = likes => ({ type: GET_LIKES, likes });
 //const gotMatches = matches => ({ type: GET_MATCHES, matches });
 const sentLike = prospectId => ({ type: SEND_LIKE, prospectId });
@@ -48,16 +45,18 @@ export const getProspects = userId => async (
         imageUrl: doc.data().imageUrl,
       });
     });
-    dispatch(gotProspects(prospects));
+    //cross reference with who the user has already liked
+    const userLikes = await firestore.collection('userLikes').doc(currentUser.id).get();
+    const filteredProspects = prospects.filter(prospect => {
+      let id = prospect.userId;
+      //if prospectId is already in current user's liked collection, it will be removed from prospects
+      return !userLikes.data()[id];
+    });
+    dispatch(gotProspects(filteredProspects));
   } catch (err) {
     console.error(err);
   }
 };
-// export const getOneProspect = () => async (
-//   dispatch,
-//   getState,
-//   { getFirestore }
-// ) => {};
 
 export const getLikes = userId => async (
   dispatch,
@@ -82,7 +81,14 @@ export const getLikes = userId => async (
         message: doc.data().message || null,
       });
     });
-    dispatch(gotLikes(likes));
+    //cross reference userLikes, as they should now be displayed in chat
+    const userLikes = await firestore.collection('userLikes').doc(userId).get();
+    const filteredLikes = likes.filter(user => {
+      let id = user.userId;
+      return !userLikes.data()[id];
+    });
+    //once chat is up and running, dispatch filteredLikes
+    dispatch(gotLikes(filteredLikes));
   } catch (err) {
     console.error(err);
   }
@@ -115,18 +121,6 @@ export const sendLike = (prospectId, message) => async (
       .collection('likes');
     await prospectUser.doc(user.id).set(userData);
     dispatch(sentLike(prospectId));
-
-    //check if prospectUser has liked current user. If so, it is a match
-    // const matchQuery = await firestore
-    //   .doc(`/userLikes/${prospectId}`)
-    //   .where(currentUserId, '==', true);
-    // if (matchQuery.exists) {
-    //set up match
-    //set up chat
-    // const newChat = await firestore.collection('chats').add({user1: currentUserId, user2: prospectId});
-    // const newMatch1 = await firestore.collection('matches').doc(currentUserId).set({userId: prospectId, chatId: newChat.id});
-    // const newMatch2 = await firestore.collection('matches').doc(prospectId).set({userId: currentUserId, chatId: newChat.id})
-    //}
   } catch (err) {
     console.error(err);
   }
@@ -137,8 +131,6 @@ const likesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PROSPECTS:
       return { ...state, prospects: [...action.prospects] };
-    case GET_ONE_PROSPECT:
-      return { ...state, currentProspect: action.prospect };
     case GET_LIKES:
       return { ...state, likes: [...action.likes] };
     case SEND_LIKE:
