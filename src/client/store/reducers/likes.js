@@ -107,8 +107,7 @@ export const sendLike = (prospectId, message) => async (
     };
     await firestore
       .collection('userLikes')
-      .doc(user.id)
-      .set({ [prospectId]: true });
+      .doc(user.id).update({ [prospectId]: true });
     console.log('prospectId:', prospectId);
     const prospectUser = await firestore
       .collection('likesUser')
