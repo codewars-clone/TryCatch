@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Messages } from '../index';
 import { connect } from 'react-redux';
-import { getChat, addMessage } from '../../store/reducers/chat';
+import { getChat, addMessage, addMessageThunk } from '../../store/reducers/chat';
 import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
@@ -45,22 +45,21 @@ class ChatRoom extends Component {
       name: 'Daphyni',
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
-    };
-    //console.log('TCL: ChatRoom -> handleSubmit -> messages', message);
-    this.props.addMessage(message);
+    }; 
+    
+    this.props.addMessageThunk(message)
   }
 
   render() {
     const { currChat } = this.props;
-    //console.log('TCL: ChatRoom -> render -> currChat ', currChat);
+
     const { loadingScreen } = this.state;
 
     let image = currChat.length ? currChat[0].image : '';
     let name = currChat.length ? currChat[0].name : '';
     let messages = currChat.length ? currChat[0].messages : [];
 
-    //console.log('TCL: ChatRoom -> render -> Message', this.state.txt);
-    console.log('chats ===> ', this.props.chats);
+  console.log('TCL: ChatRoom -> render -> currChat ', currChat);
     let main = (
       <div className="container">
         <div className="box">
@@ -138,6 +137,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getChat: chatId => dispatch(getChat(chatId)),
     addMessage: message => dispatch(addMessage(message)),
+    addMessageThunk: message => dispatch(addMessageThunk(message))
   };
 };
 

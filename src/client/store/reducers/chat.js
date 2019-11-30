@@ -59,8 +59,24 @@ export const createChatThunk = newChat => async (
 ) => {
   try {
     const db = getFirestore();
-    db.collection('chats').add(newChat);
+    db.collection('chats').doc(`${newChat.chatId}`).set(newChat)
     dispatch(getChatsThunk());
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addMessageThunk = message => async (
+  dispatch,
+  getState,
+  { getFirestore}
+) => {
+  try {
+    const db = getFirestore();
+    const chat = await db.collection('chats').doc(`${message.chatId}`).update({
+      messages: db.FieldValue.arrayUnion(message)
+    })
+    dispatch(addMessage(message))
   } catch (error) {
     console.error(error);
   }
@@ -94,18 +110,6 @@ const chatReducer = (state = initialState, action) => {
         ...state,
         currChat: [...updatedCurrChat],
       };
-    case UPDATE_CHAT:
-      const updateChats = state.chats.map(chat => {
-        if (chat.chatId === action.chatId) {
-          chat.messages = [...state.currChat[0].messages];
-        }
-        return chat;
-      });
-      return {
-        ...state,
-        chats: [...updateChats],
-      };
-
     default:
       return state;
   }
