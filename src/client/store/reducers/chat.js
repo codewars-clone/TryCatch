@@ -74,7 +74,7 @@ export const addMessageThunk = message => async (
   try {
     const db = getFirestore();
     const chat = await db.collection('chats').doc(`${message.chatId}`).update({
-      message: db.FieldValue.arrayUnion(message)
+      messages: db.FieldValue.arrayUnion(message)
     })
     dispatch(addMessage(message))
   } catch (error) {
@@ -110,18 +110,6 @@ const chatReducer = (state = initialState, action) => {
         ...state,
         currChat: [...updatedCurrChat],
       };
-    case UPDATE_CHAT:
-      const updateChats = state.chats.map(chat => {
-        if (chat.chatId === action.chatId) {
-          chat.messages = [...state.currChat[0].messages];
-        }
-        return chat;
-      });
-      return {
-        ...state,
-        chats: [...updateChats],
-      };
-
     default:
       return state;
   }
