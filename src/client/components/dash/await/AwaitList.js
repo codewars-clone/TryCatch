@@ -31,7 +31,7 @@ class AwaitList extends Component {
       image: prospect.imageUrl,
     };
     console.log('TCL: AwaitList -> createChat -> newChat ', newChat);
-    this.props.createChatRoom(newChat);
+    this.props.createChatThunk(newChat);
   }
 
   render() {
