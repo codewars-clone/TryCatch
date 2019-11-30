@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Messages } from '../index';
 import { connect } from 'react-redux';
-import { getChat, addMessage } from '../../store/reducers/chat';
+import { getChat, addMessage, addMessageThunk } from '../../store/reducers/chat';
 import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
@@ -45,9 +45,9 @@ class ChatRoom extends Component {
       name: 'Daphyni',
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
-    };
-    //console.log('TCL: ChatRoom -> handleSubmit -> messages', message);
-    this.props.addMessage(message);
+    }; 
+    
+    this.props.addMessageThunk(message)
   }
 
   render() {
@@ -137,6 +137,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getChat: chatId => dispatch(getChat(chatId)),
     addMessage: message => dispatch(addMessage(message)),
+    addMessageThunk: message => dispatch(addMessageThunk(message))
   };
 };
 

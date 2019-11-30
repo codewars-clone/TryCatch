@@ -59,7 +59,7 @@ export const createChatThunk = newChat => async (
 ) => {
   try {
     const db = getFirestore();
-    db.collection('chats').add(newChat);
+    db.collection('chats').doc(`${newChat.chatId}`).set(newChat)
     dispatch(getChatsThunk());
   } catch (error) {
     console.error(error);
@@ -69,11 +69,14 @@ export const createChatThunk = newChat => async (
 export const addMessageThunk = message => async (
   dispatch,
   getState,
-  { getFirestore }
+  { getFirestore}
 ) => {
   try {
     const db = getFirestore();
-
+    const chat = await db.collection('chats').doc(`${message.chatId}`).update({
+      message: db.FieldValue.arrayUnion(message)
+    })
+    dispatch(addMessage(message))
   } catch (error) {
     console.error(error);
   }
