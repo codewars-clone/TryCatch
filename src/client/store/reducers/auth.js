@@ -95,7 +95,7 @@ export const loginUser = (email, password) => {
   };
 };
 
-export const signUpUser = (email, password, state) => (
+export const signUpUser = (email, password, state) => async (
   dispatch,
   getState,
   { getFirebase, getFirestore }
@@ -103,19 +103,19 @@ export const signUpUser = (email, password, state) => (
   dispatch(requestSignUp());
   const firebase = getFirebase();
   const db = getFirestore();
-  firebase
+  // Signs user up and dispatches
+  const cred = await firebase
     .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(cred => {
-      dispatch(receiveSignUp(cred));
-      return db
-        .collection('users')
-        .doc(cred.user.uid)
-        .set(state);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    .createUserWithEmailAndPassword(email, password);
+  dispatch(receiveSignUp(cred));
+  // Creating the user document
+  db.collection('users')
+    .doc(cred.user.uid)
+    .set(state);
+  // Creating the userLikes document
+  db.collection('userLikes')
+    .doc(cred.user.uid)
+    .set({ exists: true });
 };
 
 //It calls firebase signOut() method

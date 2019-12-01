@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default class Terms extends Component {
@@ -47,14 +48,12 @@ export default class Terms extends Component {
             <button className="button is-danger" onClick={this.back}>
               Back
             </button>
-            <Link to="/try">
-              <button
-                className="button is-info"
-                onClick={this.props.handleSignUp}
-              >
-                Agree and Register
-              </button>
-            </Link>
+            <button
+              className="button is-info"
+              onClick={this.props.handleSignUp}
+            >
+              Agree and Register
+            </button>
           </div>
         </div>
       </section>

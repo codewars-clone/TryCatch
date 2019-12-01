@@ -46,7 +46,10 @@ export const getProspects = userId => async (
       });
     });
     //cross reference with who the user has already liked
-    const userLikes = await firestore.collection('userLikes').doc(currentUser.id).get();
+    const userLikes = await firestore
+      .collection('userLikes')
+      .doc(currentUser.id)
+      .get();
     const filteredProspects = prospects.filter(prospect => {
       let id = prospect.userId;
       //if prospectId is already in current user's liked collection, it will be removed from prospects
@@ -82,7 +85,10 @@ export const getLikes = userId => async (
       });
     });
     //cross reference userLikes, as they should now be displayed in chat
-    const userLikes = await firestore.collection('userLikes').doc(userId).get();
+    const userLikes = await firestore
+      .collection('userLikes')
+      .doc(userId)
+      .get();
     const filteredLikes = likes.filter(user => {
       let id = user.userId;
       return !userLikes.data()[id];
@@ -100,11 +106,14 @@ export const sendLike = (prospectId, message) => async (
 ) => {
   try {
     const firestore = getFirestore();
-    const { users } = getState();
-    const user = users.user;
+    const { firebase } = getState();
+    const user = firebase.profile;
+    const userId = firebase.auth.uid;
     console.log('message in sendLike', message);
+    console.log('user in sendLike', user);
+    console.log('prospect id in sendLike', prospectId);
     const userData = {
-      userId: user.id || null,
+      userId: userId || null,
       name: user.name || null,
       age: user.age || null,
       gender: user.gender || null,
@@ -113,13 +122,14 @@ export const sendLike = (prospectId, message) => async (
     };
     await firestore
       .collection('userLikes')
-      .doc(user.id).update({ [prospectId]: true });
+      .doc(userId)
+      .update({ [prospectId]: true });
     console.log('prospectId:', prospectId);
     const prospectUser = await firestore
       .collection('likesUser')
       .doc(prospectId)
       .collection('likes');
-    await prospectUser.doc(user.id).set(userData);
+    await prospectUser.doc(userId).set(userData);
     dispatch(sentLike(prospectId));
   } catch (err) {
     console.error(err);

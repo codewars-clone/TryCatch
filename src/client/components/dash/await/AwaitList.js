@@ -29,7 +29,7 @@ class AwaitList extends Component {
         },
       },
       image: prospect.imageUrl,
-      messages: []
+      messages: [],
     };
     console.log('TCL: AwaitList -> createChat -> newChat ', newChat);
     this.props.createChatThunk(newChat);
@@ -72,7 +72,7 @@ class AwaitList extends Component {
         </section>
       );
     } else {
-      return <div></div>;
+      return <div>No likes yet.</div>;
     }
   }
 }
