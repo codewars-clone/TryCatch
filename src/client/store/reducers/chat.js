@@ -90,7 +90,9 @@ export const messageListener = (chatId) => async (
     try {
       const db = getFirestore();
       const chat = await db.collection('chats').doc(`${chatId}`).onSnapshot( doc => { 
-      console.log("TCL:  doc",  doc.data()) 
+      console.log('GOING TO RESET CHAT')
+      console.log("TCL:  doc",  doc.data().chatId) 
+      dispatch(getChat(doc.data().chatId))
       })
     } catch (error) {
       console.error(error)
