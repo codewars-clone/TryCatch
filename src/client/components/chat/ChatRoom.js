@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Messages } from '../index';
 import { connect } from 'react-redux';
-import { getChat, addMessage, addMessageThunk } from '../../store/reducers/chat';
+import { getChat, addMessage, addMessageThunk, messageListener} from '../../store/reducers/chat';
 import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
@@ -29,6 +29,7 @@ class ChatRoom extends Component {
         });
       }, 2000);
     }
+    this.props.messageListener(chatId)
     this.props.getChat(chatId);
   }
   handleInput(ev) {
@@ -137,6 +138,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getChat: chatId => dispatch(getChat(chatId)),
     addMessage: message => dispatch(addMessage(message)),
+    messageListener: chatId => dispatch(messageListener(chatId)),
     addMessageThunk: message => dispatch(addMessageThunk(message))
   };
 };

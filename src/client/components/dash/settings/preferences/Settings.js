@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../../store/reducers/auth';
 
@@ -19,13 +19,14 @@ class Settings extends Component {
             blanditiis veritatis ea? Eius, necessitatibus ipsa?
           </p>
         </div>
-
-        <button
-          className="button is-danger is-light"
-          onClick={() => this.props.logOut()}
-        >
-          Log Out
-        </button>
+        <Link to='/'>
+          <button
+            className="button is-danger is-light"
+            onClick={() => this.props.logOut()}
+          >
+            Log Out
+          </button>
+        </Link>
       </section>
     );
   }
