@@ -82,6 +82,21 @@ export const addMessageThunk = message => async (
   }
 };
 
+export const messageListener = (chatId) => async (  
+  dispatch,
+  getState,
+  { getFirestore}
+  ) => {
+    try {
+      const db = getFirestore();
+      const chat = await db.collection('chats').doc(`${chatId}`).onSnapshot( doc => { 
+      console.log("TCL:  doc",  doc.data()) 
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
 const initialState = {
   chats: [],
   currChat: [],
