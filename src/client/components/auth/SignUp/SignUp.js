@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GeneralInfo, Location, Preferences, Assets, Terms } from '../../index';
 import { signUpUser } from '../../../store/reducers/auth';
+import { storage } from '../../../store/index';
 
 class SignUp extends Component {
   constructor() {
@@ -24,6 +25,10 @@ class SignUp extends Component {
       prefGender: '',
       meetUp: '',
       sexualOrientation: '',
+      image: {
+        name: ''
+      },
+      imageUrl: ''
     };
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
@@ -31,6 +36,7 @@ class SignUp extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
     this.calcAge = this.calcAge.bind(this);
     this.parsePreferences = this.parsePreferences.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
   }
 
   parsePreferences() {
@@ -84,6 +90,7 @@ class SignUp extends Component {
       name,
       ageInterest,
       prefGender,
+      imageUrl
     } = this.state;
     if (!gender) {
       gender = 'Male';
@@ -96,6 +103,7 @@ class SignUp extends Component {
       dob: DOB,
       gender: gender,
       name: name,
+      imageUrl: imageUrl,
       preferences: {
         age: ageInterest,
         gender: prefGender,
@@ -109,12 +117,38 @@ class SignUp extends Component {
       [e.target.name]: e.target.value,
     });
   };
+  handleImageChange = e => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({image}));
+    }
+  }
+
+  handleUpload = () => {
+    const {image} = this.state;
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on('state_changed',
+    (snapshot) => {
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    },
+    (error) => {
+      console.log(error);
+    },
+  () => {
+      storage.ref('images').child(image.name).getDownloadURL().then(imageUrl => {
+          this.setState({imageUrl});
+      })
+    })
+
+  }
 
   render() {
     const {
       step,
       name,
       email,
+      image,
+      imageUrl,
       MM,
       DD,
       YYYY,
@@ -142,7 +176,11 @@ class SignUp extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            handleImageChange={this.handleImageChange}
+            handleUpload={this.handleUpload}
             calcAge={this.calcAge}
+            image={image}
+            imageUrl={imageUrl}
           />
         );
       case 2: {

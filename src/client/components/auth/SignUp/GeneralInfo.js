@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImageUpload from './ImageUpload';
 
 export default class GeneralInfo extends Component {
   constructor() {
@@ -21,7 +22,11 @@ export default class GeneralInfo extends Component {
       gender,
       password,
       handleChange,
+      handleUpload,
+      handleImageChange,
       calcAge,
+      image,
+      imageUrl
     } = this.props;
     return (
       <section className="section">
@@ -150,6 +155,7 @@ export default class GeneralInfo extends Component {
               </div>
             </div>
           </div>
+          <ImageUpload handleImageChange={handleImageChange} handleUpload={handleUpload} image={image} imageUrl={imageUrl}/>
           <div className="buttons">
             <button
               className="button is-info"

@@ -12,6 +12,7 @@ import { createLogger } from 'redux-logger';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 import fbConfig from '../config/firebaseConfig';
 import rootReducer from './reducers/root';
@@ -23,6 +24,7 @@ const rrfConfig = {
 
 firebase.initializeApp(fbConfig);
 firebase.firestore();
+export const storage = firebase.storage();
 
 const middleware = composeWithDevTools(
   applyMiddleware(
