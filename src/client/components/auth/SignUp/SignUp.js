@@ -85,11 +85,11 @@ class SignUp extends Component {
       ageInterest,
       prefGender,
     } = this.state;
-    if (!ageInterest) {
-      ageInterest = '18:25';
-    }
     if (!gender) {
       gender = 'Male';
+    }
+    if (!prefGender) {
+      prefGender = 'Male';
     }
     const userData = {
       age: age,
@@ -179,6 +179,7 @@ class SignUp extends Component {
         return (
           <Terms
             prevStep={this.prevStep}
+            nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleSignUp={this.handleSignUp}
           />

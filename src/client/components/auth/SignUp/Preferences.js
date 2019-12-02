@@ -68,7 +68,9 @@ export default class Preferences extends Component {
                 value={prefGender}
                 onChange={handleChange}
               >
-                <option value="Male">Male</option>
+                <option default value="Male">
+                  Male
+                </option>
                 <option value="Female">Female</option>
               </select>
             </div>

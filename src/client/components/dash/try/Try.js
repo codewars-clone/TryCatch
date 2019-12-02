@@ -27,9 +27,8 @@ class Try extends Component {
     this.renderSplash = this.renderSplash.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  async componentDidMount() {
+  componentDidMount() {
     const userId = this.props.auth.uid;
-    this.props.getCurrentUser(userId);
     this.props.getProspects(userId);
   }
 
@@ -41,7 +40,7 @@ class Try extends Component {
   }
   async handleCodingChallenge(prospectId, message) {
     await this.props.sendLike(prospectId, message);
-    this.setState({message: ''});
+    this.setState({ message: '' });
   }
 
   renderSplash() {
@@ -56,7 +55,7 @@ class Try extends Component {
       console.log(redirect);
       return <Redirect to="/splash" />;
     } else if (!this.props.prospects[0]) {
-      return <div />;
+      return <div> No prospects in your area :(</div>;
     } else {
       const prospect = this.props.prospects[0];
       return (
@@ -114,7 +113,10 @@ class Try extends Component {
               ></textarea>
               <div
                 onClick={() =>
-                  this.handleCodingChallenge(prospect.userId, this.state.message)
+                  this.handleCodingChallenge(
+                    prospect.userId,
+                    this.state.message
+                  )
                 }
               >
                 <LikeButton />
