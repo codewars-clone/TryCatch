@@ -48,7 +48,6 @@ class ChatRoom extends Component {
     }; 
     
     this.props.addMessageThunk(message)
-    this.props.messageListener(message.chatId)
   }
 
   render() {

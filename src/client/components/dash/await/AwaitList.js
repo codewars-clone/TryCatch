@@ -18,7 +18,7 @@ class AwaitList extends Component {
 
   createChat(prospect) {
     let newChat = {
-      chatId: prospect.userId,
+      chatId: `${prospect.userId.slice(4)}${this.props.auth.uid.slic(4)}`,
       name: prospect.name,
       people: {
         prospect: {
@@ -36,21 +36,6 @@ class AwaitList extends Component {
   }
 
   render() {
-    console.log('prospects in DB', this.props.prospects);
-    // const prospects = [ {
-    //   userId: "1",
-    //   name: "Johnny",
-    //   age: 24,
-    //   gemder: 'male',
-    //   image:  "https://pbs.twimg.com/profile_images/1005956021087547393/RdD7s-Gb_400x400.jpg"
-    // },{
-    //   userId: "2",
-    //   name: "Freddy",
-    //   age: 24,
-    //   gemder: 'male',
-    //   image: "https://cdn.images.express.co.uk/img/dynamic/35/590x/Freddie-Mercury-final-pictures-1208447.jpg?r=1574537671789"
-    // }]
-    console.log('CHAT', this.props.chats);
     if (this.props.prospects.length) {
       const prospects = this.props.prospects;
       return (
