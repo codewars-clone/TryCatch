@@ -50,12 +50,16 @@ class Try extends Component {
   }
 
   render() {
-    const { redirect } = this.state;
-    if (redirect) {
-      console.log(redirect);
-      return <Redirect to="/splash" />;
-    } else if (!this.props.prospects[0]) {
-      return <div> No prospects in your area :(</div>;
+    if (!this.props.prospects[0]) {
+      return(
+          <section className="section">
+            <div className="container">
+            <h1 className="title is-1">Try</h1>
+            <hr />
+            <h3 className='title is-3'> No prospects in your area :(</h3>
+            </div>
+          </section>
+      )
     } else {
       const prospect = this.props.prospects[0];
       return (
@@ -63,7 +67,7 @@ class Try extends Component {
           <div className="container">
             <h1 className="title is-1">Try</h1>
             <hr />
-            <h2 className="title is-3">
+            <h2 className="title is-2">
               <b>{prospect.name}</b>
             </h2>
             <figure className="image is-square">
