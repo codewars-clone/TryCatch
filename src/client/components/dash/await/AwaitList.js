@@ -72,7 +72,15 @@ class AwaitList extends Component {
         </section>
       );
     } else {
-      return <div>No likes yet.</div>;
+      return(
+        <section className="section">
+        <div className="container">
+        <h1 className="title is-1">Await</h1>
+        <hr />
+        <h3 className='title is-3'> No likes yet.</h3>
+        </div>
+      </section>
+      ) 
     }
   }
 }
