@@ -27,7 +27,17 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route path="/signUp" component={SignUp} />
-          <Route exact path="/" component={SignIn} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div>
+                <SignIn />{' '}
+                <div id="filler" style={{ backgroundColor: '#2f323b' }} />
+              </div>
+            )}
+          />{' '}
+          />
           {isLoggedIn && (
             <Switch>
               <Route
