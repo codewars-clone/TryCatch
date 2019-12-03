@@ -6,6 +6,7 @@ import { getChat, addMessage, addMessageThunk, messageListener, getChatsThunk} f
 import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
+import { db } from '../../store'
 
 class ChatRoom extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class ChatRoom extends Component {
       txt: ev.target.value,
     });
   }
-  handleSubmit(e) {
+  async handleSubmit(e) {
     //console.log('event => ', e);
     e.preventDefault();
     let txt = this.state.txt;
@@ -46,8 +47,19 @@ class ChatRoom extends Component {
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     }; 
+
+    let chatId = this.props.match.params.id;
+    // const chat = await db.collection('chats').doc(`${chatId}`).update({
+    //   messages: db.FieldValue.arrayUnion(message)
+    // })
+    const data = await db.collection('chats').doc(`${chatId}`)
+    console.log("TCL: ChatRoom ->  data",  data)
+    const  chat = await data.update({
+        messages: db.FieldValue.arrayUnion(message)
+      })
+    console.log("TCL: ChatRoom -> handleSubmit -> chat ", chat )
     
-    this.props.addMessageThunk(message)
+    // this.props.addMessageThunk(message)
   }
 
   render() {
