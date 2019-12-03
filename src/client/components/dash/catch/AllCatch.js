@@ -6,7 +6,6 @@ import { getChatsThunk } from '../../../store/reducers/chat'
 class AllCatch extends Component {
 
   componentDidMount() {
-    console.log('ID', this.props.user.uid)
     this.props.getChatsThunk()
   }
 
@@ -16,7 +15,7 @@ class AllCatch extends Component {
     const list = []
     chats.forEach( chat => {
       chat.people.forEach(person => { 
-        if(person.id !== this.props.user.uid){
+        if(person.id !== this.props.auth.uid){
           const updatedChat = {
             chatId: chat.chatId,
             name: person.name,
@@ -44,7 +43,8 @@ class AllCatch extends Component {
 const mapStateToProps = state => {
   return { 
     chats: state.chat.chats,
-    user: state.firebase.profile
+    user: state.firebase.profile,
+    auth: state.firebase.auth
   }
 }
 
