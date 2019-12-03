@@ -11,7 +11,6 @@ import { db } from '../../store'
 class ChatRoom extends Component {
   constructor(props) {
     super(props);
-    //console.log('name => ', props);
     this.state = {
       loadingScreen: true,
       txt: '',
@@ -20,10 +19,10 @@ class ChatRoom extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   componentDidMount() {
     let chatId = this.props.match.params.id;
-    //console.log(chatId);
-    const { currChat } = this.props;
+
     if (chatId) {
       setTimeout(() => {
         this.setState({
@@ -31,57 +30,54 @@ class ChatRoom extends Component {
         });
       }, 2000);
     }
+    
     db.collection("chats").doc(chatId)
     .onSnapshot(doc => {
       this.setState({
         messages: doc.data().messages
       })
-        // console.log("Current data: ", doc.data());
-    });
-
-//     var starCountRef =db.ref('posts/' + chatId);
-// starCountRef.on('value', function(snapshot) {
-//   updateStarCount(postElement, snapshot.val());
-
-
-
+    })
 
     this.props.getChat(chatId);
   }
+
+
   handleInput(ev) {
     this.setState({
       txt: ev.target.value,
     });
   }
+
   async handleSubmit(e) {
-    //console.log('event => ', e);
+
     e.preventDefault();
     let txt = this.state.txt;
     let message = {
       chatId:this.props.match.params.id,
-      name: 'Daphyni',
+      name: this.props.user.name,
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     }; 
+    console.log("TCL: ChatRoom -> handleSubmit -> message", message)
 
-    const updatedMessages = [...this.state.messages, message]
+    // const updatedMessages = [...this.state.messages, message]
 
-    let chatId = this.props.match.params.id;
-    const chat = await db.collection('chats').doc(`${chatId}`).set({
-      chatId: 'NLdsgYueVBOEBC5gFUosxhFTIsI2',
-      name: 'mike',
-      people: {
-        prospect: {
-          name: 'lucy'
-        },
-        user: {
-          name: 'MIKe'
-        },
-      },
-      image:'adfad',
-      messages: updatedMessages
-    })
-    // this.props.addMessageThunk(message)
+    // let chatId = this.props.match.params.id;
+    // const chat = await db.collection('chats').doc(`${chatId}`).set({
+    //   chatId: 'NLdsgYueVBOEBC5gFUosxhFTIsI2',
+    //   name: 'mike',
+    //   people: {
+    //     prospect: {
+    //       name: 'lucy'
+    //     },
+    //     user: {
+    //       name: 'MIKe'
+    //     },
+    //   },
+    //   image:'adfad',
+    //   messages: updatedMessages
+    // })
+    this.props.addMessageThunk(message)
   }
 
   render() {
@@ -165,6 +161,7 @@ const mapStateToProps = state => {
   return {
     currChat: state.chat.currChat,
     chats: state.chat.chats,
+    user: state.firebase.profile
   };
 };
 

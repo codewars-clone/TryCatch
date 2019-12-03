@@ -11,7 +11,7 @@ class AllCatch extends Component {
 
   render() { 
     const { chats } = this.props
-    console.log("TCL: AllCatch -> render -> hats", this.props)
+    
     return (  
       <section className="section">
         <div className="container">
