@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   SignUp,
   Dashbar,
@@ -10,22 +11,46 @@ import {
   ChatRoom,
   SignIn,
 } from './client/components/index';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { verifyAuth } from './client/store/reducers/auth';
 
-function App() {
+class App extends Component {
+  componentDidMount(){
+    this.props.isVerified();
+  }
+
+  render(){
+    console.log('ARE WE LOGGED IN YET? ',this.props.isLoggedIn);
+    const {isLoggedIn} =this.props;
   return (
     <div className="App">
+      <Switch>
       <Route path="/signUp" component={SignUp} />
-      <Route path="/try" component={Try} />
       <Route exact path="/" component={SignIn} />
-      <Route path="/await" component={AwaitList} />
-      <Route path="/catch" component={AllCatach} />
-      <Route path="/settings" component={Settings} />
-      <Route path="/splash" component={Splash} />
-      <Route path="/chat/:id" component={ChatRoom} />
-      <Dashbar />
+        {isLoggedIn && (
+        <Switch>
+          <Route path="/try" render={() => <div><Try/> <Dashbar/></div>} /> />
+          <Route path="/await" render={() => <div><AwaitList/> <Dashbar/></div>} /> />
+          <Route path="/catch" render={() => <div><AllCatach/> <Dashbar/></div>} /> />
+          <Route path="/settings" render={() => <div><Settings/> <Dashbar/></div>} /> />
+          <Route path="/splash" render={() => <div><Splash/> <Dashbar/></div>} /> />
+          <Route path="/chat/:id" component={ChatRoom} />
+        </Switch>)}
+      </Switch>
     </div>
   );
+  }
+}
+const mapState = state => {
+  return {
+    isLoggedIn: state.auth.isAuthenticated
+  };
+};
+
+const mapDispatch = dispatch => {
+  return {
+    isVerified: () => dispatch(verifyAuth())
+  }
 }
 
-export default App;
+export default connect(mapState, mapDispatch)(App);
