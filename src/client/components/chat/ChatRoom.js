@@ -81,9 +81,6 @@ class ChatRoom extends Component {
       image:'adfad',
       messages: updatedMessages
     })
-
-
-
     // this.props.addMessageThunk(message)
   }
 
