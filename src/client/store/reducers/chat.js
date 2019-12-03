@@ -76,7 +76,7 @@ export const addMessageThunk = message => async (
     const chat = await db.collection('chats').doc(`${message.chatId}`).update({
       messages: db.FieldValue.arrayUnion(message)
     })
-    dispatch(addMessage(message))
+    // dispatch(addMessage(message))
   } catch (error) {
     console.error(error);
   }
