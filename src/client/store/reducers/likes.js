@@ -58,7 +58,7 @@ export const getProspects = userId => async (
     const filteredProspects = prospects.filter(prospect => {
       let id = prospect.userId;
       //if prospectId is already in current user's liked collection, it will be removed from prospects
-      return !userLikes.data()[id];
+      return !userLikes.data()[id] && (id !== userId);
     });
     dispatch(gotProspects(filteredProspects));
   } catch (err) {
