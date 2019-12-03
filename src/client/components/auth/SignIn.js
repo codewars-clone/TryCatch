@@ -45,9 +45,6 @@ class SignIn extends Component {
               onSubmit={this.handleSubmit}
               className="container"
             >
-              {/* <div className="title" size="is-full">
-              <h1>Sign In</h1>
-            </div> */}
               {/* EMAIL */}
               <div className="field">
                 <label className="label has-text-white">Email</label>
