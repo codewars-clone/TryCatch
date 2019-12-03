@@ -24,7 +24,16 @@ class App extends Component {
         {isLoggedOut ? (
           <div>
             <Route path="/signUp" component={SignUp} />
-            <Route exact path="/" component={SignIn} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <div>
+                  <SignIn />{' '}
+                  <div id="filler" style={{ backgroundColor: '#2f323b' }} />
+                </div>
+              )}
+            />
           </div>
         ) : (
           <Switch>
