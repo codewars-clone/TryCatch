@@ -18,20 +18,13 @@ class AwaitList extends Component {
 
   createChat(prospect) {
     let newChat = {
-      chatId: `${prospect.userId.slice(4)}${this.props.auth.uid.slic(4)}`,
-      name: prospect.name,
-      people: {
-        prospect: {
-          name: prospect.name,
-        },
-        user: {
-          name: this.props.user.name,
-        },
-      },
-      image: prospect.imageUrl,
+      chatId: `${prospect.userId.slice(4)}${this.props.auth.uid.slice(4)}`,
+      people: [
+        {id: this.props.auth.uid, name: this.props.user.name, image: this.props.user.imageUrl}, 
+        {id: prospect.userId, image: prospect.imageUrl, name: prospect.name}
+      ],
       messages: [],
     };
-    console.log('TCL: AwaitList -> createChat -> newChat ', newChat);
     this.props.createChatThunk(newChat);
   }
 

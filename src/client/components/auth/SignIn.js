@@ -86,7 +86,7 @@ class SignIn extends Component {
                 )}
               </div>
               <div className="column" id="loggin">
-                <button type="submit" className="button is-danger">
+                <button type="submit" className="button is-danger is-samll">
                   Login
                 </button>
               </div>
