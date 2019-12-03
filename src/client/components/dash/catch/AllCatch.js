@@ -11,9 +11,17 @@ class AllCatch extends Component {
 
   render() { 
     const { chats } = this.props
+    console.log("TCL: AllCatch -> render -> chats ", chats )
 
     const list = []
-    chats.forEach( chat => {
+    const filteredChats = chats.filter( chat => {
+      if(chat.people[0].id === this.props.auth.uid || chat.people[1].id === this.props.auth.uid ){
+        return chat
+      }
+    })   
+    console.log("TCL: AllCatch -> render -> filteredChats ", filteredChats )
+      
+    filteredChats.forEach(chat => {
       chat.people.forEach(person => { 
         if(person.id !== this.props.auth.uid){
           const updatedChat = {
@@ -50,7 +58,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getChatsThunk: (user) => { dispatch(getChatsThunk(user)) }
+    getChatsThunk: () => { dispatch(getChatsThunk()) }
   }
 }
 
