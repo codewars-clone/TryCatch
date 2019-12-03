@@ -13,10 +13,6 @@ code {
     monospace;
 }
 
-.App {
-  /* height: 1000vh; */
-}
-
 .section {
   height: 100%;
   background-attachment: fixed;
@@ -27,10 +23,6 @@ code {
   justify-content: center;
 }
 
-#sign-link {
-  display: flex;
-  justify-content: center;
-}
 #sign-in-form {
   top: 19em;
 }
@@ -46,17 +38,17 @@ code {
   left: 1em;
 }
 
-#signInBG {
+#sign-in-bg {
   height: 90vh;
 }
 
 footer {
   position: fixed;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   left: 0;
   bottom: 0;
-  height: 5%;
+  height: 1%;
   width: 100%;
   color: black;
   text-align: center;

@@ -32,7 +32,7 @@ class SignIn extends Component {
       return <Redirect to="/try" />;
     } else {
       return (
-        <div id="signInBG">
+        <div id="sign-in-bg">
           <section
             className="section"
             style={{
@@ -93,7 +93,7 @@ class SignIn extends Component {
                   Login
                 </button>
               </div>
-              <div id="signup-link">
+              <div id="loggin">
                 <Link to="/signup">
                   <h5 className="title is-5 has-text-white">Sign Up</h5>
                 </Link>
