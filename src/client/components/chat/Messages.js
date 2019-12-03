@@ -8,9 +8,9 @@ export default class Messages extends Component {
         <div className="container">
           <ul>
             {messages &&
-              messages.map(message => {
+              messages.map((message, index)=> {
                 return (
-                  <li key={message.name}>
+                  <li key={index}>
                     <p>{message.name}</p>
                     <p>{message.time}</p>
                     <p>{message.txt}</p>
