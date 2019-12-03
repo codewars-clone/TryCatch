@@ -16,6 +16,7 @@
 
 - Remember: Users liking other users is just a list or map of users; you might not necessarily need a new collection for that
 - For something like Firestore, bias on the side of "many collections; small documents" data organization style
+- Consider using [Cloud Functions](https://firebase.google.com/docs/functions/) for auto resizing uploaded images among other things that you want to "listen to" and "intercept" before anything happens in your DB.
 
 ## Communication Considerations
 
