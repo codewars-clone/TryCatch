@@ -22,7 +22,7 @@ export default class Assets extends Component {
       <section className="section">
         <div className="container">
           <h1 className="title">Assets</h1>
-          <progress class="progress is-small is-info" value="65" max="100">
+          <progress className="progress is-small is-info" value="65" max="100">
             65%
           </progress>
           {/* Operating System */}

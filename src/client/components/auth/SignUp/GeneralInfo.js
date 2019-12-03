@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ImageUpload from './ImageUpload';
 
 export default class GeneralInfo extends Component {
   constructor() {
@@ -19,20 +18,15 @@ export default class GeneralInfo extends Component {
       MM,
       DD,
       YYYY,
-      gender,
       password,
       handleChange,
-      handleUpload,
-      handleImageChange,
       calcAge,
-      image,
-      imageUrl
     } = this.props;
     return (
       <section className="section">
         <div className="container">
           <h1 className="title">General Info</h1>
-          <progress class="progress is-small is-info" value="15" max="100">
+          <progress className="progress is-small is-info" value="15" max="100">
             15%
           </progress>
           {/* FIRST NAME */}
@@ -62,10 +56,10 @@ export default class GeneralInfo extends Component {
                 onChange={handleChange}
               />
               <span className="icon is-small is-left">
-                <icon className="fas fa-envelope"></icon>
+                <i className="fas fa-envelope"></i>
               </span>
               <span className="icon is-small is-right">
-                <icon className="fas fa-exclamation-triangle"></icon>
+                <i className="fas fa-exclamation-triangle"></i>
               </span>
             </div>
           </div>
@@ -82,7 +76,7 @@ export default class GeneralInfo extends Component {
                 placeholder="Enter a secure password"
               />
               <span className="icon is-small is-left">
-                <icon className="fas fa-lock"></icon>
+                <i className="fas fa-lock"></i>
               </span>
             </p>
           </div>
@@ -120,43 +114,6 @@ export default class GeneralInfo extends Component {
               placeholder="YYYY"
             ></input>
           </div>
-          {/* GENDER & HEIGHT */}
-          <div className="field is-horizontal">
-            <div className="field-body">
-              <div className="field">
-                <label className="label">Gender</label>
-                <div className="select">
-                  <select name="gender" onChange={handleChange} value={gender}>
-                    <option default value="Male">
-                      Male
-                    </option>
-                    <option value="Female">Female</option>
-                    <option value="Non-binary">Non-binary</option>
-                  </select>
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Height</label>
-                <input
-                  className="input"
-                  maxLength="2"
-                  type="tel"
-                  name="ft"
-                  style={{ width: '5em' }}
-                  placeholder="ft"
-                ></input>
-                <input
-                  className="input"
-                  maxLength="2"
-                  type="tel"
-                  name="in"
-                  style={{ width: '5em' }}
-                  placeholder="in"
-                ></input>
-              </div>
-            </div>
-          </div>
-          <ImageUpload handleImageChange={handleImageChange} handleUpload={handleUpload} image={image} imageUrl={imageUrl}/>
           <div className="buttons">
             <button
               className="button is-info"
