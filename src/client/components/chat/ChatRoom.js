@@ -31,6 +31,21 @@ class ChatRoom extends Component {
         });
       }, 2000);
     }
+    db.collection("chats").doc(chatId)
+    .onSnapshot(doc => {
+      this.setState({
+        messages: doc.data().messages
+      })
+        // console.log("Current data: ", doc.data());
+    });
+
+//     var starCountRef =db.ref('posts/' + chatId);
+// starCountRef.on('value', function(snapshot) {
+//   updateStarCount(postElement, snapshot.val());
+
+
+
+
     this.props.getChat(chatId);
   }
   handleInput(ev) {
@@ -43,7 +58,7 @@ class ChatRoom extends Component {
     e.preventDefault();
     let txt = this.state.txt;
     let message = {
-      chatId: this.props.currChat[0].chatId,
+      chatId:this.props.match.params.id,
       name: 'Daphyni',
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
@@ -67,15 +82,6 @@ class ChatRoom extends Component {
       messages: updatedMessages
     })
 
-    let data = await db.collection('chats').get()
-    let chats = [];
-    data.forEach(doc => {
-      chats.push(doc.data());
-    });
-
-    this.setState({
-      messages: chats[0].messages
-    })
 
 
     // this.props.addMessageThunk(message)
