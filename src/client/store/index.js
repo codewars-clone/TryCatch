@@ -23,7 +23,7 @@ const rrfConfig = {
 };
 
 firebase.initializeApp(fbConfig);
-firebase.firestore();
+export const db = firebase.firestore();
 export const storage = firebase.storage();
 
 const middleware = composeWithDevTools(
