@@ -60,23 +60,7 @@ class ChatRoom extends Component {
     }; 
     console.log("TCL: ChatRoom -> handleSubmit -> message", message)
 
-    // const updatedMessages = [...this.state.messages, message]
 
-    // let chatId = this.props.match.params.id;
-    // const chat = await db.collection('chats').doc(`${chatId}`).set({
-    //   chatId: 'NLdsgYueVBOEBC5gFUosxhFTIsI2',
-    //   name: 'mike',
-    //   people: {
-    //     prospect: {
-    //       name: 'lucy'
-    //     },
-    //     user: {
-    //       name: 'MIKe'
-    //     },
-    //   },
-    //   image:'adfad',
-    //   messages: updatedMessages
-    // })
     this.props.addMessageThunk(message)
   }
 

@@ -20,9 +20,7 @@ class AwaitList extends Component {
     console.log('USERR ', this.props.auth.uid.slice(4))
     let newChat = {
       chatId: `${prospect.userId.slice(4)}${this.props.auth.uid.slice(4)}`,
-      name: prospect.name,
-      people: [this.props.auth.uid, prospect.userId],
-      image: prospect.imageUrl,
+      people: [{id: this.props.auth.uid, image: this.props.user.imageUrl}, {id: prospect.userId, image: prospect.imageUrl}],
       messages: [],
     };
     
