@@ -131,6 +131,7 @@ export default class GeneralInfo extends Component {
                       Male
                     </option>
                     <option value="Female">Female</option>
+                    <option value="Non-binary">Non-binary</option>
                   </select>
                 </div>
               </div>
