@@ -1,41 +1,40 @@
-
 body {
   margin: 0;
   padding-bottom: 10em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-.App{
-  /*height: 150vh;*/
+.App {
+  /* height: 1000vh; */
 }
 
-.section{
+.section {
   height: 100%;
   background-attachment: fixed;
 }
 
-#loggin{
+#loggin {
   display: flex;
   justify-content: center;
 }
 
-#sign-link{
+#sign-link {
   display: flex;
   justify-content: center;
 }
-#sign-in-form{
-  top: 19em
+#sign-in-form {
+  top: 19em;
 }
-#form{
+#form {
   position: fixed;
   bottom: 10em;
   left: 3em;
@@ -45,6 +44,10 @@ code {
   position: fixed;
   bottom: 10em;
   left: 1em;
+}
+
+#signInBG {
+  height: 90vh;
 }
 
 footer {
