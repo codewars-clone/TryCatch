@@ -26,7 +26,7 @@ class Try extends Component {
       this.setState({
         loadingScreen: false,
       });
-    }, 2000);
+    }, 1200);
   }
 
   handleChange(event) {
