@@ -60,10 +60,10 @@ class SignIn extends Component {
                     onChange={this.handleChange}
                   />
                   <span className="icon is-small is-left">
-                    <icon className="fas fa-envelope"></icon>
+                    <i className="fas fa-envelope"></i>
                   </span>
                   <span className="icon is-small is-right">
-                    <icon className="fas fa-exclamation-triangle"></icon>
+                    <i className="fas fa-exclamation-triangle"></i>
                   </span>
                 </div>
               </div>
@@ -79,7 +79,7 @@ class SignIn extends Component {
                     placeholder="password"
                   />
                   <span className="icon is-small is-left">
-                    <icon className="fas fa-lock"></icon>
+                    <i className="fas fa-lock"></i>
                   </span>
                 </p>
                 {loginError && (
