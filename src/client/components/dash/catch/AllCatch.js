@@ -19,7 +19,7 @@ class AllCatch extends Component {
           const updatedChat = {
             chatId: chat.chatId,
             name: person.name,
-            image: person.iamge
+            image: person.image
           }
           list.push(updatedChat)
         }
