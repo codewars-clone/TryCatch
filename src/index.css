@@ -1,60 +1,63 @@
-
 body {
   margin: 0;
   padding-bottom: 10em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-.App{
-  height: 1000vh;
+.App {
+  /* height: 1000vh; */
 }
 
-.section{ 
+.section {
   height: 100%;
   background-attachment: fixed;
 }
 
-#loggin{ 
+#loggin {
   display: flex;
   justify-content: center;
 }
 
-#sign-link{ 
+#sign-link {
   display: flex;
   justify-content: center;
 }
-#sign-in-form{ 
-  top: 19em
+#sign-in-form {
+  top: 19em;
 }
-#form{
+#form {
   position: fixed;
   bottom: 10em;
-  left: 3em; 
+  left: 3em;
 }
 
-#next { 
+#next {
   position: fixed;
   bottom: 10em;
-  left: 1em; 
+  left: 1em;
 }
 
-footer { 
+#signInBG {
+  height: 90vh;
+}
+
+footer {
   position: fixed;
   display: flex;
   justify-content: space-around;
   left: 0;
   bottom: 0;
-  height: 5%; 
+  height: 5%;
   width: 100%;
-  color: black; 
-  text-align: center; 
+  color: black;
+  text-align: center;
 }
