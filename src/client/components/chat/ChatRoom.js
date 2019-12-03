@@ -30,7 +30,7 @@ class ChatRoom extends Component {
         this.setState({
           loadingScreen: false,
         });
-      }, 2000);
+      }, 1200);
     }
     
     db.collection("chats").doc(chatId)
