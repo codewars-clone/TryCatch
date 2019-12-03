@@ -34,12 +34,13 @@ export const updateChat = chatId => {
 };
 
 //thunk
-export const getChatsThunk = () => async (
+export const getChatsThunk = (user) => async (
   dispatch,
   getState,
   { getFirestore }
 ) => {
   try {
+    console.log('USER', user)
     const db = getFirestore();
     let data = await db.collection('chats').get();
     let chats = [];

@@ -15,7 +15,8 @@ class ChatRoom extends Component {
     this.state = {
       loadingScreen: true,
       txt: '',
-      messages: []
+      messages: [],
+      people: []
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,6 +36,7 @@ class ChatRoom extends Component {
     db.collection("chats").doc(chatId)
     .onSnapshot(doc => {
       this.setState({
+        people: doc.data().people,
         messages: doc.data().messages
       })
     })
@@ -59,23 +61,24 @@ class ChatRoom extends Component {
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     }; 
-    console.log("TCL: ChatRoom -> handleSubmit -> message", message)
-
 
     this.props.addMessageThunk(message)
   }
 
   render() {
-    const { currChat } = this.props;
+    const { loadingScreen, messages, people} = this.state;
+    let image = ''
+    let name = ''
 
-    const { loadingScreen } = this.state;
+    if(people){
+      people.forEach(person => {
+        if(person.id!== this.props.auth.uid){
+          name = person.name
+          image = person.image
+        }
+      })
+    }
 
-    let image = currChat.length ? currChat[0].image : '';
-    let name = currChat.length ? currChat[0].name : '';
-    // let messages = currChat.length ? currChat[0].messages : [];
-    let {messages} = this.state
-
-  console.log('TCL: ChatRoom -> render -> currChat ', currChat);
     let main = (
       <div className="container">
         <div className="box">
@@ -146,7 +149,8 @@ const mapStateToProps = state => {
   return {
     currChat: state.chat.currChat,
     chats: state.chat.chats,
-    user: state.firebase.profile
+    user: state.firebase.profile,
+    auth: state.firebase.auth
   };
 };
 
