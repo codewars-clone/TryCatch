@@ -22,7 +22,8 @@ class AwaitList extends Component {
       chatId: `${prospect.userId.slice(4)}${this.props.auth.uid.slice(4)}`,
       people: [
         {id: this.props.auth.uid, name: this.props.user.name, image: this.props.user.imageUrl}, 
-        {id: prospect.userId, image: prospect.imageUrl, name: prospect.name}],
+        {id: prospect.userId, image: prospect.imageUrl, name: prospect.name}
+      ],
       messages: [],
     };
     this.props.createChatThunk(newChat);
