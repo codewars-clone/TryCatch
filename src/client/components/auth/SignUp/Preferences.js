@@ -72,6 +72,7 @@ export default class Preferences extends Component {
                   Male
                 </option>
                 <option value="Female">Female</option>
+                <option value="Everyone">Everyone</option>
               </select>
             </div>
           </div>

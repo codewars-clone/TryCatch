@@ -26,11 +26,16 @@ export const getProspects = userId => async (
     const firestore = getFirestore();
     const users = await firestore.collection('users');
     const currentUser = await firestore.doc(`/users/${userId}`).get();
-    const response = await users.where(
-      'gender',
-      '==',
-      currentUser.data().preferences.gender
-    );
+    let response;
+    if(currentUser.data().preferences.gender === 'Everyone'){
+      response = users;
+    } else {
+       response = await users.where(
+        'gender',
+        '==',
+        currentUser.data().preferences.gender
+      );
+    }
     const age = await response
       .where('age', '>=', currentUser.data().preferences.age[0])
       .where('age', '<=', currentUser.data().preferences.age[1])
