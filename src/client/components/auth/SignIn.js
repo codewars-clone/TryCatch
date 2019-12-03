@@ -89,14 +89,14 @@ class SignIn extends Component {
                 )}
               </div>
               <div className="column" id="loggin">
-                <button type="submit" className="button is-danger">
+                <button type="submit" className="button is-danger is-samll">
                   Login
                 </button>
               </div>
-              <div id="signup-link">
+              <div id="signupLink">
                 <Link to="/signup">
-                  <h5 className="title is-5 has-text-white">Sign Up</h5>
-                </Link>
+                    <h5 className="title is-5 has-text-white">Sign Up</h5>
+                  </Link>
               </div>
             </form>
           </section>

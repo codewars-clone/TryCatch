@@ -4,18 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers, getUser } from '../../../store/reducers/users';
 import { getProspects, unLike, sendLike } from '../../../store/reducers/likes';
-//display photo, name, age... description later
-//how to randomize which user is displayed, based on preferences
-//needs two buttons, like button and x button
 
-//in order to get all users that match preferences, we send a specific request that takes the current users' preferences, and makes a call to the database using those preferences as filters, and specificially if that user has not been "seen" by the current user. Can return all users that match these preferences, and that becomes the stack? or a user is randomly selected from that list.
-//also, the other user's preferences have to match the requested user's info/assets
-// const user = {
-//   age: 26,
-//   name: 'Daphne',
-//   imageUrl: 'https://upload.wikimedia.org/wikipedia/it/4/41/Daphne_Blake.jpg',
-//   codingChallenge: 'find the sum in a multidimensional array',
-// };
 class Try extends Component {
   constructor() {
     super();

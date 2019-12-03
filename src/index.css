@@ -27,10 +27,11 @@ code {
   justify-content: center;
 }
 
-#sign-link {
+#signLink {
   display: flex;
   justify-content: center;
 }
+
 #sign-in-form {
   top: 19em;
 }

@@ -7,6 +7,7 @@ import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
 import { db } from '../../store'
+// import  playSound from '../../../scripts/utilityFunctions'
 
 class ChatRoom extends Component {
   constructor(props) {
