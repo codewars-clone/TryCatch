@@ -32,7 +32,7 @@ class SignIn extends Component {
       return <Redirect to="/try" />;
     } else {
       return (
-        <div id="signInBG">
+        <div id="sign-in-bg">
           <section
             className="section"
             style={{
@@ -45,9 +45,6 @@ class SignIn extends Component {
               onSubmit={this.handleSubmit}
               className="container"
             >
-              {/* <div className="title" size="is-full">
-              <h1>Sign In</h1>
-            </div> */}
               {/* EMAIL */}
               <div className="field">
                 <label className="label has-text-white">Email</label>
@@ -60,10 +57,10 @@ class SignIn extends Component {
                     onChange={this.handleChange}
                   />
                   <span className="icon is-small is-left">
-                    <icon className="fas fa-envelope"></icon>
+                    <i className="fas fa-envelope"></i>
                   </span>
                   <span className="icon is-small is-right">
-                    <icon className="fas fa-exclamation-triangle"></icon>
+                    <i className="fas fa-exclamation-triangle"></i>
                   </span>
                 </div>
               </div>
@@ -79,7 +76,7 @@ class SignIn extends Component {
                     placeholder="password"
                   />
                   <span className="icon is-small is-left">
-                    <icon className="fas fa-lock"></icon>
+                    <i className="fas fa-lock"></i>
                   </span>
                 </p>
                 {loginError && (
@@ -93,10 +90,10 @@ class SignIn extends Component {
                   Login
                 </button>
               </div>
-              <div id="signupLink">
+              <div id="loggin">
                 <Link to="/signup">
-                    <h5 className="title is-5 has-text-white">Sign Up</h5>
-                  </Link>
+                  <h5 className="title is-5 has-text-white">Sign Up</h5>
+                </Link>
               </div>
             </form>
           </section>

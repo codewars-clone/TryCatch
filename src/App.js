@@ -15,42 +15,85 @@ import { Route, Switch } from 'react-router-dom';
 import { verifyAuth } from './client/store/reducers/auth';
 
 class App extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.isVerified();
   }
 
-  render(){
-    console.log('ARE WE LOGGED IN YET? ',this.props.isLoggedIn);
-    const {isLoggedIn} =this.props;
-  return (
-    <div className="App">
-      <Switch>
-      <Route path="/signUp" component={SignUp} />
-      <Route exact path="/" component={SignIn} />
-        {isLoggedIn && (
+  render() {
+    console.log('ARE WE LOGGED IN YET? ', this.props.isLoggedIn);
+    console.log('ARE WE LOGGED IN YET WITH FIREBASE? ', this.props.fbLoggedIn);
+    const { isLoggedIn } = this.props;
+    return (
+      <div className="App">
         <Switch>
-          <Route path="/try" render={() => <div><Try/> <Dashbar/></div>} /> />
-          <Route path="/await" render={() => <div><AwaitList/> <Dashbar/></div>} /> />
-          <Route path="/catch" render={() => <div><AllCatach/> <Dashbar/></div>} /> />
-          <Route path="/settings" render={() => <div><Settings/> <Dashbar/></div>} /> />
-          <Route path="/splash" render={() => <div><Splash/> <Dashbar/></div>} /> />
-          <Route path="/chat/:id" component={ChatRoom} />
-        </Switch>)}
-      </Switch>
-    </div>
-  );
+          <Route path="/signUp" component={SignUp} />
+          <Route exact path="/" component={SignIn} />
+          {isLoggedIn && (
+            <Switch>
+              <Route
+                path="/try"
+                render={() => (
+                  <div>
+                    <Try /> <Dashbar />
+                  </div>
+                )}
+              />{' '}
+              />
+              <Route
+                path="/await"
+                render={() => (
+                  <div>
+                    <AwaitList /> <Dashbar />
+                  </div>
+                )}
+              />{' '}
+              />
+              <Route
+                path="/catch"
+                render={() => (
+                  <div>
+                    <AllCatach /> <Dashbar />
+                  </div>
+                )}
+              />{' '}
+              />
+              <Route
+                path="/settings"
+                render={() => (
+                  <div>
+                    <Settings /> <Dashbar />
+                  </div>
+                )}
+              />{' '}
+              />
+              <Route
+                path="/splash"
+                render={() => (
+                  <div>
+                    <Splash /> <Dashbar />
+                  </div>
+                )}
+              />{' '}
+              />
+              <Route path="/chat/:id" component={ChatRoom} />
+            </Switch>
+          )}
+        </Switch>
+      </div>
+    );
   }
 }
 const mapState = state => {
   return {
-    isLoggedIn: state.auth.isAuthenticated
+    isLoggedIn: state.auth.isAuthenticated,
+    fbLoggedIn: state.firebase.auth.isAuthenticated,
   };
 };
 
 const mapDispatch = dispatch => {
   return {
-    isVerified: () => dispatch(verifyAuth())
-  }
-}
+    isVerified: () => dispatch(verifyAuth()),
+  };
+};
 
 export default connect(mapState, mapDispatch)(App);
