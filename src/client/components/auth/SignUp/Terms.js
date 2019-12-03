@@ -18,7 +18,7 @@ export default class Terms extends Component {
       <section className="section">
         <div className="container">
           <h1 className="title">Terms & Conditions</h1>
-          <progress class="progress is-small is-info" value="90" max="100">
+          <progress className="progress is-small is-info" value="90" max="100">
             90%
           </progress>
           <p>
@@ -48,7 +48,7 @@ export default class Terms extends Component {
             <button className="button is-danger" onClick={this.back}>
               Back
             </button>
-            <Link to='/try'>
+            <Link to="/try">
               <button
                 className="button is-info"
                 onClick={this.props.handleSignUp}
@@ -56,7 +56,6 @@ export default class Terms extends Component {
                 Agree and Register
               </button>
             </Link>
-
           </div>
         </div>
       </section>

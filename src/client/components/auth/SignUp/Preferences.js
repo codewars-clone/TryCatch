@@ -29,7 +29,7 @@ export default class Preferences extends Component {
       <section className="section">
         <div className="container">
           <h1 className="title">Preferences</h1>
-          <progress class="progress is-small is-info" value="45" max="100">
+          <progress className="progress is-small is-info" value="45" max="100">
             45%
           </progress>
           {/* MEET UP */}

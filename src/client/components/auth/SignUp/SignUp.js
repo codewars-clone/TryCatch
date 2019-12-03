@@ -26,9 +26,9 @@ class SignUp extends Component {
       meetUp: '',
       sexualOrientation: '',
       image: {
-        name: ''
+        name: '',
       },
-      imageUrl: ''
+      imageUrl: '',
     };
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
@@ -90,7 +90,7 @@ class SignUp extends Component {
       name,
       ageInterest,
       prefGender,
-      imageUrl
+      imageUrl,
     } = this.state;
     if (!gender) {
       gender = 'Male';
@@ -120,27 +120,34 @@ class SignUp extends Component {
   handleImageChange = e => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      this.setState(() => ({image}));
+      this.setState(() => ({ image }));
     }
-  }
+  };
 
   handleUpload = () => {
-    const {image} = this.state;
+    const { image } = this.state;
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on('state_changed',
-    (snapshot) => {
-      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-    },
-    (error) => {
-      console.log(error);
-    },
-  () => {
-      storage.ref('images').child(image.name).getDownloadURL().then(imageUrl => {
-          this.setState({imageUrl});
-      })
-    })
-
-  }
+    uploadTask.on(
+      'state_changed',
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref('images')
+          .child(image.name)
+          .getDownloadURL()
+          .then(imageUrl => {
+            this.setState({ imageUrl });
+          });
+      }
+    );
+  };
 
   render() {
     const {
@@ -154,6 +161,8 @@ class SignUp extends Component {
       YYYY,
       gender,
       age,
+      hFeet,
+      hInches,
       password,
       ageInterest,
       meetUp,
@@ -170,17 +179,12 @@ class SignUp extends Component {
             MM={MM}
             DD={DD}
             YYYY={YYYY}
-            gender={gender}
             age={age}
             password={password}
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
-            handleImageChange={this.handleImageChange}
-            handleUpload={this.handleUpload}
             calcAge={this.calcAge}
-            image={image}
-            imageUrl={imageUrl}
           />
         );
       case 2: {
@@ -188,6 +192,13 @@ class SignUp extends Component {
           <Location
             nextStep={this.nextStep}
             prevStep={this.prevStep}
+            image={image}
+            imageUrl={imageUrl}
+            hFeet={hFeet}
+            hInches={hInches}
+            gender={gender}
+            handleImageChange={this.handleImageChange}
+            handleUpload={this.handleUpload}
             handleChange={this.handleChange}
           />
         );
