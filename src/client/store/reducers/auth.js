@@ -137,7 +137,7 @@ export const logoutUser = () => async (dispatch, getState, { getFirebase }) => {
 //Call the firebase onAuthStateChange(), looks for pre-existing seesion, and re-stablishes it, plus
 // it also sets up a listener while the app is running to change user session tokens when they expire
 
-export const verifyAuth = () => (dispatch, getState, getFirebase) => {
+export const verifyAuth = () => (dispatch, getState, {getFirebase}) => {
   dispatch(verifyRequest());
   const firebase = getFirebase();
   firebase.auth().onAuthStateChanged(user => {
@@ -147,6 +147,8 @@ export const verifyAuth = () => (dispatch, getState, getFirebase) => {
     dispatch(verifySuccess());
   });
 };
+
+
 
 //Reducer
 

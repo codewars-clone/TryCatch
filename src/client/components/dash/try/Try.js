@@ -126,38 +126,6 @@ class Try extends Component {
                 <LikeButton />
               </div>
             </div>
-            {/* PIC 2 */}
-            {/* <figure className="image is-square">
-              <img
-                width="2100px"
-                height="200px"
-                src="https://vignette.wikia.nocookie.net/scoobydoo/images/1/1d/Daphne_Blake.png/revision/latest?cb=20190320032736"
-                alt=""
-              />
-              <LikeButton />
-            </figure>
-            <br />
-            <div className="content">
-              <h3 className="title is-3">Puns</h3>
-              <h4 className="subtitle">lorem lor e leolda </h4>
-              <LikeButton />
-            </div>
-            {/* PIC 3
-            <figure className="image is-square">
-              <img
-                width="2100px"
-                height="200px"
-                src="https://www.sdpnoticias.com/files/image_804_455/uploads/2019/08/06/5d4974b3cac78.jpeg"
-                alt=""
-              />
-              <LikeButton />
-            </figure>
-            <br />
-            <div className="content">
-              <h3 className="title is-3">Puns</h3>
-              <h4 className="subtitle">lorem lor e leolda </h4>
-              <LikeButton />
-            </div> */}
             <div
               onClick={() => {
                 this.props.unLike(prospect.userId);
