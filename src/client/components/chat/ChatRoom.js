@@ -15,6 +15,7 @@ class ChatRoom extends Component {
     this.state = {
       loadingScreen: true,
       txt: '',
+      messages: []
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,17 +49,35 @@ class ChatRoom extends Component {
       txt,
     }; 
 
+    const updatedMessages = [...this.state.messages, message]
+
     let chatId = this.props.match.params.id;
-    // const chat = await db.collection('chats').doc(`${chatId}`).update({
-    //   messages: db.FieldValue.arrayUnion(message)
-    // })
-    const data = await db.collection('chats').doc(`${chatId}`)
-    console.log("TCL: ChatRoom ->  data",  data)
-    const  chat = await data.update({
-        messages: db.FieldValue.arrayUnion(message)
-      })
-    console.log("TCL: ChatRoom -> handleSubmit -> chat ", chat )
-    
+    const chat = await db.collection('chats').doc(`${chatId}`).set({
+      chatId: 'NLdsgYueVBOEBC5gFUosxhFTIsI2',
+      name: 'mike',
+      people: {
+        prospect: {
+          name: 'lucy'
+        },
+        user: {
+          name: 'MIKe'
+        },
+      },
+      image:'adfad',
+      messages: updatedMessages
+    })
+
+    let data = await db.collection('chats').get()
+    let chats = [];
+    data.forEach(doc => {
+      chats.push(doc.data());
+    });
+
+    this.setState({
+      messages: chats[0].messages
+    })
+
+
     // this.props.addMessageThunk(message)
   }
 
@@ -69,7 +88,8 @@ class ChatRoom extends Component {
 
     let image = currChat.length ? currChat[0].image : '';
     let name = currChat.length ? currChat[0].name : '';
-    let messages = currChat.length ? currChat[0].messages : [];
+    // let messages = currChat.length ? currChat[0].messages : [];
+    let {messages} = this.state
 
   console.log('TCL: ChatRoom -> render -> currChat ', currChat);
     let main = (
