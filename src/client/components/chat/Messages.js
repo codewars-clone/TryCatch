@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import autoscroll from 'autoscroll-react';
 
-export default class Messages extends Component {
+class Messages extends Component {
   render() {
     const { messages } = this.props;
     return (
       <section className="section">
         <div className="container">
-          <ul>
+          <ul {...this.props}>
             {messages &&
-              messages.map((message, index)=> {
+              messages.map((message, index) => {
                 return (
                   <li key={index}>
-                    <p>{message.name}</p>
-                    <p>{message.time}</p>
-                    <p>{message.txt}</p>
+                    <div className="bubble">
+                      <p>{message.name}</p>
+                      <p>{message.time}</p>
+                      <p>{message.txt}</p>
+                    </div>
                     <br />
                   </li>
                 );
@@ -24,3 +27,4 @@ export default class Messages extends Component {
     );
   }
 }
+export default autoscroll(Messages);
