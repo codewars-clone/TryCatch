@@ -7,11 +7,13 @@ const GET_PROSPECTS = 'GET_PROSPECTS';
 const GET_LIKES = 'GET_LIKES';
 const SEND_LIKE = 'SEND_LIKE';
 const UNLIKE = 'UNLIKE';
+const REMOVE_AWAIT = 'REMOVE_AWAIT';
 
 const gotProspects = prospects => ({ type: GET_PROSPECTS, prospects });
 const gotLikes = likes => ({ type: GET_LIKES, likes });
 const sentLike = prospectId => ({ type: SEND_LIKE, prospectId });
 const unLike = prospectId => ({ type: UNLIKE, prospectId });
+const removedAwait = prospectId => ({ type: REMOVE_AWAIT, prospectId });
 
 //cross reference likesUser to remove whomever they've already liked from prospects list, and should also
 //keep track of who they've disliked and cross ref that as well
@@ -25,10 +27,10 @@ export const getProspects = userId => async (
     const users = await firestore.collection('users');
     const currentUser = await firestore.doc(`/users/${userId}`).get();
     let response;
-    if(currentUser.data().preferences.gender === 'Everyone'){
+    if (currentUser.data().preferences.gender === 'Everyone') {
       response = users;
     } else {
-       response = await users.where(
+      response = await users.where(
         'gender',
         '==',
         currentUser.data().preferences.gender
@@ -46,6 +48,7 @@ export const getProspects = userId => async (
         age: doc.data().age,
         gender: doc.data().gender,
         imageUrl: doc.data().imageUrl,
+        height: doc.data().height,
       });
     });
     //cross reference with who the user has already liked
@@ -56,7 +59,7 @@ export const getProspects = userId => async (
     const filteredProspects = prospects.filter(prospect => {
       let id = prospect.userId;
       //if prospectId is already in current user's liked collection, it will be removed from prospects
-      return (userLikes.data()[id] === undefined) && (id !== userId);
+      return userLikes.data()[id] === undefined && id !== userId;
     });
     dispatch(gotProspects(filteredProspects));
   } catch (err) {
@@ -94,7 +97,7 @@ export const getLikes = userId => async (
       .get();
     const filteredLikes = likes.filter(user => {
       let id = user.userId;
-      return !userLikes.data()[id];
+      return userLikes.data()[id] === undefined;
     });
     //once chat is up and running, dispatch filteredLikes
     dispatch(gotLikes(filteredLikes));
@@ -138,14 +141,37 @@ export const sendLike = (prospectId, message) => async (
 export const sendUnlike = prospectId => async (
   dispatch,
   getState,
-  { getFirestore }) => {
-    try{
-      const firestore = getFirestore();
-      const { firebase } = getState();
-      const userId = firebase.auth.uid;
-      await firestore.collection('userLikes').doc(userId).update({ [prospectId]: false })
-      dispatch(unLike(prospectId));
-  }catch (err) {
+  { getFirestore }
+) => {
+  try {
+    const firestore = getFirestore();
+    const { firebase } = getState();
+    const userId = firebase.auth.uid;
+    await firestore
+      .collection('userLikes')
+      .doc(userId)
+      .update({ [prospectId]: false });
+    dispatch(unLike(prospectId));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const removeAwait = prospectId => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  try {
+    const firestore = getFirestore();
+    const { firebase } = getState();
+    const userId = firebase.auth.uid;
+    await firestore
+      .collection('userLikes')
+      .doc(userId)
+      .update({ [prospectId]: false });
+    dispatch(removedAwait(prospectId));
+  } catch (err) {
     console.error(err);
   }
 };
@@ -167,6 +193,11 @@ const likesReducer = (state = initialState, action) => {
         prospect => prospect.userId !== action.prospectId
       );
       return { ...state, prospects: [...removeUser] };
+    case REMOVE_AWAIT:
+      const newLikes = state.likes.filter(
+        prospect => prospect.userId !== action.prospectId
+      );
+      return { ...state, likes: [...newLikes] };
     default:
       return state;
   }
