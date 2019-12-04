@@ -25,10 +25,10 @@ export const getProspects = userId => async (
     const users = await firestore.collection('users');
     const currentUser = await firestore.doc(`/users/${userId}`).get();
     let response;
-    if(currentUser.data().preferences.gender === 'Everyone'){
+    if (currentUser.data().preferences.gender === 'Everyone') {
       response = users;
     } else {
-       response = await users.where(
+      response = await users.where(
         'gender',
         '==',
         currentUser.data().preferences.gender
@@ -46,6 +46,7 @@ export const getProspects = userId => async (
         age: doc.data().age,
         gender: doc.data().gender,
         imageUrl: doc.data().imageUrl,
+        height: doc.data().height,
       });
     });
     //cross reference with who the user has already liked
@@ -56,7 +57,7 @@ export const getProspects = userId => async (
     const filteredProspects = prospects.filter(prospect => {
       let id = prospect.userId;
       //if prospectId is already in current user's liked collection, it will be removed from prospects
-      return (userLikes.data()[id] === undefined) && (id !== userId);
+      return userLikes.data()[id] === undefined && id !== userId;
     });
     dispatch(gotProspects(filteredProspects));
   } catch (err) {
@@ -138,14 +139,18 @@ export const sendLike = (prospectId, message) => async (
 export const sendUnlike = prospectId => async (
   dispatch,
   getState,
-  { getFirestore }) => {
-    try{
-      const firestore = getFirestore();
-      const { firebase } = getState();
-      const userId = firebase.auth.uid;
-      await firestore.collection('userLikes').doc(userId).update({ [prospectId]: false })
-      dispatch(unLike(prospectId));
-  }catch (err) {
+  { getFirestore }
+) => {
+  try {
+    const firestore = getFirestore();
+    const { firebase } = getState();
+    const userId = firebase.auth.uid;
+    await firestore
+      .collection('userLikes')
+      .doc(userId)
+      .update({ [prospectId]: false });
+    dispatch(unLike(prospectId));
+  } catch (err) {
     console.error(err);
   }
 };
