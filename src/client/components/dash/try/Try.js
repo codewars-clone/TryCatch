@@ -3,7 +3,7 @@ import { LikeButton, NextButton, Splash } from '../../index';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers, getUser } from '../../../store/reducers/users';
-import { getProspects, unLike, sendLike } from '../../../store/reducers/likes';
+import { getProspects, sendUnlike, sendLike } from '../../../store/reducers/likes';
 import LoadingScreen from 'react-loading-screen';
 import icon from './apple-touch-icon.png';
 
@@ -146,7 +146,7 @@ class Try extends Component {
               </div>
               <div
                 onClick={() => {
-                  this.props.unLike(prospect.userId);
+                  this.props.sendUnlike(prospect.userId);
                 }}
               >
                 <NextButton />
@@ -170,7 +170,7 @@ const mapDispatchToProps = dispatch => ({
   getUserData: () => dispatch(getUsers()),
   getCurrentUser: userId => dispatch(getUser(userId)),
   getProspects: userId => dispatch(getProspects(userId)),
-  unLike: prospectId => dispatch(unLike(prospectId)),
+  sendUnlike: prospectId => dispatch(sendUnlike(prospectId)),
   sendLike: (prospectId, message) => dispatch(sendLike(prospectId, message)),
 });
 
