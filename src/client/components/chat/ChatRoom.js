@@ -13,6 +13,7 @@ import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
 import { db } from '../../store';
+import  back  from './ButtonBack.png'
 // import  playSound from '../../../scripts/utilityFunctions'
 
 class ChatRoom extends Component {
@@ -57,7 +58,7 @@ class ChatRoom extends Component {
     });
   }
 
-  async handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
     let txt = this.state.txt;
     let message = {
@@ -66,6 +67,7 @@ class ChatRoom extends Component {
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
     };
+    
 
     this.props.addMessageThunk(message);
   }
@@ -86,19 +88,16 @@ class ChatRoom extends Component {
 
     let main = (
       <div className="container">
-        <div className="box" id='box-header'>
+        {/* <div className="box" id='box-header'>
           <div className="media">
           <div className="media-left">
               <Link to="/catch">
                 <div className="buttons">
-                  <button className="button is-danger">BACK </button>
+                  <img src={back} alt=""/> 
                 </div>
               </Link>
             </div>
-            <div className="media-right">
-              <h3 className="title is-3">{name}</h3>
-            </div>
-            <div className="media-right">
+            <div className="media-left">
               <figure className="image is-48x48">
                 <img
                   className="is-rounded"
@@ -109,8 +108,22 @@ class ChatRoom extends Component {
                 />
               </figure>
             </div>
+            <div className="media-right">
+              <h3 className="title is-3">{name}</h3>
+            </div>
           </div>
-        </div>
+        </div> */}
+        <nav className="navbar" role="navigation">
+          <div className="navbar-brand">
+          <div className="navbar-item">
+              <Link to="/catch">
+                <div className="buttons">
+                  <img src={back} alt=""/> 
+                </div>
+              </Link>
+            </div>
+          </div>
+        </nav>
         {/* MESSAGES */}
         <Messages
           messages={messages}
