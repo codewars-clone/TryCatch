@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Messages } from '../index';
 import { connect } from 'react-redux';
-import { getChat, addMessage, addMessageThunk, messageListener, getChatsThunk} from '../../store/reducers/chat';
+import {
+  getChat,
+  addMessage,
+  addMessageThunk,
+  messageListener,
+  getChatsThunk,
+} from '../../store/reducers/chat';
 import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
-import { db } from '../../store'
+import { db } from '../../store';
 // import  playSound from '../../../scripts/utilityFunctions'
 
 class ChatRoom extends Component {
@@ -16,7 +22,7 @@ class ChatRoom extends Component {
       loadingScreen: true,
       txt: '',
       messages: [],
-      people: []
+      people: [],
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,18 +38,18 @@ class ChatRoom extends Component {
         });
       }, 1200);
     }
-    
-    db.collection("chats").doc(chatId)
-    .onSnapshot(doc => {
-      this.setState({
-        people: doc.data().people,
-        messages: doc.data().messages
-      })
-    })
+
+    db.collection('chats')
+      .doc(chatId)
+      .onSnapshot(doc => {
+        this.setState({
+          people: doc.data().people,
+          messages: doc.data().messages,
+        });
+      });
 
     this.props.getChat(chatId);
   }
-
 
   handleInput(ev) {
     this.setState({
@@ -52,31 +58,30 @@ class ChatRoom extends Component {
   }
 
   async handleSubmit(e) {
-
     e.preventDefault();
     let txt = this.state.txt;
     let message = {
-      chatId:this.props.match.params.id,
+      chatId: this.props.match.params.id,
       name: this.props.user.name,
       time: moment().format('MMMM Do YYYY, h:mm:ss a'),
       txt,
-    }; 
+    };
 
-    this.props.addMessageThunk(message)
+    this.props.addMessageThunk(message);
   }
 
   render() {
-    const { loadingScreen, messages, people} = this.state;
-    let image = ''
-    let name = ''
+    const { loadingScreen, messages, people } = this.state;
+    let image = '';
+    let name = '';
 
-    if(people){
+    if (people) {
       people.forEach(person => {
-        if(person.id!== this.props.auth.uid){
-          name = person.name
-          image = person.image
+        if (person.id !== this.props.auth.uid) {
+          name = person.name;
+          image = person.image;
         }
-      })
+      });
     }
 
     let main = (
@@ -106,7 +111,10 @@ class ChatRoom extends Component {
             </div>
           </div>
         </div>
-        <Messages messages={messages} />
+        <Messages
+          messages={messages}
+          onScrolled={e => console.log('it works')}
+        />
         <form onSubmit={this.handleSubmit} id="form">
           <div className="field has-addons">
             <div className="control">
@@ -150,7 +158,7 @@ const mapStateToProps = state => {
     currChat: state.chat.currChat,
     chats: state.chat.chats,
     user: state.firebase.profile,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
   };
 };
 
@@ -160,7 +168,7 @@ const mapDispatchToProps = dispatch => {
     getChatsThunk: () => dispatch(getChatsThunk()),
     addMessage: message => dispatch(addMessage(message)),
     messageListener: chatId => dispatch(messageListener(chatId)),
-    addMessageThunk: message => dispatch(addMessageThunk(message))
+    addMessageThunk: message => dispatch(addMessageThunk(message)),
   };
 };
 

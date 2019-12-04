@@ -79,3 +79,22 @@ footer {
   color: black;
   text-align: center;
 }
+.bubble {
+  position: relative;
+  background: lightgreen;
+  border-radius: 0.4em;
+}
+.bubble:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: lightgreen;
+  border-left: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-left: -20px;
+}
