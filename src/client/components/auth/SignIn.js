@@ -35,9 +35,9 @@ class SignIn extends Component {
         <div id="sign-in-bg">
           <section
             className="section"
+            id="bg-img"
             style={{
-              backgroundImage: `url(${TryImage})`,
-              backgroundRepeat: 'no-repeat',
+              background: `url(${TryImage}) no-repeat center`,
             }}
           >
             <form
@@ -53,7 +53,7 @@ class SignIn extends Component {
                     type="email"
                     id="email"
                     className="input"
-                    placeholder="Email input"
+                    placeholder="Email"
                     onChange={this.handleChange}
                   />
                   <span className="icon is-small is-left">
@@ -73,7 +73,7 @@ class SignIn extends Component {
                     id="password"
                     className="input"
                     onChange={this.handleChange}
-                    placeholder="password"
+                    placeholder="Password"
                   />
                   <span className="icon is-small is-left">
                     <i className="fas fa-lock"></i>
@@ -85,14 +85,19 @@ class SignIn extends Component {
                   </p>
                 )}
               </div>
-              <div className="column" id="loggin">
-                <button type="submit" className="button is-danger is-samll">
+              <div className="column" id="login">
+                <button type="submit" className="button is-danger is-large">
                   Login
                 </button>
               </div>
-              <div id="loggin">
+              <div className="column" id="login">
+                <p className="title is-5" id="acc">
+                  Don't have an account?
+                </p>
+              </div>
+              <div className="column" id="login">
                 <Link to="/signup">
-                  <h5 className="title is-5 has-text-white">Sign Up</h5>
+                  <button className="button is-danger is-wide">Sign Up</button>
                 </Link>
               </div>
             </form>
