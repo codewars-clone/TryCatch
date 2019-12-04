@@ -14,8 +14,8 @@ class SingleAwait extends Component {
       <div className="box">
         <div className="media">
           <div className="media-content">
-            <figure className="image is-96x96">
-              <img width = '2100px' height='200px' src={imageUrl} alt=""/>
+            <figure className="image is-64x64">
+              <img  src={imageUrl} alt="profile"/>
             </figure>
             <div class="media-left" onClick={() => this.props.unLike(userId)}>
              <div className="buttons">

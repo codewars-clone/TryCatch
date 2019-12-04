@@ -7,9 +7,9 @@ const SingleCatch = props => {
   return ( 
     <div className="box">
       <div className="media">
-          <div className="media-content">
+          <div className="media-left">
             <figure className="image is-96x96">
-              <img width = '2100px' height='200px' src={chat.image} alt=""/>   
+              <img className='is-rounded' src={chat.image} alt="profile"/>   
             </figure>
           </div>
           <div className="media-content">

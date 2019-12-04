@@ -48,6 +48,10 @@ code {
   left: 3em;
 }
 
+.image-border{
+  border-radius: 10% !important;
+}
+
 #next {
   position: fixed;
   bottom: 10em;
@@ -81,20 +85,51 @@ footer {
 }
 .bubble {
   position: relative;
+  padding: 1em;
+  background: rgb(226, 226, 226);
+  border-radius: 0.4em;
+}
+
+.bubble:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color:rgb(226, 226, 226);
+	border-left: 0;
+	border-top: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
+
+.bubble-user {
+  position: relative;
+  padding: 1em;
   background: lightgreen;
   border-radius: 0.4em;
 }
-.bubble:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-right-color: lightgreen;
-  border-left: 0;
-  border-bottom: 0;
-  margin-top: -10px;
-  margin-left: -20px;
+
+.bubble-user:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: lightgreen;
+	border-right: 0;
+	border-top: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
+
+#box-header { 
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%; 
 }
