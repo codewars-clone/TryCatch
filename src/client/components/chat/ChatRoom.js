@@ -13,7 +13,12 @@ import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
 import { db } from '../../store';
+import * as Scroll from 'react-scroll';
 // import  playSound from '../../../scripts/utilityFunctions'
+
+let scroll = Scroll.animateScroll;
+let Events = Scroll.Events;
+let scroller = Scroll.scroller;
 
 class ChatRoom extends Component {
   constructor(props) {
@@ -26,6 +31,7 @@ class ChatRoom extends Component {
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
@@ -49,11 +55,22 @@ class ChatRoom extends Component {
       });
 
     this.props.getChat(chatId);
+    this.scrollToBottom();
   }
 
   handleInput(ev) {
     this.setState({
       txt: ev.target.value,
+    });
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    scroll.scrollToBottom({
+      containerClass: 'container',
     });
   }
 
@@ -85,7 +102,7 @@ class ChatRoom extends Component {
     }
 
     let main = (
-      <div className="container">
+      <div className="container" onChange={() => this.scrollToBottom()}>
         <div className="box">
           <div className="media">
             <div className="media-content">
@@ -111,10 +128,7 @@ class ChatRoom extends Component {
             </div>
           </div>
         </div>
-        <Messages
-          messages={messages}
-          onScrolled={e => console.log('it works')}
-        />
+        <Messages id="message-scroll" messages={messages} />
         <form onSubmit={this.handleSubmit} id="form">
           <div className="field has-addons">
             <div className="control">
@@ -128,7 +142,11 @@ class ChatRoom extends Component {
               />
             </div>
             <div className="button is-info">
-              <button name="submit" className="login-button">
+              <button
+                name="submit"
+                onClick={() => this.scrollToBottom()}
+                className="login-button"
+              >
                 Send
               </button>
             </div>
