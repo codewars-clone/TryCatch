@@ -36,12 +36,19 @@ export const getProspects = userId => async (
         currentUser.data().preferences.gender
       );
     }
-    const age = await response
+    const ageInterest = await response
       .where('age', '>=', currentUser.data().preferences.age[0])
       .where('age', '<=', currentUser.data().preferences.age[1])
       .get();
+      //cross reference filtered prospects by checking if those prospects would be interested
+      //in current user
+    const potentialMatches = ageInterest.filter(prospect => {
+      return (prospect.data().preferences.gender === currentUser.data().gender || 'Everyone')
+    }).filter(prospect => {
+      return (currentUser.data().age >= prospect.data().preferences.age[0] && currentUser.data().age <= prospect.data().preferences.age[1])
+    });
     const prospects = [];
-    age.forEach(doc => {
+    potentialMatches.forEach(doc => {
       prospects.push({
         userId: doc.id,
         name: doc.data().name,
