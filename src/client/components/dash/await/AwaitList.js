@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SingleAwait } from '../../index';
 import { createChat, createChatThunk } from '../../../store/reducers/chat';
-import { getLikes, sendLike } from '../../../store/reducers/likes';
+import { getLikes, sendLike, removeAwait } from '../../../store/reducers/likes';
 import { getUser } from '../../../store/reducers/users';
 
 class AwaitList extends Component {
@@ -20,7 +20,7 @@ class AwaitList extends Component {
     let newChat = {
       chatId: `${prospect.userId.slice(4)}${this.props.auth.uid.slice(4)}`,
       people: [
-        {id: this.props.auth.uid, name: this.props.user.name, image: this.props.user.imageUrl}, 
+        {id: this.props.auth.uid, name: this.props.user.name, image: this.props.user.imageUrl},
         {id: prospect.userId, image: prospect.imageUrl, name: prospect.name}
       ],
       messages: [],
@@ -43,6 +43,7 @@ class AwaitList extends Component {
                   prospect={prospect}
                   createChat={this.createChat}
                   sendLike={this.props.sendLike}
+                  unLike={this.props.unLike}
                 />
               );
             })}
@@ -58,7 +59,7 @@ class AwaitList extends Component {
         <h3 className='title is-3'> No likes yet.</h3>
         </div>
       </section>
-      ) 
+      )
     }
   }
 }
@@ -79,6 +80,7 @@ const mapDispatchToProps = dispatch => {
     getLikes: userId => dispatch(getLikes(userId)),
     sendLike: userId => dispatch(sendLike(userId)),
     getCurrentUser: userId => dispatch(getUser(userId)),
+    unLike: userId => dispatch(removeAwait(userId))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AwaitList);

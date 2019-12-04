@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { LikeButton } from '../../index'
-import{ Link } from 'react-router-dom'
+import  NextButton from '../NextButton';
 class SingleAwait extends Component {
   constructor(props) {
     super(props);
@@ -17,15 +17,20 @@ class SingleAwait extends Component {
             <figure className="image is-96x96">
               <img width = '2100px' height='200px' src={imageUrl} alt=""/>
             </figure>
+            <div class="media-left" onClick={() => this.props.unLike(userId)}>
+             <div className="buttons">
+              <button className="button is-danger">
+                <i className="fas fa-times"></i>
+              </button>
+              </div>
+            </div>
           </div>
           <div className="media-right">
             <h4 className="title is-4" >{name} {age} <i className="fas fa-birthday-cake"></i></h4>
             <div onClick={()=> {createChat(prospect)}}>
-              {/* <Link to='/splash'> */}
                 <div onClick={() => this.props.sendLike(userId)}>
                 <LikeButton />
                 </div>
-              {/* </Link> */}
             </div>
           </div>
         </div>
