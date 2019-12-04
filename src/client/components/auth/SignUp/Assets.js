@@ -62,8 +62,8 @@ export default class Assets extends Component {
                 <option value="Reverse a linked list">
                   Reverse a linked list
                 </option>
-                <option value="Fine the longest palindrome in a string">
-                  Longest palindrome in string
+                <option value="Find the longest palindrome in a string">
+                  Find the longest palindrome in string
                 </option>
                 <option value="Sort an array of N integers">
                   Sort an array of N integers
