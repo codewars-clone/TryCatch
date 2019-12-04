@@ -26,6 +26,7 @@ class SignUp extends Component {
       ageInterest: '',
       prefGender: '',
       meetUp: '',
+      codeChallenge: '',
       sexualOrientation: '',
       image: {
         name: '',
@@ -95,12 +96,19 @@ class SignUp extends Component {
       ageInterest,
       prefGender,
       imageUrl,
+      codeChallenge,
     } = this.state;
     if (!gender) {
       gender = 'Male';
     }
     if (!prefGender) {
-      prefGender = 'Male';
+      if (gender === 'Male') {
+        prefGender = 'Female';
+      } else if (gender === 'Female') {
+        prefGender = 'Male';
+      } else {
+        prefGender = 'Everyone';
+      }
     }
     const userData = {
       age: age,
@@ -109,6 +117,7 @@ class SignUp extends Component {
       name: name,
       imageUrl: imageUrl,
       height: `${hFeet}'${hInches}`,
+      codeChallenge: codeChallenge,
       preferences: {
         age: ageInterest,
         gender: prefGender,
@@ -121,7 +130,6 @@ class SignUp extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(this.state);
   };
   handleImageChange = e => {
     if (e.target.files[0]) {
@@ -174,6 +182,7 @@ class SignUp extends Component {
       meetUp,
       sexualOrientation,
       prefGender,
+      codeChallenge,
     } = this.state;
     // eslint-disable-next-line default-case
     switch (step) {
@@ -227,6 +236,7 @@ class SignUp extends Component {
           <Assets
             nextStep={this.nextStep}
             prevStep={this.prevStep}
+            codeChallenge={codeChallenge}
             handleChange={this.handleChange}
           />
         );

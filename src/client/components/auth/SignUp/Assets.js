@@ -18,6 +18,7 @@ export default class Assets extends Component {
   }
 
   render() {
+    const { codeChallenge, handleChange } = this.props;
     return (
       <section className="section">
         <div className="container">
@@ -46,6 +47,28 @@ export default class Assets extends Component {
                 className="input"
                 placeholder="Javascript..?"
               />
+            </div>
+          </div>
+          {/* CODING CHALLENGE */}
+          <div className="field">
+            <label className="label">Coding Challenge</label>
+            <div className="select is-multiple is-medium">
+              <select
+                name="codeChallenge"
+                value={codeChallenge}
+                onChange={handleChange}
+              >
+                <option defaultValue="">Select</option>
+                <option value="Reverse a linked list">
+                  Reverse a linked list
+                </option>
+                <option value="Fine the longest palindrome in a string">
+                  Longest palindrome in string
+                </option>
+                <option value="Sort an array of N integers">
+                  Sort an array of N integers
+                </option>
+              </select>
             </div>
           </div>
           {/* BUTTONS */}
