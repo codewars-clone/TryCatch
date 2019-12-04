@@ -86,9 +86,19 @@ class ChatRoom extends Component {
 
     let main = (
       <div className="container">
-        <div className="box">
+        <div className="box" id='box-header'>
           <div className="media">
-            <div className="media-content">
+          <div className="media-left">
+              <Link to="/catch">
+                <div className="buttons">
+                  <button className="button is-danger">BACK </button>
+                </div>
+              </Link>
+            </div>
+            <div className="media-right">
+              <h3 className="title is-3">{name}</h3>
+            </div>
+            <div className="media-right">
               <figure className="image is-48x48">
                 <img
                   className="is-rounded"
@@ -99,18 +109,9 @@ class ChatRoom extends Component {
                 />
               </figure>
             </div>
-            <div className="media-content">
-              <h3 className="title is-3">{name}</h3>
-            </div>
-            <div className="media-right">
-              <Link to="/catch">
-                <div className="buttons">
-                  <button className="button is-danger">LEAVE CHAT</button>
-                </div>
-              </Link>
-            </div>
           </div>
         </div>
+        {/* MESSAGES */}
         <Messages
           messages={messages}
           onScrolled={e => console.log('it works')}

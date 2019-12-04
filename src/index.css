@@ -81,9 +81,11 @@ footer {
 }
 .bubble {
   position: relative;
+  padding: 1em;
   background: lightgreen;
   border-radius: 0.4em;
 }
+
 .bubble:after {
   content: '';
   position: absolute;
@@ -98,3 +100,9 @@ footer {
   margin-top: -10px;
   margin-left: -20px;
 }
+
+/* #box-header { 
+  position: fixed;
+   top: 0;
+  width: 100%; 
+} */
