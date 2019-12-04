@@ -88,7 +88,7 @@ class ChatRoom extends Component {
 
     let main = (
       <div className="container">
-        {/* <div className="box" id='box-header'>
+        <div className="box" id='box-header'>
           <div className="media">
           <div className="media-left">
               <Link to="/catch">
@@ -112,18 +112,7 @@ class ChatRoom extends Component {
               <h3 className="title is-3">{name}</h3>
             </div>
           </div>
-        </div> */}
-        <nav className="navbar" role="navigation">
-          <div className="navbar-brand">
-          <div className="navbar-item">
-              <Link to="/catch">
-                <div className="buttons">
-                  <img src={back} alt=""/> 
-                </div>
-              </Link>
-            </div>
-          </div>
-        </nav>
+        </div>
         {/* MESSAGES */}
         <Messages
           messages={messages}
