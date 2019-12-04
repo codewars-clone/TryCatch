@@ -3,7 +3,11 @@ import { LikeButton, NextButton, Splash } from '../../index';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers, getUser } from '../../../store/reducers/users';
-import { getProspects, sendUnlike, sendLike } from '../../../store/reducers/likes';
+import {
+  getProspects,
+  sendUnlike,
+  sendLike,
+} from '../../../store/reducers/likes';
 import LoadingScreen from 'react-loading-screen';
 import icon from './apple-touch-icon.png';
 
@@ -114,10 +118,12 @@ class Try extends Component {
                     <i className="fas fa-location-arrow"></i>
                     <h6 className="title is-6">New York, NY</h6>
                   </div>
-                  <div className="media-content">
-                    <i className="fas fa-ruler-vertical"></i>
-                    <h6 className="title is-6">5'8</h6>
-                  </div>
+                  {prospect.height ? (
+                    <div className="media-content">
+                      <i className="fas fa-ruler-vertical"></i>
+                      <h6 className="title is-6">{prospect.height}</h6>{' '}
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <br />
