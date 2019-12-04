@@ -36,7 +36,7 @@ class AllCatch extends Component {
 
     return (  
       <section className="section">
-        <div className="container">
+        <div className="container catch-padding">
           <h1 className="title is-1">Catch</h1>
           <hr/>
           { list.map(chat => {
