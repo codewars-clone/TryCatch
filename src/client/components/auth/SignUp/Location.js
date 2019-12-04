@@ -24,6 +24,8 @@ export default class AdditionalInfo extends Component {
       handleChange,
       handleUpload,
       handleImageChange,
+      hFeet,
+      hInches,
       image,
       imageUrl,
     } = this.props;
@@ -55,7 +57,9 @@ export default class AdditionalInfo extends Component {
                   className="input"
                   maxLength="2"
                   type="tel"
-                  name="ft"
+                  name="hFeet"
+                  onChange={handleChange}
+                  value={hFeet}
                   style={{ width: '5em' }}
                   placeholder="ft"
                 ></input>
@@ -63,7 +67,9 @@ export default class AdditionalInfo extends Component {
                   className="input"
                   maxLength="2"
                   type="tel"
-                  name="in"
+                  name="hInches"
+                  onChange={handleChange}
+                  value={hInches}
                   style={{ width: '5em' }}
                   placeholder="in"
                 ></input>

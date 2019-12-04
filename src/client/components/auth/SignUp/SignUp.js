@@ -18,6 +18,8 @@ class SignUp extends Component {
       email: '',
       DOB: '',
       age: null,
+      hFeet: '',
+      hInches: '',
       password: '',
       location: '',
       gender: '',
@@ -88,6 +90,8 @@ class SignUp extends Component {
       DOB,
       gender,
       name,
+      hFeet,
+      hInches,
       ageInterest,
       prefGender,
       imageUrl,
@@ -104,6 +108,7 @@ class SignUp extends Component {
       gender: gender,
       name: name,
       imageUrl: imageUrl,
+      height: `${hFeet}'${hInches}`,
       preferences: {
         age: ageInterest,
         gender: prefGender,
@@ -116,6 +121,7 @@ class SignUp extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
+    console.log(this.state);
   };
   handleImageChange = e => {
     if (e.target.files[0]) {
