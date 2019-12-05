@@ -125,10 +125,12 @@ class Try extends Component {
                     <i className="fas fa-birthday-cake"></i>
                     <h6 className="title is-6"> {prospect.age}</h6>
                   </div>
-                  <div className="media-content">
-                    <i className="fab fa-js-square"></i>
-                    <h6 className="title is-6">Javascript</h6>
-                  </div>
+                  {prospect.favoriteLang ? (
+                    <div className="media-content">
+                      <i className="fab fa-js-square"></i>
+                      <h6 className="title is-6">Javascript</h6>
+                    </div>
+                  ) : null}
                   <div className="media-content">
                     <i className="fas fa-location-arrow"></i>
                     <h6 className="title is-6">New York, NY</h6>
@@ -144,7 +146,7 @@ class Try extends Component {
               <br />
               {prospect.codeChallenge ? (
                 <div className="content">
-                  <h3 className="title is-3">Coding Challenge</h3>
+                  <h4 className="title is-4">Coding Challenge</h4>
                   <p>{prospect.codeChallenge}</p>
                   <textarea
                     placeholder="write code here and hit like button"

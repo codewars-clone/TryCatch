@@ -38,14 +38,21 @@ export const getProspects = userId => async (
     }
     const userPreferences = await response
       .where('age', '>=', currentUser.data().preferences.age[0])
-      .where('age', '<=', currentUser.data().preferences.age[1]).get()
+      .where('age', '<=', currentUser.data().preferences.age[1])
+      .get();
 
-      //filter user prospects by the preferences of each prospect. The user should match
-      //those prospect's preferences
+    //filter user prospects by the preferences of each prospect. The user should match
+    //those prospect's preferences
     const prospects = [];
     userPreferences.forEach(doc => {
-      if(doc.data().preferences.gender === (currentUser.data().gender || 'Everyone')){
-        if(doc.data().preferences.age[0] <= currentUser.data().age && doc.data().preferences.age[1] >= currentUser.data().age){
+      if (
+        doc.data().preferences.gender ===
+        (currentUser.data().gender || 'Everyone')
+      ) {
+        if (
+          doc.data().preferences.age[0] <= currentUser.data().age &&
+          doc.data().preferences.age[1] >= currentUser.data().age
+        ) {
           prospects.push({
             userId: doc.id,
             name: doc.data().name,
@@ -54,10 +61,11 @@ export const getProspects = userId => async (
             imageUrl: doc.data().imageUrl,
             height: doc.data().height,
             codeChallenge: doc.data().codeChallenge,
-          })
+            favoriteLang: doc.data().favoriteLang,
+          });
         }
       }
-    })
+    });
     //cross reference with who the user has already liked
     const userLikes = await firestore
       .collection('userLikes')
