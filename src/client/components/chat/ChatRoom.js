@@ -117,8 +117,6 @@ class ChatRoom extends Component {
       });
     }
     
-    console.log("TOP", window.pageYOffset);
-    console.log("TOP", window);
     return (
       <div className="container" onChange={() => this.scrollToBottom()}>
         <div className="box" id='box-header'>
