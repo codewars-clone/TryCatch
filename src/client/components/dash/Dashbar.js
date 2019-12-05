@@ -17,7 +17,7 @@ class Dashbar extends Component {
         <div>
           <Link to="/await">
             <div className="icon-wrapper">
-              <i className="fas fa-pause fa-2x"></i>
+              <i class="fas fa-heart fa-2x"></i>
               <span className="badge">10</span>
             </div>
           </Link>
@@ -37,13 +37,6 @@ class Dashbar extends Component {
               </div>
             </Link>
           )}
-          <i class="fas fa-heart fa-2x"></i>
-          </Link>
-        </div>
-        <div>
-          <Link to="/catch">
-            <i className="far fa-comment fa-2x"></i>
-          </Link>
         </div>
         <div>
           <Link to="/settings">
