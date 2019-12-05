@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getChatsThunk } from '../../store/reducers/chat';
 
-export default class Dashbar extends Component {
+class Dashbar extends Component {
   render() {
+    let likes = this.props.chats.length;
+    //let likes = 0;
+    console.log('My props ===>', this.props);
     return (
       <footer className="footer">
         <div>
@@ -13,15 +18,30 @@ export default class Dashbar extends Component {
         </div>
         <div>
           <Link to="/await">
-            <i className="fas fa-pause"></i>
-            <h4>AWAIT</h4>
+            <div className="icon-wrapper">
+              <i className="fas fa-pause"></i>
+              <h4>AWAIT</h4>
+              <span className="badge">10</span>
+            </div>
           </Link>
         </div>
         <div>
-          <Link to="/catch">
-            <i className="far fa-comment"></i>
-            <h4>CATCH</h4>
-          </Link>
+          {likes ? (
+            <Link to="/catch">
+              <div className="icon-wrapper">
+                <i className="far fa-comment"></i>
+                <h4>CATCH</h4>
+                <span className="badge">{likes}</span>
+              </div>
+            </Link>
+          ) : (
+            <Link to="/catch">
+              <div>
+                <i className="far fa-comment"></i>
+                <h4>CATCH</h4>
+              </div>
+            </Link>
+          )}
         </div>
         <div>
           <Link to="/settings">
@@ -34,3 +54,20 @@ export default class Dashbar extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    chats: state.chat.chats,
+    user: state.firebase.profile,
+    auth: state.firebase.auth,
+    likes: state.likes.likes,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getChatsThunk: () => {
+      dispatch(getChatsThunk());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashbar);
