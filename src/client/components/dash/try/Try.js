@@ -127,29 +127,31 @@ class Try extends Component {
                 </div>
               </div>
               <br />
-              <div className="content">
-                <h3 className="title is-3">Coding Challenge</h3>
-                <p>{prospect.codingChallenge}</p>
-                <textarea
-                  placeholder="write code here and hit like button"
-                  type="message"
-                  name="message"
-                  cols="30"
-                  rows="10"
-                  className="textarea"
-                  onChange={this.handleChange}
-                ></textarea>
-                <div
-                  onClick={() =>
-                    this.handleCodingChallenge(
-                      prospect.userId,
-                      this.state.message
-                    )
-                  }
-                >
-                  <LikeButton />
+              {prospect.codeChallenge ? (
+                <div className="content">
+                  <h3 className="title is-3">Coding Challenge</h3>
+                  <p>{prospect.codeChallenge}</p>
+                  <textarea
+                    placeholder="write code here and hit like button"
+                    type="message"
+                    name="message"
+                    cols="30"
+                    rows="10"
+                    className="textarea"
+                    onChange={this.handleChange}
+                  ></textarea>
+                  <div
+                    onClick={() =>
+                      this.handleCodingChallenge(
+                        prospect.userId,
+                        this.state.message
+                      )
+                    }
+                  >
+                    <LikeButton />
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <div
                 onClick={() => {
                   this.props.sendUnlike(prospect.userId);

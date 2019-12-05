@@ -43,9 +43,8 @@ export default class AdditionalInfo extends Component {
                 <label className="label">Gender</label>
                 <div className="select">
                   <select name="gender" onChange={handleChange} value={gender}>
-                    <option default value="Male">
-                      Male
-                    </option>
+                    <option defaultValue="">Select</option>
+                    <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Non-binary">Non-binary</option>
                   </select>
