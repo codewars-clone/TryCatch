@@ -16,8 +16,6 @@ import { verifyAuth } from './client/store/reducers/auth';
 
 class App extends Component {
   render() {
-    console.log('ARE WE LOGGED IN YET? ', this.props.isLoggedIn);
-    console.log('ARE WE LOGGED IN YET WITH FIREBASE? ', this.props.fbLoggedIn);
     const { isLoggedIn, isLoggedOut } = this.props;
     return (
       <div className="App">
