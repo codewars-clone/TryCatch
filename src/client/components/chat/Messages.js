@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 
 class Messages extends Component {
   render() {
     const { messages, user } = this.props;
+    console.log("TCL: render ->  messages",  messages)
     return (
       <section className="section">
         <div className="container">
@@ -16,7 +18,7 @@ class Messages extends Component {
                   <li key={index}>
                     <div className={bubbleColor}>
                       <p>{message.name}</p>
-                      <p>{message.time}</p>
+                      <p>{moment(message.time).fromNow()}</p>
                       <p>{message.txt}</p>
                     </div>
                     <br />

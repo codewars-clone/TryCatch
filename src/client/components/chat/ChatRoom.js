@@ -81,7 +81,7 @@ class ChatRoom extends Component {
     let message = {
       chatId: this.props.match.params.id,
       name: this.props.user.name,
-      time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+      time: Date(Date.now()),
       txt,
     };
 
@@ -102,9 +102,12 @@ class ChatRoom extends Component {
       });
     }
 
+
+  let { box } = this.state
+  console.log("TCL: ChatRoom -> window.onscroll ->  box ",  box )
     let main = (
       <div className="container" onChange={() => this.scrollToBottom()}>
-        <div className="box" id="box-header">
+        <div className="box" id='box-header'>
           <div className="media">
             <div className="media-left">
               <Link to="/catch">
