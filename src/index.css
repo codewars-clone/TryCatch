@@ -86,11 +86,22 @@ footer {
   justify-content: space-between;
   left: 0;
   bottom: 0;
-  height: 1%;
+  height: 10%;
+  padding: 24px 24px 24px 24px;
   width: 100%;
   color: black;
+  background: #EEEEEE;
   text-align: center;
 }
+
+a{
+  color: black
+}
+
+a:hover{
+  color: #E43B72
+}
+
 .bubble {
   position: relative;
   padding: 1em;
@@ -142,6 +153,7 @@ footer {
 
 #box-header { 
   position: fixed;
+  opacity: .8;
   top: 0;
   z-index: 1;
   width: 100%; 
