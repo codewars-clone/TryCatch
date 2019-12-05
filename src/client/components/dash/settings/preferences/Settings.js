@@ -10,7 +10,7 @@ class Settings extends Component {
         <div className="container">
           <h1 className="title is-1">Settings</h1>
           <hr />
-          <h3>Welcome, {this.props.user.name}</h3>
+          <h4 className="title is-4">Welcome, {this.props.user.name}</h4>
           <hr />
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
