@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import { getChatsThunk } from '../../store/reducers/chat';
 import { getLikes } from '../../store/reducers/likes';
 
-let whatever = 'nice';
-
 class Dashbar extends Component {
+  componentDidMount() {
+    let userId = this.props.auth.uid;
+    this.props.getChatsThunk();
+    this.props.getLikes(userId);
+  }
   render() {
     let chats = this.props.chats.length;
     let likes = this.props.likes.length;
@@ -72,7 +75,7 @@ const mapDispatchToProps = dispatch => {
     getChatsThunk: () => {
       dispatch(getChatsThunk());
     },
-    getLike: userId => {
+    getLikes: userId => {
       dispatch(getLikes(userId));
     },
   };
