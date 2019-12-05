@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LikeButton, NextButton, Splash } from '../../index';
+import { LikeButton, NextButton } from '../../index';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers, getUser } from '../../../store/reducers/users';

@@ -18,10 +18,10 @@ class SingleAwait extends Component {
               <img  src={imageUrl} alt="profile"/>
             </figure>
             <div class="media-left" onClick={() => this.props.unLike(userId)}>
-             <div className="buttons">
-              <button className="button is-danger">
-                <i className="fas fa-times"></i>
-              </button>
+              <div className="buttons">
+                <button className="button is-danger">
+                  <i className="fas fa-times"></i>
+                </button>
               </div>
             </div>
           </div>

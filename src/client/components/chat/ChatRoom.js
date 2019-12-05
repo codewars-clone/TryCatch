@@ -9,13 +9,10 @@ import {
   messageListener,
   getChatsThunk,
 } from '../../store/reducers/chat';
-import LoadingScreen from 'react-loading-screen';
-import TryImage from '../auth/try.png';
-import moment from 'moment';
 import { db } from '../../store';
 import back from './ButtonBack.png';
 import * as Scroll from 'react-scroll';
-// import  playSound from '../../../scripts/utilityFunctions'
+
 
 let scroll = Scroll.animateScroll;
 

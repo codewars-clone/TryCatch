@@ -21,7 +21,6 @@ export { default as Splash } from './dash/try/Splash'
 export { default as SingleAwait } from './dash/await/SingleAwait'
 
 // --------CATCH-----------//
-export { default as ChatButton } from './dash/catch/ChatButton'
 export { default as SingleCatch } from './dash/catch/SingleCatch' 
 
 // -------CHAT -------//
