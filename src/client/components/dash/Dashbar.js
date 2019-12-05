@@ -5,13 +5,12 @@ import { getChatsThunk } from '../../store/reducers/chat';
 
 class Dashbar extends Component {
   render() {
-
     let likes = this.props.chats.length;
     return (
       <footer>
         <div>
           <Link to="/try">
-            <i className="fas fa-users fa-2x" ></i>
+            <i className="fas fa-users fa-2x"></i>
           </Link>
         </div>
         <div>
@@ -27,7 +26,7 @@ class Dashbar extends Component {
             <Link to="/catch">
               <div className="icon-wrapper">
                 <i className="far fa-comment fa-2x"></i>
-                <span className="badge">{likes}</span>
+                <span className="badge-1">{likes}</span>
               </div>
             </Link>
           ) : (
