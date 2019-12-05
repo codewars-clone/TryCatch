@@ -36,17 +36,16 @@ class Try extends Component {
         loadingScreen: false,
       });
     };
+    
     const geoError = error => {
       console.log('Error occurred. Error code: ' + error.code);
-      this.setState({
-        loadingScreen: false,
-      });
-      // error.code can be:
-      //   0: unknown error
-      //   1: permission denied
-      //   2: position unavailable (error response from location provider)
-      //   3: timed out
+      setTimeout(()=> {
+        this.setState({
+          loadingScreen: false,
+        });
+      }, 1500)
     };
+
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
   }
 

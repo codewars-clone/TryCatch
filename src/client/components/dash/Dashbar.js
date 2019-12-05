@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getChatsThunk } from '../../store/reducers/chat';
 
-export default class Dashbar extends Component {
+class Dashbar extends Component {
   render() {
-
+    let likes = this.props.chats.length;
     return (
       <footer>
         <div>
           <Link to="/try">
-            <i className="fas fa-users fa-2x" ></i>
+            <i className="fas fa-users fa-2x"></i>
           </Link>
         </div>
         <div>
           <Link to="/await">
-          <i class="fas fa-heart fa-2x"></i>
+            <div className="icon-wrapper">
+              <i class="fas fa-heart fa-2x"></i>
+              <span className="badge">10</span>
+            </div>
           </Link>
         </div>
         <div>
-          <Link to="/catch">
-            <i className="far fa-comment fa-2x"></i>
-          </Link>
+          {likes ? (
+            <Link to="/catch">
+              <div className="icon-wrapper">
+                <i className="far fa-comment fa-2x"></i>
+                <span className="badge-1">{likes}</span>
+              </div>
+            </Link>
+          ) : (
+            <Link to="/catch">
+              <div>
+                <i className="far fa-comment fa-2x"></i>
+              </div>
+            </Link>
+          )}
         </div>
         <div>
           <Link to="/settings">
@@ -31,3 +47,20 @@ export default class Dashbar extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    chats: state.chat.chats,
+    user: state.firebase.profile,
+    auth: state.firebase.auth,
+    likes: state.likes.likes,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getChatsThunk: () => {
+      dispatch(getChatsThunk());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashbar);
