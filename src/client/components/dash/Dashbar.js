@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getChatsThunk } from '../../store/reducers/chat';
 import { getLikes } from '../../store/reducers/likes';
 
+let whatever = 'nice';
+
 class Dashbar extends Component {
   render() {
     let chats = this.props.chats.length;
