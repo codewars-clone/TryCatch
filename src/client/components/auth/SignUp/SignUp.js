@@ -28,6 +28,7 @@ class SignUp extends Component {
       meetUp: '',
       codeChallenge: '',
       sexualOrientation: '',
+      favoriteLang: '',
       image: {
         name: '',
       },
@@ -97,6 +98,7 @@ class SignUp extends Component {
       prefGender,
       imageUrl,
       codeChallenge,
+      favoriteLang,
     } = this.state;
     if (!gender) {
       gender = 'Male';
@@ -110,6 +112,10 @@ class SignUp extends Component {
         prefGender = 'Everyone';
       }
     }
+    if (!imageUrl) {
+      imageUrl =
+        'https://cnam.ca/wp-content/uploads/2018/06/default-profile.gif';
+    }
     const userData = {
       age: age,
       dob: DOB,
@@ -118,6 +124,7 @@ class SignUp extends Component {
       imageUrl: imageUrl,
       height: `${hFeet}'${hInches}`,
       codeChallenge: codeChallenge,
+      favoriteLang: favoriteLang,
       preferences: {
         age: ageInterest,
         gender: prefGender,
@@ -183,6 +190,7 @@ class SignUp extends Component {
       sexualOrientation,
       prefGender,
       codeChallenge,
+      favoriteLang,
     } = this.state;
     // eslint-disable-next-line default-case
     switch (step) {
@@ -237,6 +245,7 @@ class SignUp extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             codeChallenge={codeChallenge}
+            favoriteLang={favoriteLang}
             handleChange={this.handleChange}
           />
         );

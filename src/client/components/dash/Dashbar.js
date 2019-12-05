@@ -5,22 +5,19 @@ import { getChatsThunk } from '../../store/reducers/chat';
 
 class Dashbar extends Component {
   render() {
+
     let likes = this.props.chats.length;
-    //let likes = 0;
-    console.log('My props ===>', this.props);
     return (
-      <footer className="footer">
+      <footer>
         <div>
           <Link to="/try">
-            <i className="fas fa-users"></i>
-            <h4>TRY</h4>
+            <i className="fas fa-users fa-2x" ></i>
           </Link>
         </div>
         <div>
           <Link to="/await">
             <div className="icon-wrapper">
-              <i className="fas fa-pause"></i>
-              <h4>AWAIT</h4>
+              <i className="fas fa-pause fa-2x"></i>
               <span className="badge">10</span>
             </div>
           </Link>
@@ -29,24 +26,28 @@ class Dashbar extends Component {
           {likes ? (
             <Link to="/catch">
               <div className="icon-wrapper">
-                <i className="far fa-comment"></i>
-                <h4>CATCH</h4>
+                <i className="far fa-comment fa-2x"></i>
                 <span className="badge">{likes}</span>
               </div>
             </Link>
           ) : (
             <Link to="/catch">
               <div>
-                <i className="far fa-comment"></i>
-                <h4>CATCH</h4>
+                <i className="far fa-comment fa-2x"></i>
               </div>
             </Link>
           )}
+          <i class="fas fa-heart fa-2x"></i>
+          </Link>
+        </div>
+        <div>
+          <Link to="/catch">
+            <i className="far fa-comment fa-2x"></i>
+          </Link>
         </div>
         <div>
           <Link to="/settings">
-            <i className="fas fa-cogs"></i>
-            <h4>SETTINGS</h4>
+            <i className="fas fa-cogs fa-2x"></i>
           </Link>
         </div>
       </footer>

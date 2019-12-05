@@ -36,21 +36,35 @@ export const getProspects = userId => async (
         currentUser.data().preferences.gender
       );
     }
-    const age = await response
+    const userPreferences = await response
       .where('age', '>=', currentUser.data().preferences.age[0])
       .where('age', '<=', currentUser.data().preferences.age[1])
       .get();
+
+    //filter user prospects by the preferences of each prospect. The user should match
+    //those prospect's preferences
     const prospects = [];
-    age.forEach(doc => {
-      prospects.push({
-        userId: doc.id,
-        name: doc.data().name,
-        age: doc.data().age,
-        gender: doc.data().gender,
-        imageUrl: doc.data().imageUrl,
-        height: doc.data().height,
-        codeChallenge: doc.data().codeChallenge,
-      });
+    userPreferences.forEach(doc => {
+      if (
+        doc.data().preferences.gender ===
+        currentUser.data().gender || 'Everyone'
+      ) {
+        if (
+          doc.data().preferences.age[0] <= currentUser.data().age &&
+          doc.data().preferences.age[1] >= currentUser.data().age
+        ) {
+          prospects.push({
+            userId: doc.id,
+            name: doc.data().name,
+            age: doc.data().age,
+            gender: doc.data().gender,
+            imageUrl: doc.data().imageUrl,
+            height: doc.data().height,
+            codeChallenge: doc.data().codeChallenge,
+            favoriteLang: doc.data().favoriteLang,
+          });
+        }
+      }
     });
     //cross reference with who the user has already liked
     const userLikes = await firestore
@@ -60,7 +74,8 @@ export const getProspects = userId => async (
     const filteredProspects = prospects.filter(prospect => {
       let id = prospect.userId;
       //if prospectId is already in current user's liked collection, it will be removed from prospects
-      return userLikes.data()[id] === undefined && id !== userId;
+      //also filter self from prospects
+      return userLikes.data()[id] === undefined && id !== currentUser.id;
     });
     dispatch(gotProspects(filteredProspects));
   } catch (err) {
