@@ -39,17 +39,9 @@ export const getProspects = userId => async (
     const userPreferences = await response
       .where('age', '>=', currentUser.data().preferences.age[0])
       .where('age', '<=', currentUser.data().preferences.age[1]).get()
-      //.get();
-      //cross reference filtered prospects by checking if those prospects would be interested
-      //in current user
-    // const potentialMatches = userPreferences.filter(prospect => {
-    //   return (prospect.data().preferences.gender === currentUser.data().gender || 'Everyone')
-    // }).filter(prospect => {
-    //   return (currentUser.data().age >= prospect.data().preferences.age[0] && currentUser.data().age <= prospect.data().preferences.age[1])
-    // });
-    // const genderMatch = await userPreferences.where('preferences.gender', '==', (currentUser.data().gender || 'Everyone')).get();
-    //const ageMatch = await genderMatch.where(currentUser.data().age, 'in', 'preferences.age').get()
-    //.where('preferences.age'[1], '>=', currentUser.data().age).get()
+
+      //filter user prospects by the preferences of each prospect. The user should match
+      //those prospect's preferences
     const prospects = [];
     userPreferences.forEach(doc => {
       if(doc.data().preferences.gender === (currentUser.data().gender || 'Everyone')){
@@ -66,19 +58,6 @@ export const getProspects = userId => async (
         }
       }
     })
-    //original code
-    // const prospects = [];
-    // userPreferences.forEach(doc => {
-    //   prospects.push({
-    //     userId: doc.id,
-    //     name: doc.data().name,
-    //     age: doc.data().age,
-    //     gender: doc.data().gender,
-    //     imageUrl: doc.data().imageUrl,
-    //     height: doc.data().height,
-    //     codeChallenge: doc.data().codeChallenge,
-    //   });
-    // });
     //cross reference with who the user has already liked
     const userLikes = await firestore
       .collection('userLikes')
