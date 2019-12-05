@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getChatsThunk } from '../../store/reducers/chat';
+import { getLikes } from '../../store/reducers/likes';
+
+let whatever = 'nice';
 
 class Dashbar extends Component {
   render() {
-    let likes = this.props.chats.length;
+    let chats = this.props.chats.length;
+    let likes = this.props.likes.length;
     return (
       <footer>
         <div>
@@ -14,19 +18,27 @@ class Dashbar extends Component {
           </Link>
         </div>
         <div>
-          <Link to="/await">
-            <div className="icon-wrapper">
-              <i class="fas fa-heart fa-2x"></i>
-              <span className="badge">10</span>
-            </div>
-          </Link>
+          {likes ? (
+            <Link to="/await">
+              <div className="icon-wrapper">
+                <i class="fas fa-heart fa-2x"></i>
+                <span className="badge">{likes}</span>
+              </div>
+            </Link>
+          ) : (
+            <Link to="/await">
+              <div>
+                <i class="fas fa-heart fa-2x"></i>
+              </div>
+            </Link>
+          )}
         </div>
         <div>
-          {likes ? (
+          {chats ? (
             <Link to="/catch">
               <div className="icon-wrapper">
                 <i className="far fa-comment fa-2x"></i>
-                <span className="badge-1">{likes}</span>
+                <span className="badge-1">{chats}</span>
               </div>
             </Link>
           ) : (
@@ -59,6 +71,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getChatsThunk: () => {
       dispatch(getChatsThunk());
+    },
+    getLike: userId => {
+      dispatch(getLikes(userId));
     },
   };
 };
