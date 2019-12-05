@@ -32,6 +32,27 @@ export const updateChat = chatId => {
     chatId,
   };
 };
+//
+//const list = []
+// const filteredChats = chats.filter( chat => {
+//   if(chat.people[0].id === this.props.auth.uid || chat.people[1].id === this.props.auth.uid ){
+//     return chat
+//   }
+// })
+// console.log("TCL: AllCatch -> render -> filteredChats ", filteredChats )
+
+// filteredChats.forEach(chat => {
+//   chat.people.forEach(person => {
+//     if(person.id !== this.props.auth.uid){
+//       const updatedChat = {
+//         chatId: chat.chatId,
+//         name: person.name,
+//         image: person.image
+//       }
+//       list.push(updatedChat)
+//     }
+//   })
+// })
 
 //thunk
 export const getChatsThunk = () => async (
@@ -41,12 +62,30 @@ export const getChatsThunk = () => async (
 ) => {
   try {
     const db = getFirestore();
+    const { firebase } = getState();
+    const userId = firebase.auth.uid;
     let data = await db.collection('chats').get();
     let chats = [];
     data.forEach(doc => {
       chats.push(doc.data());
     });
-    dispatch(createChat(chats));
+    const filteredChats = chats.filter(chat => {
+      return (chat.people[0].id === userId || chat.people[1].id === userId)
+    })
+    const list = [];
+    filteredChats.forEach(chat => {
+      chat.people.forEach(person => {
+        if(person.id !== userId){
+          const updatedChat = {
+            chatId: chat.chatId,
+            name: person.name,
+            image: person.image
+          }
+          list.push(updatedChat)
+        }
+      })
+    })
+    dispatch(createChat(list));
   } catch (error) {
     console.error(error);
   }
@@ -76,22 +115,21 @@ export const addMessageThunk = message => async (
     const chat = await db.collection('chats').doc(`${message.chatId}`).update({
       messages: db.FieldValue.arrayUnion(message)
     })
-    // dispatch(addMessage(message))
   } catch (error) {
     console.error(error);
   }
 };
 
-export const messageListener = (chatId) => async (  
+export const messageListener = (chatId) => async (
   dispatch,
   getState,
   { getFirestore}
   ) => {
     try {
       const db = getFirestore();
-      const chat = await db.collection('chats').doc(`${chatId}`).onSnapshot( doc => { 
+      const chat = await db.collection('chats').doc(`${chatId}`).onSnapshot( doc => {
       console.log('GOING TO RESET CHAT')
-      console.log("TCL:  doc",  doc.data().chatId) 
+      console.log("TCL:  doc",  doc.data().chatId)
       dispatch(getChat(doc.data().chatId))
       })
     } catch (error) {
