@@ -90,16 +90,16 @@ footer {
   padding: 24px 24px 24px 24px;
   width: 100%;
   color: black;
-  background: #EEEEEE;
+  background: #eeeeee;
   text-align: center;
 }
 
-a{
-  color: black
+a {
+  color: black;
 }
 
-a:hover{
-  color: #E43B72
+a:hover {
+  color: #e43b72;
 }
 
 .bubble {
@@ -153,7 +153,7 @@ a:hover{
 
 #box-header {
   position: fixed;
-  opacity: .8;
+  opacity: 0.8;
   top: 0;
   z-index: 1;
   width: 100%;
@@ -175,15 +175,43 @@ i {
   vertical-align: middle;
 }
 .badge {
-  background: rgb(255, 0, 0);
-  color: rgb(255, 255, 255);
-  width: 60%;
-  height: 65%;
+  background: radial-gradient(5px -9px, circle, white 8%, red 26px);
+  background-color: red;
+  border: 2px solid white;
+  border-radius: 20px; /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: white;
+  font: bold 15px/13px Helvetica, Verdana, Tahoma;
+  width: 1.8em;
+  height: 1.8em;
   margin: 0;
-  border-radius: 50%;
+  border-radius: 60%;
   position: absolute;
-  top: -13px;
-  right: -20px;
-  padding: 5px;
+  top: -14px;
+  right: -25px;
+  padding: 10px;
   box-shadow: 2px 2px 1px grey;
+  padding: 4px 3px 0 3px;
+  text-align: center;
+}
+
+.badge-1 {
+  background: radial-gradient(5px -9px, circle, white 8%, red 26px);
+  background-color: red;
+  border: 2px solid white;
+  border-radius: 20px; /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: white;
+  font: bold 15px/13px Helvetica, Verdana, Tahoma;
+  width: 1.8em;
+  height: 1.8em;
+  margin: 0;
+  border-radius: 60%;
+  position: absolute;
+  top: -14px;
+  right: -23px;
+  padding: 10px;
+  box-shadow: 2px 2px 1px grey;
+  padding: 4px 3px 0 3px;
+  text-align: center;
 }
