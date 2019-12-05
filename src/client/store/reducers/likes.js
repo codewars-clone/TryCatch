@@ -47,7 +47,7 @@ export const getProspects = userId => async (
     userPreferences.forEach(doc => {
       if (
         doc.data().preferences.gender ===
-        (currentUser.data().gender || 'Everyone')
+        currentUser.data().gender || 'Everyone'
       ) {
         if (
           doc.data().preferences.age[0] <= currentUser.data().age &&
