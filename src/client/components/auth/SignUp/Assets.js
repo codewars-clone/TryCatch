@@ -18,7 +18,7 @@ export default class Assets extends Component {
   }
 
   render() {
-    const { codeChallenge, handleChange } = this.props;
+    const { codeChallenge, favoriteLang, handleChange } = this.props;
     return (
       <section className="section">
         <div className="container">
@@ -44,6 +44,10 @@ export default class Assets extends Component {
             <div className="control is-medium">
               <input
                 type="text"
+                name="favoriteLang"
+                value={favoriteLang}
+                onChange={handleChange}
+                maxLength="13"
                 className="input"
                 placeholder="Javascript..?"
               />
