@@ -10,6 +10,7 @@ export default class ImageUpload extends Component {
               <input
                 className="file-input"
                 type="file"
+                accept="image/png, image/jpeg, image/gif"
                 onChange={this.props.handleImageChange}
               />
               <span className="file-cta">
