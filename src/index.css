@@ -13,6 +13,9 @@ body {
   padding-bottom: 10em;
 }
 
+.messages{
+  margin-top:3em;
+}
 #filler {
   position: fixed;
   z-index: -1;
@@ -91,8 +94,10 @@ footer {
 .bubble {
   position: relative;
   padding: 1em;
+  width: 75%;
+  box-shadow: 3px 3px 3px #aaaaaa;
   background: rgb(226, 226, 226);
-  border-radius: 0.4em;
+  border-radius: 0.6em;
 }
 
 .bubble:after {
@@ -113,8 +118,11 @@ footer {
 .bubble-user {
   position: relative;
   padding: 1em;
+  width: 75%;
+  left: 5em;
   background: lightgreen;
-  border-radius: 0.4em;
+  box-shadow: 3px 3px 3px #aaaaaa;
+  border-radius: 0.6em;  
 }
 
 .bubble-user:after {

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 
 class Messages extends Component {
   render() {
-    const { messages, user } = this.props;
+    const { messages, user } = this.props; 
     return (
       <section className="section">
         <div className="container">
-          <ul {...this.props}>
+          <ul className='messages'>
             {messages &&
               messages.map((message, index) => {
                 const bubbleColor = user.name === message.name ? "bubble-user": 'bubble'
@@ -16,7 +17,7 @@ class Messages extends Component {
                   <li key={index}>
                     <div className={bubbleColor}>
                       <p>{message.name}</p>
-                      <p>{message.time}</p>
+                      <p>{moment(message.time).fromNow()}</p>
                       <p>{message.txt}</p>
                     </div>
                     <br />
