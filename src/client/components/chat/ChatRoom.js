@@ -18,8 +18,7 @@ import * as Scroll from 'react-scroll';
 // import  playSound from '../../../scripts/utilityFunctions'
 
 let scroll = Scroll.animateScroll;
-let Events = Scroll.Events;
-let scroller = Scroll.scroller;
+
 
 class ChatRoom extends Component {
   constructor(props) {
@@ -29,6 +28,7 @@ class ChatRoom extends Component {
       txt: '',
       messages: [],
       people: [],
+      disabled: true
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,14 +59,24 @@ class ChatRoom extends Component {
     this.scrollToBottom();
   }
 
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   handleInput(ev) {
+    if(ev.target.value){
+      this.setState({
+        disabled: false
+      })
+    }
+    else{
+      this.setState({
+        disabled: true
+      })
+    }
     this.setState({
       txt: ev.target.value,
     });
-  }
-
-  componentDidUpdate() {
-    this.scrollToBottom();
   }
 
   scrollToBottom() {
@@ -75,8 +85,8 @@ class ChatRoom extends Component {
     });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(ev) {
+    ev.preventDefault();
     let txt = this.state.txt;
     let message = {
       chatId: this.props.match.params.id,
@@ -86,10 +96,15 @@ class ChatRoom extends Component {
     };
 
     this.props.addMessageThunk(message);
+
+    this.setState({
+      txt: ''
+    })
+
   }
 
   render() {
-    const { loadingScreen, messages, people } = this.state;
+    const { messages, people } = this.state;
     let image = '';
     let name = '';
 
@@ -101,11 +116,10 @@ class ChatRoom extends Component {
         }
       });
     }
-
-
-  let { box } = this.state
-  console.log("TCL: ChatRoom -> window.onscroll ->  box ",  box )
-    let main = (
+    
+    console.log("TOP", window.pageYOffset);
+    console.log("TOP", window);
+    return (
       <div className="container" onChange={() => this.scrollToBottom()}>
         <div className="box" id='box-header'>
           <div className="media">
@@ -142,12 +156,14 @@ class ChatRoom extends Component {
                 className="input"
                 placeholder="Send message"
                 autoFocus
+                value={this.state.txt}
                 onChange={this.handleInput}
               />
             </div>
             <div className="button is-info">
               <button
                 name="submit"
+                disabled={this.state.disabled}
                 onClick={() => this.scrollToBottom()}
                 className="login-button"
               >
@@ -156,20 +172,6 @@ class ChatRoom extends Component {
             </div>
           </div>
         </form>
-      </div>
-    );
-
-    return (
-      <div>
-        {main}
-        <LoadingScreen
-          loading={loadingScreen}
-          bgColor="#f1f1f1"
-          spinnerColor="#9ee5f8"
-          textColor="#676767"
-          logoSrc={TryImage}
-          text="Please wait, finding  Catches"
-        />
       </div>
     );
   }

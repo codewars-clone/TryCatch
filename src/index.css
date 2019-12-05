@@ -13,6 +13,9 @@ body {
   padding-bottom: 10em;
 }
 
+.messages{
+  margin-top:3em;
+}
 #filler {
   position: fixed;
   z-index: -1;

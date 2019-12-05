@@ -5,12 +5,11 @@ import moment from 'moment';
 
 class Messages extends Component {
   render() {
-    const { messages, user } = this.props;
-    console.log("TCL: render ->  messages",  messages)
+    const { messages, user } = this.props; 
     return (
       <section className="section">
         <div className="container">
-          <ul {...this.props}>
+          <ul className='messages'>
             {messages &&
               messages.map((message, index) => {
                 const bubbleColor = user.name === message.name ? "bubble-user": 'bubble'
