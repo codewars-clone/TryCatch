@@ -11,7 +11,6 @@ class AllCatch extends Component {
 
   render() { 
     const { chats } = this.props
-    console.log("TCL: AllCatch -> render -> chats ", chats )
 
     const list = []
     const filteredChats = chats.filter( chat => {
