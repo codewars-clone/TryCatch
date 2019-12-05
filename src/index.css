@@ -9,12 +9,12 @@ body {
   /* background-color: #2f323b; */
 }
 
-.catch-padding{
+.catch-padding {
   padding-bottom: 10em;
 }
 
-.messages{
-  margin-top:3em;
+.messages {
+  margin-top: 3em;
 }
 #filler {
   position: fixed;
@@ -56,7 +56,7 @@ code {
   left: 3em;
 }
 
-.image-border{
+.image-border {
   border-radius: 10% !important;
 }
 
@@ -112,18 +112,18 @@ a:hover{
 }
 
 .bubble:after {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 20px solid transparent;
-	border-right-color:rgb(226, 226, 226);
-	border-left: 0;
-	border-top: 0;
-	margin-top: -10px;
-	margin-left: -20px;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: rgb(226, 226, 226);
+  border-left: 0;
+  border-top: 0;
+  margin-top: -10px;
+  margin-left: -20px;
 }
 
 .bubble-user {
@@ -133,28 +133,57 @@ a:hover{
   left: 5em;
   background: lightgreen;
   box-shadow: 3px 3px 3px #aaaaaa;
-  border-radius: 0.6em;  
+  border-radius: 0.6em;
 }
 
 .bubble-user:after {
-	content: '';
-	position: absolute;
-	right: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 20px solid transparent;
-	border-left-color: lightgreen;
-	border-right: 0;
-	border-top: 0;
-	margin-top: -10px;
-	margin-right: -20px;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-left-color: lightgreen;
+  border-right: 0;
+  border-top: 0;
+  margin-top: -10px;
+  margin-right: -20px;
 }
 
-#box-header { 
+#box-header {
   position: fixed;
   opacity: .8;
   top: 0;
   z-index: 1;
-  width: 100%; 
+  width: 100%;
+}
+.icon-wrapper {
+  position: relative;
+  float: left;
+}
+
+/* *.icon-blue {
+  color: white;
+}
+*.icon-grey {
+  color: white;
+} */
+i {
+  width: 10em;
+  text-align: center;
+  vertical-align: middle;
+}
+.badge {
+  background: rgb(255, 0, 0);
+  color: rgb(255, 255, 255);
+  width: 60%;
+  height: 65%;
+  margin: 0;
+  border-radius: 50%;
+  position: absolute;
+  top: -13px;
+  right: -20px;
+  padding: 5px;
+  box-shadow: 2px 2px 1px grey;
 }
