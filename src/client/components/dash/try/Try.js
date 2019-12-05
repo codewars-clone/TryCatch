@@ -26,11 +26,26 @@ class Try extends Component {
   componentDidMount() {
     const userId = this.props.auth.uid;
     this.props.getProspects(userId);
-    setTimeout(() => {
+    let startPos;
+    const geoSuccess = position => {
+      startPos = position;
+      console.log('LOCATION:', position);
       this.setState({
         loadingScreen: false,
       });
-    }, 1200);
+    };
+    const geoError = error => {
+      console.log('Error occurred. Error code: ' + error.code);
+      this.setState({
+        loadingScreen: false,
+      });
+      // error.code can be:
+      //   0: unknown error
+      //   1: permission denied
+      //   2: position unavailable (error response from location provider)
+      //   3: timed out
+    };
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
   }
 
   handleChange(event) {
@@ -127,29 +142,31 @@ class Try extends Component {
                 </div>
               </div>
               <br />
-              <div className="content">
-                <h3 className="title is-3">Coding Challenge</h3>
-                <p>{prospect.codingChallenge}</p>
-                <textarea
-                  placeholder="write code here and hit like button"
-                  type="message"
-                  name="message"
-                  cols="30"
-                  rows="10"
-                  className="textarea"
-                  onChange={this.handleChange}
-                ></textarea>
-                <div
-                  onClick={() =>
-                    this.handleCodingChallenge(
-                      prospect.userId,
-                      this.state.message
-                    )
-                  }
-                >
-                  <LikeButton />
+              {prospect.codeChallenge ? (
+                <div className="content">
+                  <h3 className="title is-3">Coding Challenge</h3>
+                  <p>{prospect.codeChallenge}</p>
+                  <textarea
+                    placeholder="write code here and hit like button"
+                    type="message"
+                    name="message"
+                    cols="30"
+                    rows="10"
+                    className="textarea"
+                    onChange={this.handleChange}
+                  ></textarea>
+                  <div
+                    onClick={() =>
+                      this.handleCodingChallenge(
+                        prospect.userId,
+                        this.state.message
+                      )
+                    }
+                  >
+                    <LikeButton />
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <div
                 onClick={() => {
                   this.props.sendUnlike(prospect.userId);

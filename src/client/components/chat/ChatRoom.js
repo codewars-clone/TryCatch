@@ -13,7 +13,12 @@ import LoadingScreen from 'react-loading-screen';
 import TryImage from '../auth/try.png';
 import moment from 'moment';
 import { db } from '../../store';
+import back from './ButtonBack.png';
+import * as Scroll from 'react-scroll';
 // import  playSound from '../../../scripts/utilityFunctions'
+
+let scroll = Scroll.animateScroll;
+
 
 class ChatRoom extends Component {
   constructor(props) {
@@ -23,9 +28,11 @@ class ChatRoom extends Component {
       txt: '',
       messages: [],
       people: [],
+      disabled: true
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
@@ -49,29 +56,55 @@ class ChatRoom extends Component {
       });
 
     this.props.getChat(chatId);
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
   handleInput(ev) {
+    if(ev.target.value){
+      this.setState({
+        disabled: false
+      })
+    }
+    else{
+      this.setState({
+        disabled: true
+      })
+    }
     this.setState({
       txt: ev.target.value,
     });
   }
 
-  async handleSubmit(e) {
-    e.preventDefault();
+  scrollToBottom() {
+    scroll.scrollToBottom({
+      containerClass: 'container',
+    });
+  }
+
+  handleSubmit(ev) {
+    ev.preventDefault();
     let txt = this.state.txt;
     let message = {
       chatId: this.props.match.params.id,
       name: this.props.user.name,
-      time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+      time: Date(Date.now()),
       txt,
     };
 
     this.props.addMessageThunk(message);
+
+    this.setState({
+      txt: ''
+    })
+
   }
 
   render() {
-    const { loadingScreen, messages, people } = this.state;
+    const { messages, people } = this.state;
     let image = '';
     let name = '';
 
@@ -83,12 +116,21 @@ class ChatRoom extends Component {
         }
       });
     }
-
-    let main = (
-      <div className="container">
-        <div className="box">
+    
+    console.log("TOP", window.pageYOffset);
+    console.log("TOP", window);
+    return (
+      <div className="container" onChange={() => this.scrollToBottom()}>
+        <div className="box" id='box-header'>
           <div className="media">
-            <div className="media-content">
+            <div className="media-left">
+              <Link to="/catch">
+                <div className="buttons">
+                  <img src={back} alt="" />
+                </div>
+              </Link>
+            </div>
+            <div className="media-left">
               <figure className="image is-48x48">
                 <img
                   className="is-rounded"
@@ -99,22 +141,12 @@ class ChatRoom extends Component {
                 />
               </figure>
             </div>
-            <div className="media-content">
-              <h3 className="title is-3">{name}</h3>
-            </div>
             <div className="media-right">
-              <Link to="/catch">
-                <div className="buttons">
-                  <button className="button is-danger">LEAVE CHAT</button>
-                </div>
-              </Link>
+              <h3 className="title is-3">{name}</h3>
             </div>
           </div>
         </div>
-        <Messages
-          messages={messages}
-          onScrolled={e => console.log('it works')}
-        />
+        <Messages messages={messages} />
         <form onSubmit={this.handleSubmit} id="form">
           <div className="field has-addons">
             <div className="control">
@@ -124,30 +156,22 @@ class ChatRoom extends Component {
                 className="input"
                 placeholder="Send message"
                 autoFocus
+                value={this.state.txt}
                 onChange={this.handleInput}
               />
             </div>
             <div className="button is-info">
-              <button name="submit" className="login-button">
+              <button
+                name="submit"
+                disabled={this.state.disabled}
+                onClick={() => this.scrollToBottom()}
+                className="login-button"
+              >
                 Send
               </button>
             </div>
           </div>
         </form>
-      </div>
-    );
-
-    return (
-      <div>
-        {main}
-        <LoadingScreen
-          loading={loadingScreen}
-          bgColor="#f1f1f1"
-          spinnerColor="#9ee5f8"
-          textColor="#676767"
-          logoSrc={TryImage}
-          text="Please wait, finding  Catches"
-        />
       </div>
     );
   }

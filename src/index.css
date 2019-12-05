@@ -1,12 +1,20 @@
 body {
   margin: 0;
-  padding-bottom: 10em;
+  padding-bottom: 2em;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #2f323b; */
+}
+
+.catch-padding{
+  padding-bottom: 10em;
+}
+
+.messages{
+  margin-top:3em;
 }
 #filler {
   position: fixed;
@@ -48,6 +56,10 @@ code {
   left: 3em;
 }
 
+.image-border{
+  border-radius: 10% !important;
+}
+
 #next {
   position: fixed;
   bottom: 10em;
@@ -81,20 +93,56 @@ footer {
 }
 .bubble {
   position: relative;
-  background: lightgreen;
-  border-radius: 0.4em;
+  padding: 1em;
+  width: 75%;
+  box-shadow: 3px 3px 3px #aaaaaa;
+  background: rgb(226, 226, 226);
+  border-radius: 0.6em;
 }
+
 .bubble:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-right-color: lightgreen;
-  border-left: 0;
-  border-bottom: 0;
-  margin-top: -10px;
-  margin-left: -20px;
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color:rgb(226, 226, 226);
+	border-left: 0;
+	border-top: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
+
+.bubble-user {
+  position: relative;
+  padding: 1em;
+  width: 75%;
+  left: 5em;
+  background: lightgreen;
+  box-shadow: 3px 3px 3px #aaaaaa;
+  border-radius: 0.6em;  
+}
+
+.bubble-user:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: lightgreen;
+	border-right: 0;
+	border-top: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
+
+#box-header { 
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%; 
 }

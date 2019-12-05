@@ -56,6 +56,7 @@ export const getProspects = userId => async (
         gender: doc.data().gender,
         imageUrl: doc.data().imageUrl,
         height: doc.data().height,
+        codeChallenge: doc.data().codeChallenge,
       });
     });
     //cross reference with who the user has already liked

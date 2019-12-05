@@ -1,4 +1,5 @@
 import React from 'react';
+// import like from "./favicon.ico"
 const LikeButton = () => {
   return (
     <div className="buttons is-right">

@@ -35,8 +35,9 @@ export default class Preferences extends Component {
           {/* MEET UP */}
           <div className="field">
             <label className="label">Meet Up</label>
-            <div className="select is-multiple is-medium">
-              <select multiple size="2">
+            <div className="select is-medium">
+              <select>
+                <option defaultValue="">Select</option>
                 <option value="pair-program">Pair Program</option>
                 <option value="work-remote">Work Remote</option>
               </select>
@@ -51,6 +52,7 @@ export default class Preferences extends Component {
                 value={ageInterest}
                 onChange={handleChange}
               >
+                <option defaultValue="">Select</option>
                 <option value="18:25">18-25</option>
                 <option value="26:33">26-33</option>
                 <option value="33:41">33-41</option>
@@ -68,9 +70,8 @@ export default class Preferences extends Component {
                 value={prefGender}
                 onChange={handleChange}
               >
-                <option default value="Male">
-                  Male
-                </option>
+                <option defaultValue="">Select</option>
+                <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Everyone">Everyone</option>
               </select>
