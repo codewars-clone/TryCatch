@@ -20,12 +20,7 @@ export { default as Splash } from './dash/try/Splash';
 export { default as SingleAwait } from './dash/await/SingleAwait';
 
 // --------CATCH-----------//
-<<<<<<< HEAD
-export { default as ChatButton } from './dash/catch/ChatButton';
-export { default as SingleCatch } from './dash/catch/SingleCatch';
-=======
-export { default as SingleCatch } from './dash/catch/SingleCatch' 
->>>>>>> master
+export { default as SingleCatch } from './dash/catch/SingleCatch'
 
 // -------CHAT -------//
 export { default as ChatRoom } from '../components/chat/ChatRoom';
