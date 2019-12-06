@@ -1,3 +1,5 @@
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <h1 align="center">Try {Catch}</h1>
 <p align="center">A PWA that allows people in the tech industry to date, network, and connect based on their interests.</p>
 <p align="center">
@@ -23,7 +25,25 @@ A PWA dating app for developers called Try{Catch} that connects developers throu
 - <a href="https://github.com/kkmartinez95">Kaitlyn Martinez</a>
 
 
-## Available Scripts ( Developer Stuff)
+## Getting Started
+
+#### Requirements
+
+Desktop, iOS and Android testing devices are supported - all you need is a browser!
+
+#### How to Install
+
+Beta Release 0.0.1
+
+From the **terminal**, run:
+
+```
+git clone https://github.com/codewars-clone/TryCatch
+cd TryCatch
+npm install
+npm start
+
+```
 
 In the project directory, you can run:
 
