@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   SignUp,
+  Info,
+  Preferences,
+  Assets,
+  Terms,
   Dashbar,
   Try,
   AwaitList,
@@ -16,7 +20,7 @@ import { verifyAuth } from './client/store/reducers/auth';
 
 class App extends Component {
   render() {
-    const { isLoggedIn, isLoggedOut } = this.props;
+    const { isLoggedOut } = this.props;
     return (
       <div className="App">
         {isLoggedOut ? (
@@ -44,6 +48,10 @@ class App extends Component {
                 </div>
               )}
             />
+            <Route path="/info" component={Info} />
+            <Route path="/preferences" component={Preferences} />
+            <Route path="/assets" component={Assets} />
+            <Route path="/terms" component={Terms} />
             <Route
               path="/try"
               render={() => (

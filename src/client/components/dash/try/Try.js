@@ -36,14 +36,14 @@ class Try extends Component {
         loadingScreen: false,
       });
     };
-    
+
     const geoError = error => {
       console.log('Error occurred. Error code: ' + error.code);
-      setTimeout(()=> {
+      setTimeout(() => {
         this.setState({
           loadingScreen: false,
         });
-      }, 1500)
+      }, 1500);
     };
 
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
@@ -53,7 +53,6 @@ class Try extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
-    console.log(this.state.message);
   }
   async handleCodingChallenge(prospectId, message) {
     await this.props.sendLike(prospectId, message);
