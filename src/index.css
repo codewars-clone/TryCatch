@@ -67,7 +67,8 @@ code {
 
 #next {
   position: fixed;
-  bottom: 10em;
+  bottom:4em;
+  box-shadow: 3px 3px 3px #aaaaaa;
   left: 1em;
 }
 
