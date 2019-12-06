@@ -25,6 +25,9 @@ A PWA dating app for developers called Try{Catch} that connects developers throu
 - <a href="https://github.com/kkmartinez95">Kaitlyn Martinez</a>
 
 
+## Resources
+React, Redux, Firebase
+
 ## Getting Started
 
 #### Requirements
