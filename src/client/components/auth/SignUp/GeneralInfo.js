@@ -59,7 +59,10 @@ export class NewInfo extends Component {
   };
 
   handleUpdate = () => {
-    let imageUrl = this.handleUpload();
+    let imageUrl;
+    if (this.state.image.name) {
+      imageUrl = this.handleUpload();
+    }
     let { hFeet, hInches, gender } = this.state;
     if (!imageUrl) {
       imageUrl =
