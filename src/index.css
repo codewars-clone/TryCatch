@@ -16,6 +16,11 @@ body {
 .messages {
   margin-top: 3em;
 }
+
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+}
 #filler {
   position: fixed;
   z-index: -1;
