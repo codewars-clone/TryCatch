@@ -46,6 +46,7 @@ class SingleAwait extends Component {
             </div>
           </div>
         </div>
+        <br/>
         {message ? 
           (<div className='wrapper'>
             <button className="button is-link" onClick={()=> {this.handleModal()}}>See Code</button>
