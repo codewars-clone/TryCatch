@@ -165,7 +165,11 @@ class Try extends Component {
                       )
                     }
                   >
-                    <LikeButton />
+                  <div className="buttons is-right">
+                      <button className="button is-success">
+                        <i class="fab fa-telegram-plane"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : null}
