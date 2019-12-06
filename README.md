@@ -16,14 +16,14 @@ A PWA dating app for developers called Try{Catch} that connects developers throu
 
 ## Contributors
 
-- Sayeed Joseph
-- Camryn Perry
-- Marcos Santanna
-- Michael Mcmanus
-- Kaitlyn Martinez
+- <a href="https://github.com/sjoseph11236">Sayeed Joseph</a>
+- <a href="https://github.com/camryn-perry">Camryn Perry</a>
+- <a href="https://github.com/mcs2019">Marcos Santanna</a>
+- <a href="https://github.com/MikeMcmanus95">Michael Mcmanus</a>
+- <a href="https://github.com/kkmartinez95">Kaitlyn Martinez</a>
 
 
-## Available Scripts
+## Available Scripts ( Developer Stuff)
 
 In the project directory, you can run:
 
