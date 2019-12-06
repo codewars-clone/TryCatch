@@ -23,7 +23,6 @@ class SingleAwait extends Component {
 
   render() {
     const { name, imageUrl, userId, message } = this.props.prospect
-    console.log("TCL: SingleAwait -> render ->  message",  message)
     const { createChat, prospect } = this.props
     const { active } = this.state
     return (
