@@ -128,7 +128,7 @@ class Try extends Component {
                   {prospect.favoriteLang ? (
                     <div className="media-content">
                       <i className="fab fa-js-square"></i>
-                      <h6 className="title is-6">Javascript</h6>
+                      <h6 className="title is-6">{prospect.favoriteLang}</h6>
                     </div>
                   ) : null}
                   <div className="media-content">
