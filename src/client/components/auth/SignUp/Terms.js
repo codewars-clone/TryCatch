@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 export default class Terms extends Component {
-  constructor(props) {
-    super(props);
-    this.back = this.back.bind(this);
-  }
-
-  back(e) {
-    e.preventDefault();
-    this.props.prevStep();
-  }
-
   render() {
     return (
       <section className="section">
@@ -48,14 +36,14 @@ export default class Terms extends Component {
             <button className="button is-danger" onClick={this.back}>
               Back
             </button>
-            <Link to="/try">
-              <button
-                className="button is-info"
-                onClick={this.props.handleSignUp}
-              >
-                Agree and Register
-              </button>
-            </Link>
+            <button
+              className="button is-info"
+              onClick={() => {
+                this.props.history.push('/try');
+              }}
+            >
+              Agree and Register
+            </button>
           </div>
         </div>
       </section>

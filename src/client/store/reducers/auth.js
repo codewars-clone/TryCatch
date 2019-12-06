@@ -15,11 +15,18 @@ export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const VERIFY_REQUEST = 'VERIFY_REQUEST';
 export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
 
+export const UPDATE_USER = 'UPDATE_USER';
 //Action creators
 
 const requestLogin = () => {
   return {
     type: LOGIN_REQUEST,
+  };
+};
+
+const requestUpdate = () => {
+  return {
+    type: UPDATE_USER,
   };
 };
 
@@ -116,6 +123,19 @@ export const signUpUser = (email, password, state) => async (
   db.collection('userLikes')
     .doc(cred.user.uid)
     .set({ exists: true });
+};
+
+export const updateUser = data => async (
+  dispatch,
+  getState,
+  { getFirebase, getFirestore }
+) => {
+  const firebase = getFirebase();
+  const firestore = getFirestore();
+  const uid = firebase.auth().currentUser.uid;
+  const userRef = firestore.collection('users').doc(uid);
+  userRef.update(data);
+  dispatch(requestUpdate());
 };
 
 //It calls firebase signOut() method

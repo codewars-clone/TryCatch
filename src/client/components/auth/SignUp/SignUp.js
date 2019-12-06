@@ -1,136 +1,23 @@
-/* eslint-disable no-duplicate-case */
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { GeneralInfo, Location, Preferences, Assets, Terms } from '../../index';
 import { signUpUser } from '../../../store/reducers/auth';
-import { storage } from '../../../store/index';
 
-class SignUp extends Component {
+class NewSignUp extends Component {
   constructor() {
     super();
     this.state = {
-      step: 1,
       name: '',
+      email: '',
+      password: '',
       MM: '',
       DD: '',
       YYYY: '',
-      email: '',
       DOB: '',
       age: null,
-      hFeet: '',
-      hInches: '',
-      password: '',
-      location: '',
-      gender: '',
-      ageInterest: '',
-      prefGender: '',
-      meetUp: '',
-      codeChallenge: '',
-      sexualOrientation: '',
-      favoriteLang: '',
-      image: {
-        name: '',
-      },
-      imageUrl: '',
     };
-    this.nextStep = this.nextStep.bind(this);
-    this.prevStep = this.prevStep.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.calcAge = this.calcAge.bind(this);
-    this.parsePreferences = this.parsePreferences.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
-  }
-
-  parsePreferences() {
-    const { ageInterest } = this.state;
-    if (ageInterest !== '') {
-      const arr = ageInterest.split(':').map(ele => Number(ele));
-      this.setState({
-        ageInterest: arr,
-      });
-    } else {
-      this.setState({
-        ageInterest: [18, 25],
-      });
-    }
-    console.log(this.state);
-  }
-
-  calcAge() {
-    const { YYYY, MM, DD } = this.state;
-    const dateString = `${YYYY}-${MM}-${DD}`;
-    const birthday = new Date(dateString);
-    const age = ~~((Date.now() - birthday) / 31557600000);
-    this.setState({
-      age: age,
-      DOB: birthday,
-    });
-  }
-
-  nextStep() {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1,
-    });
-  }
-
-  prevStep() {
-    const { step } = this.state;
-    this.setState({
-      step: step - 1,
-    });
-  }
-
-  handleSignUp() {
-    const { signUpThunk } = this.props;
-    let {
-      email,
-      password,
-      age,
-      DOB,
-      gender,
-      name,
-      hFeet,
-      hInches,
-      ageInterest,
-      prefGender,
-      imageUrl,
-      codeChallenge,
-      favoriteLang,
-    } = this.state;
-    if (!gender) {
-      gender = 'Male';
-    }
-    if (!prefGender) {
-      if (gender === 'Male') {
-        prefGender = 'Female';
-      } else if (gender === 'Female') {
-        prefGender = 'Male';
-      } else {
-        prefGender = 'Everyone';
-      }
-    }
-    if (!imageUrl) {
-      imageUrl =
-        'https://cnam.ca/wp-content/uploads/2018/06/default-profile.gif';
-    }
-    const userData = {
-      age: age,
-      dob: DOB,
-      gender: gender,
-      name: name,
-      imageUrl: imageUrl,
-      height: `${hFeet}'${hInches}`,
-      codeChallenge: codeChallenge,
-      favoriteLang: favoriteLang,
-      preferences: {
-        age: ageInterest,
-        gender: prefGender,
-      },
-    };
-    signUpThunk(email, password, userData);
   }
 
   handleChange = e => {
@@ -138,136 +25,136 @@ class SignUp extends Component {
       [e.target.name]: e.target.value,
     });
   };
-  handleImageChange = e => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({ image }));
-    }
+
+  handleSubmit = () => {
+    const { age, DOB } = this.calcAge();
+    const { signUpThunk } = this.props;
+    let { email, password, name } = this.state;
+    const userData = {
+      age: age,
+      dob: DOB,
+      name: name,
+    };
+    signUpThunk(email, password, userData);
+    this.props.history.push('/info');
   };
 
-  handleUpload = () => {
-    const { image } = this.state;
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on(
-      'state_changed',
-      snapshot => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref('images')
-          .child(image.name)
-          .getDownloadURL()
-          .then(imageUrl => {
-            this.setState({ imageUrl });
-          });
-      }
-    );
+  calcAge = () => {
+    const { YYYY, MM, DD } = this.state;
+    const dateString = `${YYYY}-${MM}-${DD}`;
+    const birthday = new Date(dateString);
+    const age = ~~((Date.now() - birthday) / 31557600000);
+    return {
+      age: age,
+      DOB: birthday,
+    };
   };
 
   render() {
-    const {
-      step,
-      name,
-      email,
-      image,
-      imageUrl,
-      MM,
-      DD,
-      YYYY,
-      gender,
-      age,
-      hFeet,
-      hInches,
-      password,
-      ageInterest,
-      meetUp,
-      sexualOrientation,
-      prefGender,
-      codeChallenge,
-      favoriteLang,
-    } = this.state;
-    // eslint-disable-next-line default-case
-    switch (step) {
-      case 1:
-        return (
-          <GeneralInfo
-            name={name}
-            email={email}
-            MM={MM}
-            DD={DD}
-            YYYY={YYYY}
-            age={age}
-            password={password}
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
-            calcAge={this.calcAge}
-          />
-        );
-      case 2: {
-        return (
-          <Location
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            image={image}
-            imageUrl={imageUrl}
-            hFeet={hFeet}
-            hInches={hInches}
-            gender={gender}
-            handleImageChange={this.handleImageChange}
-            handleUpload={this.handleUpload}
-            handleChange={this.handleChange}
-          />
-        );
-      }
-      case 3:
-        return (
-          <Preferences
-            ageInterest={ageInterest}
-            sexualOrientation={sexualOrientation}
-            prefGender={prefGender}
-            meetUp={meetUp}
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
-            parsePreferences={this.parsePreferences}
-          />
-        );
-      case 4:
-        return (
-          <Assets
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            codeChallenge={codeChallenge}
-            favoriteLang={favoriteLang}
-            handleChange={this.handleChange}
-          />
-        );
-      case 5:
-        return (
-          <Terms
-            prevStep={this.prevStep}
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            handleSignUp={this.handleSignUp}
-          />
-        );
-    }
+    const { name, email, MM, DD, YYYY, password } = this.state;
+    return (
+      <section className="section">
+        <div className="container">
+          {/* FIRST NAME */}
+          <div className="field">
+            <label className="label">First Name</label>
+            <div className="control">
+              <input
+                type="text"
+                className="input"
+                placeholder="Enter your first name"
+                value={name}
+                name="name"
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          {/* EMAIL */}
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control has-icons-left has-icons-right">
+              <input
+                type="email"
+                className="input"
+                placeholder="Enter a valid email"
+                value={email}
+                name="email"
+                onChange={this.handleChange}
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-envelope"></i>
+              </span>
+              <span className="icon is-small is-right">
+                <i className="fas fa-exclamation-triangle"></i>
+              </span>
+            </div>
+          </div>
+          {/* PASSWORD */}
+          <div className="field">
+            <label className="label">Password</label>
+            <p className="control has-icons-left">
+              <input
+                type="password"
+                name="password"
+                className="input"
+                value={password}
+                onChange={this.handleChange}
+                placeholder="Enter a secure password"
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          {/* DOB */}
+          <label className="label">Date of Birth</label>
+          <div className="field is-horizontal">
+            <input
+              className="input"
+              maxLength="2"
+              type="tel"
+              name="MM"
+              value={MM}
+              onChange={this.handleChange}
+              style={{ width: '5em' }}
+              placeholder="MM"
+            ></input>
+            <input
+              className="input"
+              maxLength="2"
+              type="tel"
+              name="DD"
+              value={DD}
+              onChange={this.handleChange}
+              style={{ width: '5em' }}
+              placeholder="DD"
+            ></input>
+            <input
+              className="input"
+              maxLength="4"
+              type="tel"
+              name="YYYY"
+              value={YYYY}
+              onChange={this.handleChange}
+              style={{ width: '6em' }}
+              placeholder="YYYY"
+            ></input>
+          </div>
+          <div className="buttons">
+            <button
+              className="button is-info"
+              onClick={() => {
+                this.handleSubmit();
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </section>
+    );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    auth: state.firebase.auth,
-    isAuthenticated: state.auth.isAuthenticated,
-  };
-};
 
 const mapDispatchToProps = dispatch => ({
   signUpThunk(email, password, state) {
@@ -275,4 +162,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(NewSignUp);

@@ -1,30 +1,49 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateUser } from '../../../store/reducers/auth';
 
-export default class Preferences extends Component {
+export class NewPreferences extends Component {
   constructor() {
     super();
-    this.continue = this.continue.bind(this);
-    this.back = this.back.bind(this);
+    this.state = {
+      ageInterest: '',
+      prefGender: '',
+      meetUp: '',
+    };
   }
 
-  continue(e) {
-    e.preventDefault();
-    this.props.nextStep();
+  parsePreferences() {
+    const { ageInterest } = this.state;
+    if (ageInterest !== '') {
+      const arr = ageInterest.split(':').map(ele => Number(ele));
+      return arr;
+    } else {
+      return [18, 25];
+    }
   }
 
-  back(e) {
-    e.preventDefault();
-    this.props.prevStep();
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleUpdate() {
+    let ageInterest = this.parsePreferences();
+    const { prefGender, meetUp } = this.state;
+    const userData = {
+      preferences: {
+        age: ageInterest,
+        gender: prefGender,
+        meetUp: meetUp,
+      },
+    };
+    this.props.addToUser(userData);
+    this.props.history.push('/assets');
   }
 
   render() {
-    const {
-      ageInterest,
-      prefGender,
-      meetUp,
-      handleChange,
-      parsePreferences,
-    } = this.props;
+    const { ageInterest, prefGender, meetUp } = this.state;
     return (
       <section className="section">
         <div className="container">
@@ -36,7 +55,7 @@ export default class Preferences extends Component {
           <div className="field">
             <label className="label">Meet Up</label>
             <div className="select is-medium">
-              <select>
+              <select name="meetUp" value={meetUp} onChange={this.handleChange}>
                 <option defaultValue="">Select</option>
                 <option value="pair-program">Pair Program</option>
                 <option value="work-remote">Work Remote</option>
@@ -50,7 +69,7 @@ export default class Preferences extends Component {
               <select
                 name="ageInterest"
                 value={ageInterest}
-                onChange={handleChange}
+                onChange={this.handleChange}
               >
                 <option defaultValue="">Select</option>
                 <option value="18:25">18-25</option>
@@ -68,7 +87,7 @@ export default class Preferences extends Component {
               <select
                 name="prefGender"
                 value={prefGender}
-                onChange={handleChange}
+                onChange={this.handleChange}
               >
                 <option defaultValue="">Select</option>
                 <option value="Male">Male</option>
@@ -79,14 +98,18 @@ export default class Preferences extends Component {
           </div>
           {/* BUTTONS */}
           <div className="buttons">
-            <button className="button is-danger" onClick={this.back}>
+            <button
+              className="button is-danger"
+              onClick={() => {
+                this.props.history.push('/info');
+              }}
+            >
               Back
             </button>
             <button
               className="button is-info"
               onClick={e => {
-                this.continue(e);
-                parsePreferences();
+                this.handleUpdate();
               }}
             >
               Save and continue
@@ -97,3 +120,9 @@ export default class Preferences extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  addToUser: data => dispatch(updateUser(data)),
+});
+
+export default connect(null, mapDispatchToProps)(NewPreferences);

@@ -1,128 +1,148 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ImageUpload from './ImageUpload';
+import { storage } from '../../../store/index';
+import { updateUser } from '../../../store/reducers/auth';
 
-export default class GeneralInfo extends Component {
+export class NewInfo extends Component {
   constructor() {
     super();
-    this.continue = this.continue.bind(this);
+    this.state = {
+      image: {
+        name: '',
+      },
+      imageUrl: '',
+      hFeet: '',
+      hInches: '',
+      gender: '',
+    };
   }
 
-  continue(e) {
-    e.preventDefault();
-    this.props.nextStep();
-  }
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleImageChange = e => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({ image }));
+    }
+  };
+
+  handleUpload = () => {
+    const { image } = this.state;
+    let imgUrl = '';
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on(
+      'state_changed',
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref('images')
+          .child(image.name)
+          .getDownloadURL()
+          .then(imageUrl => {
+            imgUrl = imageUrl;
+          });
+      }
+    );
+    return imgUrl;
+  };
+
+  handleUpdate = () => {
+    let imageUrl = this.handleUpload();
+    let { hFeet, hInches, gender } = this.state;
+    if (!imageUrl) {
+      imageUrl =
+        'https://cnam.ca/wp-content/uploads/2018/06/default-profile.gif';
+    }
+    const userData = {
+      imageUrl: imageUrl,
+      height: `${hFeet}'${hInches}`,
+      gender: gender,
+    };
+    this.props.addToUser(userData);
+    this.props.history.push('/preferences');
+  };
 
   render() {
-    const {
-      name,
-      email,
-      MM,
-      DD,
-      YYYY,
-      password,
-      handleChange,
-      calcAge,
-    } = this.props;
+    const { gender, hFeet, hInches, image, imageUrl } = this.state;
     return (
       <section className="section">
         <div className="container">
-          <h1 className="title">General Info</h1>
-          <progress className="progress is-small is-info" value="15" max="100">
-            15%
+          <h1 className="title">Additonal Info</h1>
+          <progress className="progress is-small is-info" value="30" max="100">
+            30%
           </progress>
-          {/* FIRST NAME */}
-          <div className="field">
-            <label className="label">First Name</label>
-            <div className="control">
-              <input
-                type="text"
-                className="input"
-                placeholder="Enter your first name"
-                value={name}
-                name="name"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          {/* EMAIL */}
-          <div className="field">
-            <label className="label">Email</label>
-            <div className="control has-icons-left has-icons-right">
-              <input
-                type="email"
-                className="input"
-                placeholder="Enter a valid email"
-                value={email}
-                name="email"
-                onChange={handleChange}
-              />
-              <span className="icon is-small is-left">
-                <i className="fas fa-envelope"></i>
-              </span>
-              <span className="icon is-small is-right">
-                <i className="fas fa-exclamation-triangle"></i>
-              </span>
-            </div>
-          </div>
-          {/* PASSWORD */}
-          <div className="field">
-            <label className="label">Password</label>
-            <p className="control has-icons-left">
-              <input
-                type="password"
-                name="password"
-                className="input"
-                value={password}
-                onChange={handleChange}
-                placeholder="Enter a secure password"
-              />
-              <span className="icon is-small is-left">
-                <i className="fas fa-lock"></i>
-              </span>
-            </p>
-          </div>
-          {/* DOB */}
-          <label className="label">Date of Birth</label>
+          {/* GENDER & HEIGHT */}
           <div className="field is-horizontal">
-            <input
-              className="input"
-              maxLength="2"
-              type="tel"
-              name="MM"
-              value={MM}
-              onChange={handleChange}
-              style={{ width: '5em' }}
-              placeholder="MM"
-            ></input>
-            <input
-              className="input"
-              maxLength="2"
-              type="tel"
-              name="DD"
-              value={DD}
-              onChange={handleChange}
-              style={{ width: '5em' }}
-              placeholder="DD"
-            ></input>
-            <input
-              className="input"
-              maxLength="4"
-              type="tel"
-              name="YYYY"
-              value={YYYY}
-              onChange={handleChange}
-              style={{ width: '6em' }}
-              placeholder="YYYY"
-            ></input>
+            <div className="field-body">
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="select">
+                  <select
+                    name="gender"
+                    onChange={this.handleChange}
+                    value={gender}
+                  >
+                    <option defaultValue="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Non-binary">Non-binary</option>
+                  </select>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Height</label>
+                <input
+                  className="input"
+                  maxLength="2"
+                  type="tel"
+                  name="hFeet"
+                  onChange={this.handleChange}
+                  value={hFeet}
+                  style={{ width: '5em' }}
+                  placeholder="ft"
+                ></input>
+                <input
+                  className="input"
+                  maxLength="2"
+                  type="tel"
+                  name="hInches"
+                  onChange={this.handleChange}
+                  value={hInches}
+                  style={{ width: '5em' }}
+                  placeholder="in"
+                ></input>
+              </div>
+            </div>
           </div>
+          <br />
+          <ImageUpload
+            handleImageChange={this.handleImageChange}
+            handleUpload={this.handleUpload}
+            image={image}
+            imageUrl={imageUrl}
+          />
+          <br />
+          {/* BUTTONS */}
           <div className="buttons">
             <button
               className="button is-info"
-              onClick={e => {
-                this.continue(e);
-                calcAge();
+              onClick={() => {
+                this.handleUpdate();
               }}
             >
-              Save and Continue
+              Save and continue
             </button>
           </div>
         </div>
@@ -130,3 +150,9 @@ export default class GeneralInfo extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  addToUser: data => dispatch(updateUser(data)),
+});
+
+export default connect(null, mapDispatchToProps)(NewInfo);

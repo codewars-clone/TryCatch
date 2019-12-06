@@ -1,24 +1,41 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateUser } from '../../../store/reducers/auth';
 
-export default class Assets extends Component {
+export class NewAssets extends Component {
   constructor() {
     super();
-    this.continue = this.continue.bind(this);
-    this.back = this.back.bind(this);
+    this.state = {
+      OS: [],
+      codeChallenege: '',
+      favoriteLang: '',
+    };
   }
 
-  continue(e) {
-    e.preventDefault();
-    this.props.nextStep();
-  }
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  back(e) {
-    e.preventDefault();
-    this.props.prevStep();
-  }
+  handleMultiChange = e => {
+    this.setState({ OS: e.option });
+    console.log(this.state);
+  };
+
+  handleUpdate = () => {
+    const { OS, codeChallenge, favoriteLang } = this.state;
+    const userData = {
+      OS: OS,
+      codeChallenge: codeChallenge,
+      favoriteLang: favoriteLang,
+    };
+    this.props.addToUser(userData);
+    this.props.history.push('/terms');
+  };
 
   render() {
-    const { codeChallenge, favoriteLang, handleChange } = this.props;
+    const { OS, codeChallenge, favoriteLang } = this.state;
     return (
       <section className="section">
         <div className="container">
@@ -30,7 +47,7 @@ export default class Assets extends Component {
           <div className="field">
             <label className="label">Operating System</label>
             <div className="select is-multiple is-medium">
-              <select multiple size="4">
+              <select multiple={true} size="4" name="OS">
                 <option value="windows">Windows</option>
                 <option value="linux">Linux</option>
                 <option value="mac-os">Mac OS</option>
@@ -46,7 +63,7 @@ export default class Assets extends Component {
                 type="text"
                 name="favoriteLang"
                 value={favoriteLang}
-                onChange={handleChange}
+                onChange={this.handleChange}
                 maxLength="13"
                 className="input"
                 placeholder="Javascript..?"
@@ -56,11 +73,11 @@ export default class Assets extends Component {
           {/* CODING CHALLENGE */}
           <div className="field">
             <label className="label">Coding Challenge</label>
-            <div className="select is-multiple is-medium">
+            <div className="select is-medium">
               <select
                 name="codeChallenge"
                 value={codeChallenge}
-                onChange={handleChange}
+                onChange={this.handleChange}
               >
                 <option defaultValue="">Select</option>
                 <option value="Reverse a linked list">
@@ -77,10 +94,20 @@ export default class Assets extends Component {
           </div>
           {/* BUTTONS */}
           <div className="buttons">
-            <button className="button is-danger" onClick={this.back}>
+            <button
+              className="button is-danger"
+              onClick={() => {
+                this.props.history.push('/preferences');
+              }}
+            >
               Back
             </button>
-            <button className="button is-info" onClick={this.continue}>
+            <button
+              className="button is-info"
+              onClick={() => {
+                this.handleUpdate();
+              }}
+            >
               Save and continue
             </button>
           </div>
@@ -89,3 +116,9 @@ export default class Assets extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  addToUser: data => dispatch(updateUser(data)),
+});
+
+export default connect(null, mapDispatchToProps)(NewAssets);
