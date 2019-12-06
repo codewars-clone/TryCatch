@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { LikeButton, NextButton, Splash } from '../../index';
+import { LikeButton, NextButton } from '../../index';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers, getUser } from '../../../store/reducers/users';
 import {
   getProspects,
+  getLikes,
   sendUnlike,
   sendLike,
 } from '../../../store/reducers/likes';
@@ -26,6 +27,7 @@ class Try extends Component {
   componentDidMount() {
     const userId = this.props.auth.uid;
     this.props.getProspects(userId);
+    this.props.getLikes(userId);
     let startPos;
     const geoSuccess = position => {
       startPos = position;
@@ -34,17 +36,16 @@ class Try extends Component {
         loadingScreen: false,
       });
     };
+    
     const geoError = error => {
       console.log('Error occurred. Error code: ' + error.code);
-      this.setState({
-        loadingScreen: false,
-      });
-      // error.code can be:
-      //   0: unknown error
-      //   1: permission denied
-      //   2: position unavailable (error response from location provider)
-      //   3: timed out
+      setTimeout(()=> {
+        this.setState({
+          loadingScreen: false,
+        });
+      }, 1500)
     };
+
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
   }
 
@@ -196,6 +197,7 @@ const mapDispatchToProps = dispatch => ({
   getCurrentUser: userId => dispatch(getUser(userId)),
   getProspects: userId => dispatch(getProspects(userId)),
   sendUnlike: prospectId => dispatch(sendUnlike(prospectId)),
+  getLikes: userId => dispatch(getLikes(userId)),
   sendLike: (prospectId, message) => dispatch(sendLike(prospectId, message)),
 });
 

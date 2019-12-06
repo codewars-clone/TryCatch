@@ -47,7 +47,7 @@ export const getProspects = userId => async (
     userPreferences.forEach(doc => {
       if (
         doc.data().preferences.gender ===
-        (currentUser.data().gender || 'Everyone')
+        currentUser.data().gender || 'Everyone'
       ) {
         if (
           doc.data().preferences.age[0] <= currentUser.data().age &&
@@ -77,7 +77,12 @@ export const getProspects = userId => async (
       //also filter self from prospects
       return userLikes.data()[id] === undefined && id !== currentUser.id;
     });
-    dispatch(gotProspects(filteredProspects));
+    const { likes } = getState().likes;
+    const likesIds = likes.map(like => like.userId);
+    const finalProspects = filteredProspects.filter(prospect => {
+      return !likesIds.includes(prospect.userId);
+    });
+    dispatch(gotProspects(finalProspects));
   } catch (err) {
     console.error(err);
   }

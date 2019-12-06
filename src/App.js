@@ -20,7 +20,11 @@ import { verifyAuth } from './client/store/reducers/auth';
 
 class App extends Component {
   render() {
+<<<<<<< HEAD
     const { isLoggedOut } = this.props;
+=======
+    const { isLoggedIn, isLoggedOut } = this.props;
+>>>>>>> master
     return (
       <div className="App">
         {isLoggedOut ? (
