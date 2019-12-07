@@ -9,7 +9,7 @@ export class NewInfo extends Component {
     super();
     this.state = {
       image: {
-        name: '',
+        //name: '',
       },
       imageUrl: '',
       hFeet: '',
@@ -51,30 +51,36 @@ export class NewInfo extends Component {
           .child(image.name)
           .getDownloadURL()
           .then(imageUrl => {
-            imgUrl = imageUrl;
-          });
+            this.setState({imageUrl})
+          })
+
+          //console.log("TCL: NewInfo -> handleUpload -> imgUrl", imgUrl)
+
       }
     );
-    return imgUrl;
+
+    // console.log("TCL: NewInfo -> handleUpload -> imgUrl", imgUrl)
+    // return imgUrl;
   };
 
-  handleUpdate = () => {
-    let imageUrl;
+  handleUpdate = async () => {
+    console.log("in handle update")
+    console.log("name of image", this.state.image.name)
     if (this.state.image.name) {
-      imageUrl = this.handleUpload();
+      await this.handleUpload();
+      console.log("TCL: NewInfo -> handleUpdate -> imageUrl", this.state.imageUrl)
     }
     let { hFeet, hInches, gender } = this.state;
-    if (!imageUrl) {
-      imageUrl =
-        'https://cnam.ca/wp-content/uploads/2018/06/default-profile.gif';
-    }
+    // if (!imageUrl) {
+    //   imageUrl =
+    //     'https://cnam.ca/wp-content/uploads/2018/06/default-profile.gif';
+    // }
     const userData = {
-      imageUrl: imageUrl,
+      imageUrl: this.state.imageUrl,
       height: `${hFeet}'${hInches}`,
       gender: gender,
     };
     this.props.addToUser(userData);
-    this.props.history.push('/preferences');
   };
 
   render() {
@@ -138,11 +144,12 @@ export class NewInfo extends Component {
           />
           <br />
           {/* BUTTONS */}
-          <div className="buttons">
+          <div id="signup-image" className="buttons">
+            <button className= "button is-success" onClick={() => this.handleUpdate()}>Upload photo</button>
             <button
               className="button is-info"
               onClick={() => {
-                this.handleUpdate();
+                this.props.history.push('/preferences');
               }}
             >
               Save and continue

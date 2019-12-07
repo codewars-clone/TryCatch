@@ -45,6 +45,7 @@ export const getProspects = userId => async (
     //those prospect's preferences
     const prospects = [];
     userPreferences.forEach(doc => {
+      console.log(doc.data());
       if (
         doc.data().preferences.gender ===
         currentUser.data().gender || 'Everyone'

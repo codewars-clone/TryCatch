@@ -60,6 +60,10 @@ code {
   bottom: 2em;
   left: 3em;
 }
+#signup-image{
+  display: flex;
+  flex-direction: column;
+}
 
 .image-border {
   border-radius: 10% !important;
