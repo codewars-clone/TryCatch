@@ -27,7 +27,7 @@ export class NewAssets extends Component {
     const { OS, codeChallenge, favoriteLang } = this.state;
     const userData = {
       OS: OS,
-      codeChallenge: codeChallenge,
+      codeChallenge: codeChallenge || '',
       favoriteLang: favoriteLang,
     };
     this.props.addToUser(userData);

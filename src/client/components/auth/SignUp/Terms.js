@@ -33,7 +33,12 @@ export default class Terms extends Component {
           <br />
           {/* BUTTONS */}
           <div className="buttons">
-            <button className="button is-danger" onClick={this.back}>
+            <button
+              className="button is-danger"
+              onClick={() => {
+                this.props.history.push('/assets');
+              }}
+            >
               Back
             </button>
             <button
