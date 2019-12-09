@@ -32,8 +32,7 @@ export class NewInfo extends Component {
   };
 
   handleUpload = () => {
-    const { image } = this.state;
-    let imgUrl = '';
+    const { image, hFeet, hInches, gender } = this.state;
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
     uploadTask.on(
       'state_changed',
@@ -45,36 +44,37 @@ export class NewInfo extends Component {
       error => {
         console.log(error);
       },
-      () => {
-        storage
+      async () => {
+        let imageUrl = await storage
           .ref('images')
           .child(image.name)
-          .getDownloadURL()
-          .then(imageUrl => {
-            imgUrl = imageUrl;
-          });
+          .getDownloadURL();
+        const userData = {
+          imageUrl: imageUrl,
+          height: `${hFeet}'${hInches}`,
+          gender: gender,
+        };
+        this.props.addToUser(userData);
+        this.props.history.push('/preferences');
       }
     );
-    return imgUrl;
   };
 
-  handleUpdate = () => {
-    let imageUrl;
+  handleUpdate = async () => {
+    const { hFeet, hInches, gender } = this.state;
     if (this.state.image.name) {
-      imageUrl = this.handleUpload();
-    }
-    let { hFeet, hInches, gender } = this.state;
-    if (!imageUrl) {
-      imageUrl =
+      this.handleUpload();
+    } else {
+      let imageUrl =
         'https://cnam.ca/wp-content/uploads/2018/06/default-profile.gif';
+      const userData = {
+        imageUrl: imageUrl,
+        height: `${hFeet}'${hInches}`,
+        gender: gender,
+      };
+      this.props.addToUser(userData);
+      this.props.history.push('/preferences');
     }
-    const userData = {
-      imageUrl: imageUrl,
-      height: `${hFeet}'${hInches}`,
-      gender: gender,
-    };
-    this.props.addToUser(userData);
-    this.props.history.push('/preferences');
   };
 
   render() {
