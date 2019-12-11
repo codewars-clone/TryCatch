@@ -1,16 +1,13 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <h1 align="center">Try {Catch}</h1>
-<p align="center">A PWA that allows people in the tech industry to date, network, and connect based on their interests.</p>
+<p align="center">
+A PWA dating app for developers that connects users through photos, shared programming interests, and coding challenges.</p>
 <p align="center">
   <img src="https://i.imgur.com/zw7zF2h.png" width="300" alt="trycatch"/>
 </p>
 
 
-
-# Description
-
-A PWA dating app for developers that connects users through photos, shared programming interests, and coding challenges.
 
 # Image Walkthrough
 **Sign Up**
