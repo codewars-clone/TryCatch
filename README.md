@@ -10,7 +10,7 @@
 
 # Description
 
-A PWA dating app for developers called Try{Catch} that connects developers through shared interests, as well as being able to challenge eachother with coding questions. You are able to like through pictures and coding challenges, and match with users from different backgrounds to chat.
+A PWA dating app for developers that connects users through photos, shared programming interests, and coding challenges.
 
 # Image Walkthrough
 **Sign Up**
