@@ -51,7 +51,7 @@ The `Catch` feed is where you can see all the users that you have matched with. 
 
 
 <h3 align="center">
-Visit our app and try it out for yourself to see of these features in action.
+Visit our app and try it out for yourself to see of these features in action:
 <a href="https://try-catch.app/">try-catch.app</a>
 </h3>
 
