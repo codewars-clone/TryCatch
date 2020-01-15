@@ -257,6 +257,7 @@ i {
     position: fixed;
     opacity: 0.8;
     top: 0;
+    left: 0em;
     z-index: 1;
     width: 100%;
   }
