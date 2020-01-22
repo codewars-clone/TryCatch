@@ -55,10 +55,11 @@ code {
 #sign-in-form {
   top: 19em;
 }
+
 #form {
   position: fixed;
   bottom: 2em;
-  left: 3em;
+  left: 37em;
 }
 
 .image-border {
@@ -136,7 +137,7 @@ a:hover {
   position: relative;
   padding: 1em;
   width: 75%;
-  left: 5em;
+  left: 20em;
   background: lightgreen;
   box-shadow: 3px 3px 3px #aaaaaa;
   border-radius: 0.6em;
@@ -155,31 +156,28 @@ a:hover {
   border-top: 0;
   margin-top: -10px;
   margin-right: -20px;
-}
+} 
 
 #box-header {
   position: fixed;
   opacity: 0.8;
   top: 0;
+  left: 5em;
   z-index: 1;
-  width: 100%;
+  width: 90%;
 }
+
 .icon-wrapper {
   position: relative;
   float: left;
 }
 
-/* *.icon-blue {
-  color: white;
-}
-*.icon-grey {
-  color: white;
-} */
 i {
   width: 10em;
   text-align: center;
   vertical-align: middle;
 }
+
 .badge {
   background: radial-gradient(5px -9px, circle, white 8%, red 26px);
   background-color: red;
@@ -220,4 +218,47 @@ i {
   box-shadow: 2px 2px 1px grey;
   padding: 4px 3px 0 3px;
   text-align: center;
+}
+
+
+@media only screen and (max-width: 414px) {
+  #form {
+    position: fixed;
+    bottom: 2em;
+    left: 3em;
+  }
+
+    .bubble-user {
+    position: relative;
+    padding: 1em;
+    width: 75%;
+    left: 5em;
+    background: lightgreen;
+    box-shadow: 3px 3px 3px #aaaaaa;
+    border-radius: 0.6em;
+  }
+  
+  .bubble-user:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-left-color: lightgreen;
+    border-right: 0;
+    border-top: 0;
+    margin-top: -10px;
+    margin-right: -20px;
+  }
+
+  #box-header {
+    position: fixed;
+    opacity: 0.8;
+    top: 0;
+    left: 0em;
+    z-index: 1;
+    width: 100%;
+  }
 }
