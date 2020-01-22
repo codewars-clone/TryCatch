@@ -11,6 +11,7 @@ class SignIn extends Component {
     this.state = {
       email: '',
       password: '',
+      inputColor: 'is-danger'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,6 +20,22 @@ class SignIn extends Component {
     this.setState({
       [event.target.id]: event.target.value,
     });
+
+    this.checkPasswordLength();
+  }
+
+  // Validate Password length
+  checkPasswordLength()  { 
+    if(this.state.password.length >= 7) {
+      this.setState({
+        inputColor: 'is-success'
+      })
+    }
+    else {
+      this.setState({
+        inputColor: 'is-danger'
+      })
+    }
   }
 
   handleSubmit = e => {
@@ -26,8 +43,10 @@ class SignIn extends Component {
     const { signInThunk } = this.props;
     signInThunk(this.state.email, this.state.password);
   };
+  
   render() {
     const { loginError, isAuthenticated } = this.props;
+
     if (isAuthenticated) {
       return <Redirect to="/try" />;
     } else {
@@ -71,7 +90,7 @@ class SignIn extends Component {
                   <input
                     type="password"
                     id="password"
-                    className="input"
+                    className={`input ${this.state.inputColor}`}
                     onChange={this.handleChange}
                     placeholder="Password"
                   />
